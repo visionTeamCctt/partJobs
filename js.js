@@ -1,14 +1,17 @@
 var loggedFlag = 0;
 //for scrolling in the jobs page
-
+const usernameRegex =/^[a-zA-Z0-9_\.]+$/;
+const RegexFirstchar=/[0-9]/;
 //--------------------------------------------------------------------
+//when u click on search icon
 function openSearch() {
   document.getElementById("myOverlay").style.display = "block";
 }
-
+//when u click on x icon
 function closeSearch() {
   document.getElementById("myOverlay").style.display = "none";
 }
+//Index.php : when u click on switch to show Email feild
 
 function showEmail() {
   var x = document.getElementById("email-field");
@@ -16,9 +19,10 @@ function showEmail() {
     x.style.display = "none";
   } else {
     x.style.display = "block";
+    
   }
 }
-
+//to switch between log in and sign in
 function openIndiviualSignin() {
   document.getElementById("tab-1").checked = false;
   document.getElementById("tab-2").checked = true;
@@ -55,7 +59,7 @@ function openCompanyLogin() {
 
 
 }
-
+//when u click on x icon
 function closeSignin() {
   document.getElementById("IndiviualSign").style.display = "none";
   document.getElementById("companyLog").style.display = "none";
@@ -64,7 +68,7 @@ function closeSignin() {
   document.getElementById("companySign").style.display = "none";
   document.getElementById("logSignOverlayy").style.display = "none";
 }
-
+//first form when both of the fields are empty
 function validateForm() {
   var where = document.form.city.value;
   var what = document.form.keywors.value;
@@ -88,14 +92,17 @@ function validateForm() {
 //indiviual log in validation
 document.getElementById('IndivisualLog').addEventListener('submit', function() {
 
-  var usernameRegex = /[0-9]/;//regular expression
+ 
   var inFieldU = document.getElementById("in-userf");
   var inFieldP = document.getElementById("in-passf");
  
   var inLabelU = document.getElementById("in-user");
   var inLabelP = document.getElementById("in-pass");
-  
-  
+usernameRegex .exec(inFieldU);//regular expression
+  const vaild=!!usernameRegex;
+  if(!vaild){
+alert("user name is invaild");
+  }
 
   //if already shown from previous submit to hide it
   if (inLabelU.style.display === "inline" || 
@@ -110,7 +117,7 @@ document.getElementById('IndivisualLog').addEventListener('submit', function() {
     
      
     }
-    if( inFieldU.value[0].match(usernameRegex) != null ){
+    if( inFieldU.value[0].match(RegexFirstchar) != null ){
       inLabelU.innerHTML="user name should not start with number or Literal Characters";
       inLabelU.style.display="inline"
      }
@@ -130,7 +137,7 @@ document.getElementById('IndivisualLog').addEventListener('submit', function() {
    //company log in validation
    document.getElementById('companyLog').addEventListener('submit', function() {
 
-  var usernameRegex = /[0-9]/;//regular expression
+  
  
   var coFieldU = document.getElementById("co-userf");
   var coFieldP = document.getElementById("co-passf");
@@ -138,7 +145,11 @@ document.getElementById('IndivisualLog').addEventListener('submit', function() {
   
   var coLabelU = document.getElementById("co-user");
   var coLabelP = document.getElementById("co-pass");
-
+  usernameRegex .exec(coFieldU);//regular expression
+  const vaild=!!usernameRegex;
+  if(!vaild){
+alert("user name is invaild");
+  }
 
   //if already shown from previous submit to hide it
   if (
@@ -152,7 +163,7 @@ document.getElementById('IndivisualLog').addEventListener('submit', function() {
      coLabelP.style.display = "none";
      
     }
-    if( coFieldU.value[0].match(usernameRegex) != null ){
+    if( coFieldU.value[0].match(RegexFirstchar) != null ){
       coLabelU.innerHTML="user name should not start with number or Literal Characters";
       coLabelU.style.display="inline"
      }
@@ -173,13 +184,18 @@ document.getElementById('IndivisualLog').addEventListener('submit', function() {
    });
    //inSignValidation this way the validation function will be applied before submission
    document.getElementById('IndiviualSign').addEventListener('submit', function() {
-    var usernameRegex = /[0-9]/;//regular expression
+    n
   var inFieldFanme = document.getElementById("in-fnamef");
   var inFieldU = document.getElementById("in-S-userf");
   var inFieldP = document.getElementById("in-S-passf");
   var inFieldPR = document.getElementById("in-passRf");
   var inFieldbirth = document.getElementById("in-birthDatef");
   var inFieldAddress = document.getElementById("in-addressf");
+  usernameRegex .exec(inFieldU);//regular expression
+  const vaild=!!usernameRegex;
+  if(!vaild){
+alert("user name is invaild");
+  }
   //inFieldU.value. match(nameRegex);
   var inLabelFname = document.getElementById("in-fname");
   var inLabelU = document.getElementById("in-S-user");
@@ -218,7 +234,7 @@ document.getElementById('IndivisualLog').addEventListener('submit', function() {
 //       inLabelFname.style.display = "inline";
       
 //     }
-    if( inFieldFanme.value[0].match(usernameRegex) != null ){
+    if( inFieldFanme.value[0].match(RegexFirstchar) != null ){
       inLabelFname.innerHTML="name should not start with number or Literal Characters";
       inLabelFname.style.display="inline"
      }
@@ -226,7 +242,7 @@ document.getElementById('IndivisualLog').addEventListener('submit', function() {
 //     inLabelU.style.display = "inline";
 //    }
 
-if( inFieldU.value[0].match(usernameRegex) != null ){
+if( inFieldU.value[0].match(RegexFirstchar) != null ){
  inLabelU.innerHTML="user name should not start with number or Literal Characters";
  inLabelU.style.display="inline"
 }
@@ -248,7 +264,12 @@ if( inFieldU.value[0].match(usernameRegex) != null ){
     inLabelPR.innerHTML = "passwords are not the same";
     inLabelPR.style.display="inline";
   }
-  
+  if (inFieldP.value.length < 6) {
+    //   //   //display label will be better
+     inLabelP.innerHTML = 'password cannot be less than 6 characters';
+    
+     }
+      
 //  if ( inFieldbirth.value === "") {
 //     inLabelbirthDate.style.display = "inline";
 
@@ -322,12 +343,8 @@ if( inFieldU.value[0].match(usernameRegex) != null ){
 // // if (inFieldP.value === "") {
 // //     inLabelP.style.display = "inline";
 
-//   // }else if (inFieldP.value.length < 6) {
-//   //   //display label will be better
-//   //   inLabelP.innerHTML = 'password cannot be less than 6 characters';
+//   }else
 
-//   // }
-  
 // //  if (inFieldPR.value === "") {
 // //     inLabelPR.style.display = "inline";
 

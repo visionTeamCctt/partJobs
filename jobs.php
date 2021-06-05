@@ -1,95 +1,99 @@
 <?php
-include 'db_connect.php';
-
+// Initialize the session
 session_start();
+include "signin.php";
  
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: index.php");
-    exit;
+
+    
+    
 }
-
-
-
-//ديري include في كل صفحة حيصير فيها اللوق ان بعدين 
-// وديري call للدالة 
-echo '<script>alert("shit");</scrip>';
-  global $link;
-  // Define variables and initialize with empty values
+ 
+// Include config file
+require_once "db_connect.php";
+ 
+// Define variables and initialize with empty values
 $username = $password = "";
 $username_err = $password_err = $login_err = "";
+ //start checking for login
 // Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-  // Check if username is empty
-  if(empty(trim($_POST["user"]))){
-    $username_err = "Please enter username.";
-} else{
-    $username = trim($_POST["user"]);
-}
-   // Check if password is empty
-   if(empty(trim($_POST["pass"]))){
-    $password_err = "Please enter your password.";
-} else{
-    $password = trim($_POST["pass"]);
-}
-// Validate credentials
-if(empty($username_err) && empty($password_err)){
-  // Prepare a select statement
-  $sql = "SELECT  username, Upassword FROM users WHERE username =  ؟";
-  if($stmt = mysqli_prepare($link, $sql)){
-    // Bind variables to the prepared statement as parameters
-    mysqli_stmt_bind_param($stmt, "s", $param_username);
-     // Set parameters
-    $param_username = $username;
+if(isset($_POST["login"])){
+ 
+    // Check if username is empty
+    if(empty(trim($_POST['user']))){
+        $username_err = "Please enter username.";
+    } else{
+        $username = trim($_POST["user"]);
+    }
     
-    // Attempt to execute the prepared statement
-    if(mysqli_stmt_execute($stmt)){
-      // Store result
-      mysqli_stmt_store_result($stmt);
-      // Check if username exists, if yes then verify password
-         if(mysqli_stmt_num_rows($stmt) == 1){                    
-        // Bind result variables
-        mysqli_stmt_bind_result($stmt, $username, $hashed_password);
-        if(mysqli_stmt_fetch($stmt)){
-          if(password_verify($password, $hashed_password)){
-            echo'<script>alert("your in")</script>';
-              // Password is correct, so start a new session
-              session_start();
-              
-              // Store data in session variables
-              $_SESSION["loggedin"] = true;
-              // $_SESSION["id"] = $id;
-              $_SESSION["username"] = $username;                            
-             
-              // Redirect user to welcome page
-              header("location: index.php");
-          } else{
-              // Password is not valid, display a generic error message
-              $login_err = "Invalid username or password.";
-          }
-      }
-  }else{
-    // Username doesn't exist, display a generic error message
-    $login_err = "Invalid username or password.";
-}
-} else{
-echo "Oops! Something went wrong. Please try again later.";
-}
+    
+    // Check if password is empty
+    if(empty(trim($_POST["pass"]))){
+        $password_err = "Please enter your password.";
+    } else{
+        $password = trim($_POST["pass"]);
+    }
+    
+    // Validate credentials
+    if(empty($username_err) && empty($password_err)){
+        // Prepare a select statement
+        $sql = "SELECT username, Password FROM individual WHERE username = ?";
+        
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_username);
+            
+            // Set parameters
+            $param_username = $username;
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                // Store result
+                mysqli_stmt_store_result($stmt);
+                
+                // Check if username exists, if yes then verify password
+                if(mysqli_stmt_num_rows($stmt) == 1){   
+                                
+                    // Bind result variables
+                    mysqli_stmt_bind_result($stmt, $username, $password);
+                    if(mysqli_stmt_fetch($stmt)){
+                    
+                        if(password_verify($password, $hashed_password)){
+                          
+                          // Password is correct, so start a new session
+                            session_start();
+                            
+                            // Store data in session variables
+                            $_SESSION["loggedin"] = true;
+                            $_SESSION["user"] = $username;                            
+                            
+                            // Redirect user to welcome page
+                            header("location: redircet.php");
+                        } else{
+                            // Password is not valid, display a generic error message
+                            $login_err = "Invalid username or password.";
+                        }
+                    }
+                } else{
+                    // Username doesn't exist, display a generic error message
+                    $login_err = "Invalid username or password.";
+                }
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
 
-// Close statement
-mysqli_stmt_close($stmt);
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    }
+    
+    // Close connection
+    mysqli_close($link);
 }
-}
-
-// Close connection
-mysqli_close($link);
-}
-
-      
-
-
 ?>
-// include 'functions.php';
+
 
 
 
@@ -291,17 +295,24 @@ mysqli_close($link);
         <input id="tab-1" type="radio" name="tab" class="sign-in" ><label for="tab-1" class="tab">Sign In</label>
         <input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Sign Up</label>
         <div class="login-form">
-          <form class="sign-in-htm" id="IndivisualLog" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" onsubmit="return false">
+          <form class="sign-in-htm" id="IndivisualLog" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  onsubmit="return true">
             <div class="group">
+            <?php 
+        if(!empty($login_err)){
+            echo '<div class="alert alert-danger">' . $login_err . '</div>';
+        }        
+        ?>
               <label for="user" class="label">Username</label>
-              <input name="user" id="in-userf"  value="" type="text" class="userf input" pattern="^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$"
-              title="Usernames may only contain letters and numbers and must be between 5 and 5 characters" required>
+              <input name="user" id="in-userf"  value="" type="text" class="userf input" require class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+                <span class="invalid-feedback"><?php echo $username_err; ?></span> 
+              
               <label for="user" id="in-user"  class=" label" >username is required</label>
               
             </div>
             <div class="group">
               <label for="pass" class="label">Password</label>
-              <input name="pass" id="in-passf" type="password" class="passf input" data-type="password" minlength="6" required>
+              <input name="pass" id="in-passf" type="password" class="passf input" data-type="password" minlength="6" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
+                <span class="invalid-feedback"><?php echo $password_err; ?></span>
               <label for="pass" id="in-pass" class="pass label" >password is required</label>
              
 
@@ -312,18 +323,18 @@ mysqli_close($link);
               <label for="check"><span class="icon"></span> Keep me Signed in</label>
             </div>
             <div class="group">
-              <input type="submit" class="button" value="Sign In" >
+              <input type="submit" name="login" class="button"  value="Sign In" >
             </div>
             <div class="hr"></div>
             <div class="foot-lnk">
               <a href="#forgot">Forgot Password?</a>
             </div>
           </form>
-          <form class="sign-in-htm" id="companyLog" onsubmit="return false">
+          <form class="sign-in-htm" id="companyLog" >
             <div class="group">
               <label for="user" class="label">companyname</label>
-              <input name="user" id="co-userf" type="text" class="input userf" pattern="^[a-z0-9]{5,15}$"
-              title="Usernames may only contain letters and numbers and must be between 5 and 15 characters" required>
+              <input name="user" id="co-userf" type="text" class="input userf" 
+               required>
               <label for="user" id="co-user" class=" user label " >username is required</label>
            
             </div>
@@ -347,10 +358,11 @@ mysqli_close($link);
             </div>
           </form>
           <!--sign in-->
-          <form class="sign-up-htm "  id="IndiviualSign" onsubmit="return false" >
+          <form class="sign-up-htm " method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  id="IndiviualSign" onsubmit="return true" >
             <div class="group">
               <label for="fname" class="label">First Name</label>
-              <input name="fname" id="in-fnamef" type="text" class="input" pattern="^[a-z]{5,15}$" title="names may only contain letters must be between 5 and 15 characters" required>
+              <input name="fname" id="in-fnamef" type="text" class="input" require class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+                <span class="invalid-feedback"><?php echo $username_err; ?></span>
               <label for="fname" id="in-fname" class="label" >First Name is required</label>
 
             </div>
@@ -361,7 +373,7 @@ mysqli_close($link);
             </div>
             <div class="group">
               <label for="user" class="label">username</label>
-              <input name="user" id="in-S-userf" type="text" class="input" pattern="^[a-z0-9]{5,15}$"
+              <input name="user" id="in-S-userf" type="text" class="input" 
                title="Usernames may only contain letters and numbers and must be between 5 and 15 characters" required>
               <label for="user" id="in-S-user" class="label">username is required</label>
 
@@ -374,7 +386,7 @@ mysqli_close($link);
             </div>
             <div class="group">
               <label for="pass"  class="label">Repeat Password</label>
-              <input name="pass" id="in-passRf" type="password" class="input" data-type="password" >
+              <input name="Rpass" id="in-passRf" type="password" class="input" data-type="password" >
               <label for="pass" id="in-passR" class="label">you have to Repeat Password</label>
            
             </div>
@@ -397,7 +409,7 @@ mysqli_close($link);
             
             </div>
             <div class="group">
-              <input type="submit" class="button" value="Sign Up" >
+              <input type="submit" class="button" name="signin" value="Sign Up" >
             </div>
             <div class="hr"></div>
             <div class="foot-lnk">

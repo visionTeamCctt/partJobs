@@ -160,7 +160,7 @@
           <form class="sign-in-htm" id="IndivisualLog" onsubmit="return false">
             <div class="group">
               <label for="user" class="label">Username</label>
-              <input name="user" id="in-userf"  value="" type="text" class="userf input" pattern="[a-z0-9]{5,15}$"
+              <input name="user" id="in-userf"  value="" type="text" class="userf input" 
               title="Usernames may only contain letters and numbers and must be between 5 and 15 characters" required>
               <label for="user" id="in-user"  class=" label" >username is required</label>
               
@@ -353,7 +353,7 @@
           <label for="switch" class="alert">Email alert?</label> 
           <label for="" id="alert-vaildation">You Have to Fill at least one field</label>
           <label class="switch">
-            <input type="checkbox" name="switch" onsubmit="showEmail();" id="switch">
+            <input type="checkbox" name="switch" onclick="showEmail()" id="switch">
             <!--add javascript function-->
             <span class="slider round"></span>
           </label>
@@ -378,7 +378,7 @@
     </div>
     <br>
 
-    <div></div>
+
 
 
   
@@ -391,8 +391,9 @@
       <div class="city-item">
         <div class="img-content">
           <img src="./imgs/Cities/tripoli.jpg" alt="image">
+          <a href="jobs.html" class="more-overlay">tripoli</a>
         </div>
-        <a href="jobs.html" class="more-overlay">tripoli</a>
+        
       </div>
   
     <div class="city-item">
