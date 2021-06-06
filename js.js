@@ -90,7 +90,8 @@ function validateForm() {
 
 
 //indiviual log in validation
-document.getElementById('IndivisualLog').addEventListener('submit', function() {
+//document.getElementById('IndivisualLog').addEventListener('submit',
+ function IndivisualLog() {
 
  
   var inFieldU = document.getElementById("in-userf");
@@ -102,6 +103,7 @@ usernameRegex .exec(inFieldU);//regular expression
   const vaild=!!usernameRegex;
   if(!vaild){
 alert("user name is invaild");
+return false
   }
 
   //if already shown from previous submit to hide it
@@ -120,6 +122,7 @@ alert("user name is invaild");
     if( inFieldU.value[0].match(RegexFirstchar) != null ){
       inLabelU.innerHTML="user name should not start with number or Literal Characters";
       inLabelU.style.display="inline"
+      return false
      }
 
   // if (inFieldU.value === "") {
@@ -133,7 +136,7 @@ alert("user name is invaild");
   //   inLabelP.innerHTML = 'password cannot be less than 6 characters';
 
   // }
-   });
+   }
    //company log in validation
    document.getElementById('companyLog').addEventListener('submit', function() {
 

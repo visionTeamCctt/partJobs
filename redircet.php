@@ -1,3 +1,5 @@
+<?php
+session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,10 +17,12 @@
   <div class="circle"></div>
   <p>Loading</p>
 </div>
+<a href="jobs.php">OKAY</a>
 <?php
 
-usleep( 1000000);
-header("location: index.php");?>
+
+?>
+
 
 </body>
 </html>

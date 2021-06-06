@@ -11,6 +11,13 @@ html, body {
       font-family: 'New Tegomin', serif;
       color: rgb(3, 3, 3);
   }
+  body a {
+    padding: 4rem 2 rem;
+    background-color: orange;
+    color: white;
+    border-radius: .5rem;
+    margin-top: 10rem;
+  }
   
   .bar {
     position: relative;
