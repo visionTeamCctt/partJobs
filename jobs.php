@@ -520,15 +520,13 @@ if(isset($_SESSION["UserName"])){
 
         
                   <div class="inner-card partTimeJobs" id="partTimejobs" >
-                    <div class="path-links"> <!--here goes the path -->
+                          <div class="path-links"> <!--here goes the path -->
                       
-                      <a href="home.html"><b>Home</b> </a><i class="fa fa-caret-right fo"></i>
-                    <a href="jobs.html" id="jobs">Jobs</a>
-                    
-
-                  </div>
+                            <a href="home.html"><b>Home</b> </a><i class="fa fa-caret-right fo"></i>
+                            <a href="jobs.html" id="jobs">Jobs</a>
+                  
+                          </div>
                     <h2>Part Time Jobs</h2>
-
                     <?php  
                       global $selectQuery;
                 
@@ -550,39 +548,40 @@ if(isset($_SESSION["UserName"])){
 
                                   
                                     <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?= $ads["jobTitle"];?></label><br>
-                                                  <p class="descrption"><?= $ads["jobDescription"];?></p>
+                                                <p class="descrption"><?= $ads["jobDescription"];?></p>
                                                 <br><label for="li" class="info"><?= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?= $ads["uploadDate"];?></label>
                                                 <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
                                                 <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["salary"];?> per hour</label>
                                                 <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i>
-                                  </div>
+                                    </div>
                                     <section class="post-overlay" id="postOverlay">
                                                   
 
-                                                  <div class="post-container">
+                                          <div class="post-container">
                                                   <span class="closebtn" onclick="closeJobDetails()" title="Close Overlay">×</span>
                                                     <h5><?= $ads["jobTitle"];?></h5>
                                                   
                                                 <div class="JobDetails">
-                                                <span></span>
-                                                  <label for="post-overlay" class="post-nav"><?= $ads["fname"];?></label>
-                                                  <label for="post-overlay" class="post-nav"><?= $ads["uploadDate"];?></label>
-                                                  
-                                                  <label for="post-overlay" class="post-nav"><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
-                                                  <label for="post-overlay" class="post-nav"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label>
-                                                  <br><br><br><br>
-                                                  <ul class="details-list">
-                                                <li><label for="details-list" >Expire date:</label> <?= $ads["expireDate"];?></li>
-                                                <li> <label for="details-list">salary:</label> <?= $ads["salary"];?> per day</li>  </ul>
-                                                  <br> 
-                                                  <table>
-                                                    <tr>
-                                                <td><br><label for="description" class="details" >Description:</label></td> <td><p id="description"><?= $ads["jobDescription"];?></p></td></tr>
-                                                <tr><td><label for="benefits" class="details">Benefits:</label></td><td><br><p  id="benefits"><?= $ads["benefits"];?></p></td></tr> 
-                                                <tr> <td><label for="requirements" class="details">requirements:</label></td><td><br><br><br><br><p id="requirements"><?= $ads["requirements"];?></p></td></tr>
-                                                <tr><td><br><br> <br><label for="location" class="details">job location:</label></td><td><p class="location"><?= $ads["jobLocation"];?></p></td></tr> 
-                                                <tr><td><br><br><label for="note" class="details">note:</label></td><td><p class="note"><?= $ads["note"];?></p></td></tr>
-                                                </table></div>
+                                                          <span></span>
+                                                            <label for="post-overlay" class="post-nav"><?= $ads["fname"];?></label>
+                                                            <label for="post-overlay" class="post-nav"><?= $ads["uploadDate"];?></label>
+                                                            
+                                                            <label for="post-overlay" class="post-nav"><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
+                                                            <label for="post-overlay" class="post-nav"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label>
+                                                            <br><br><br><br>
+                                                            <ul class="details-list">
+                                                          <li><label for="details-list" >Expire date:</label> <?= $ads["expireDate"];?></li>
+                                                          <li> <label for="details-list">salary:</label> <?= $ads["salary"];?> per day</li>  </ul>
+                                                            <br> 
+                                                            <table>
+                                                              <tr>
+                                                          <td><br><label for="description" class="details" >Description:</label></td> <td><p id="description"><?= $ads["jobDescription"];?></p></td></tr>
+                                                          <tr><td><label for="benefits" class="details">Benefits:</label></td><td><br><p  id="benefits"><?= $ads["benefits"];?></p></td></tr> 
+                                                          <tr> <td><label for="requirements" class="details">requirements:</label></td><td><br><br><br><br><p id="requirements"><?= $ads["requirements"];?></p></td></tr>
+                                                          <tr><td><br><br> <br><label for="location" class="details">job location:</label></td><td><p class="location"><?= $ads["jobLocation"];?></p></td></tr> 
+                                                          <tr><td><br><br><label for="note" class="details">note:</label></td><td><p class="note"><?= $ads["note"];?></p></td></tr>
+                                                          </table>
+                                                </div>
                                                 <button class="post-btn" id="cancelbtn" onclick="closeJobDetails()" >cancel</button>
                                                 <button  class="post-btn">Apply for this job</button>
                                                 </div>
@@ -616,23 +615,23 @@ if(isset($_SESSION["UserName"])){
                   
                   
                     <div class="ul">
-                  
-                          
-                          <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?= $ads["jobTitle"];?></label><br>
-                                  <p class="descrption"><?= $ads["jobDescription"];?></p>
-                                <br><label for="li" class="info"><?= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?= $ads["uploadDate"];?></label>
-                                <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
-                                <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["salary"];?> per hour</label>
-                                <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i>
-                            </div>
-                            <section class="post-overlay" id="postOverlay">
-                    
 
-                            <div class="post-container">
-                                  <span class="closebtn" onclick="closeJobDetails()" title="Close Overlay">×</span>
-                                  <h5><?= $ads["jobTitle"];?></h5>
-                                
-                                      <div class="JobDetails">
+                                  
+                        <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?= $ads["jobTitle"];?></label><br>
+                                    <p class="descrption"><?= $ads["jobDescription"];?></p>
+                                    <br><label for="li" class="info"><?= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?= $ads["uploadDate"];?></label>
+                                    <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
+                                    <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["salary"];?> per hour</label>
+                                    <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i>
+                        </div>
+                        <section class="post-overlay" id="postOverlay">
+                                      
+
+                              <div class="post-container">
+                                      <span class="closebtn" onclick="closeJobDetails()" title="Close Overlay">×</span>
+                                        <h5><?= $ads["jobTitle"];?></h5>
+                                      
+                                    <div class="JobDetails">
                                               <span></span>
                                                 <label for="post-overlay" class="post-nav"><?= $ads["fname"];?></label>
                                                 <label for="post-overlay" class="post-nav"><?= $ads["uploadDate"];?></label>
@@ -642,22 +641,21 @@ if(isset($_SESSION["UserName"])){
                                                 <br><br><br><br>
                                                 <ul class="details-list">
                                               <li><label for="details-list" >Expire date:</label> <?= $ads["expireDate"];?></li>
-                                            <li> <label for="details-list">salary:</label> <?= $ads["salary"];?> per day</li>  </ul>
+                                              <li> <label for="details-list">salary:</label> <?= $ads["salary"];?> per day</li>  </ul>
                                                 <br> 
                                                 <table>
                                                   <tr>
-                                            <td><br><label for="description" class="details" >Description:</label></td> <td><p id="description"><?= $ads["jobDescription"];?></p></td></tr>
-                                            <tr><td><label for="benefits" class="details">Benefits:</label></td><td><br><p  id="benefits"><?= $ads["benefits"];?></p></td></tr> 
+                                              <td><br><label for="description" class="details" >Description:</label></td> <td><p id="description"><?= $ads["jobDescription"];?></p></td></tr>
+                                              <tr><td><label for="benefits" class="details">Benefits:</label></td><td><br><p  id="benefits"><?= $ads["benefits"];?></p></td></tr> 
                                               <tr> <td><label for="requirements" class="details">requirements:</label></td><td><br><br><br><br><p id="requirements"><?= $ads["requirements"];?></p></td></tr>
-                                            <tr><td><br><br> <br><label for="location" class="details">job location:</label></td><td><p class="location"><?= $ads["jobLocation"];?></p></td></tr> 
+                                              <tr><td><br><br> <br><label for="location" class="details">job location:</label></td><td><p class="location"><?= $ads["jobLocation"];?></p></td></tr> 
                                               <tr><td><br><br><label for="note" class="details">note:</label></td><td><p class="note"><?= $ads["note"];?></p></td></tr>
-                                            </table>
-                                      </div>
+                                              </table>
+                                    </div>
                                     <button class="post-btn" id="cancelbtn" onclick="closeJobDetails()" >cancel</button>
                                     <button  class="post-btn">Apply for this job</button>
-                            </div>
-                    
-                    
+                                    </div>
+                        </section>
                     </div>
                     
                           <?php 
@@ -667,9 +665,9 @@ if(isset($_SESSION["UserName"])){
 
                       }
                       ?>
-
-                    
                         <div class="a"><a href="#">Show all relative posts</a></div>
+
+                    </div>
                         
             
 
