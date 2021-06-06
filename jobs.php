@@ -510,7 +510,7 @@ if(isset($_POST["login"])){
       $selectQuery= "SELECT *
       FROM individual
       RIGHT JOIN posts
-      ON individual.username = posts.username and posts.jobLocation='$city'";
+      ON individual.username = posts.username and posts.jobLocation='$city' AND posts.jobType='Part Time jobs';";
           
 
   }
@@ -521,10 +521,10 @@ if(isset($_POST["login"])){
     $selectQuery= "SELECT *
     FROM individual
     RIGHT JOIN posts
-    ON individual.username = posts.username; ";
+    ON individual.username = posts.username AND posts.jobType='Part Time jobs'; ";
   }
  
-  print_r($selectQuery);
+  
     if($result =mysqli_query($link,$selectQuery))
 		  {
         
