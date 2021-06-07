@@ -88,12 +88,13 @@
                     <div class="field">
                         <div class="label">CV</div>
         <input type="file" name="realfile" id="real-file"  style="border: 0cm;" hidden >
-            <button type="button" id="custom-fileButton">choose file</button>
+            <button type="button" name="customfileButton" id="custom-fileButton">choose file</button>
           <span id="custom-fileText" style="color: gray;">No File Choosen.</span>
                       </div>
                 </div>
              
             </div>
+            
                <!-- new edit    section-items-->
                <div class="ss">
                 <p class="title"></p>

@@ -154,8 +154,10 @@ if(isset($_POST["login"])){
 </head>
 
 <body id="body">
- 
-<a href="./Indiv_Profile.html" class="Profile-icon floating-btn"><i class="fas fa-user"></i></a>
+<button onclick="<?php if(isset($_SESSION["UserName"])){
+  ?><img class="cat-icon" src="cat_profile_96px.png" alt=""><?php }else{ ?><i class="fas fa-user"></i><?php }?></button>
+
+<!-- <a href="./Indiv_Profile.html" class="Profile-icon floating-btn"><i class="fas fa-user"></i></a> -->
 
   
   <header class="H-F" id="header">
@@ -280,16 +282,15 @@ if(isset($_SESSION["UserName"])){
 ?>
 <div class="dropdown"> 
         <!-- ad button to create an ad -->
-        <button class="dropbtn">  <?php echo $_SESSION["UserName"]; ?>
-          
-        </button>
+       
         
       </div>
       <div class="dropdown"> 
         <!-- ad button to create an ad -->
         <button class="dropbtn">
+        
           
-        <a  class="dropbtn"s href="logout.php">Singout</a>
+        <a class="dropbtn"  href="logout.php">Singout</a>
         </button>
       </div>
 <?php 
@@ -537,9 +538,9 @@ if(isset($_SESSION["UserName"])){
                         $keywors=$_POST["keywors"];
 
                   
-                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city' or  posts.jobTitle Like '%$keywors%' ";
+                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
                           if($result =mysqli_query($link,$selectQuery))
-                          {echo'shit';
+                          {
                             
                             if ($result->num_rows > 0) {
                                     
@@ -600,7 +601,7 @@ if(isset($_SESSION["UserName"])){
                   {
 
                     
-                    $selectQuery= "SELECT * FROM individual RIGHT JOIN posts ON individual.username = posts.username AND posts.jobType='Part Time jobs'
+                    $selectQuery= "SELECT * FROM individual RIGHT JOIN posts ON individual.userID= posts.userID AND posts.jobType='Part Time job'
                     ORDER by posts.uploadDate DESC ";
 
                 
@@ -682,38 +683,83 @@ if(isset($_SESSION["UserName"])){
       
         <div class="inner-card other-cards summerJobs"id="summerJobs">
           <h2>Summer Jobs</h2>
+          <?php  
+                      global $selectQuery;
+                
+                        if (isset($_POST['searchsubmit'])){
+                        $city=$_POST["city"];
+                        $keywors=$_POST["keywors"];
+
+                  
+                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Summer job' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
+                          if($result =mysqli_query($link,$selectQuery))
+                          {
+                            
+                            if ($result->num_rows > 0) {
+                                    
+                                while($ads=mysqli_fetch_assoc($result))
+                                {?>
           <div class="ul">
-            <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title">Job Title</label><br>
-              <p class="descrption">description</p>
-            <br><label for="li" class="info">company/indivdual name</label><label for="li" class="info" data-type="date" >2021/2/1</label>
-            <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i> where</label>
-            <label for="li" class="info"><i class="fas fa-dollar-sign"></i> per hour</label>
-            <label for="li" class="info"><i class="far fa-bookmark"></i> job type</label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i></div>
+          <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?= $ads["jobTitle"];?></label><br>
+                                                <p class="descrption"><?= $ads["jobDescription"];?></p>
+                                                <br><label for="li" class="info"><?= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?= $ads["uploadDate"];?></label>
+                                                <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
+                                                <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["salary"];?> per hour</label>
+                                                <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i>
+                                    </div>
             
-            <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title">Job Title</label><br>
-              <p class="descrption">description</p>
-            <br><label for="li" class="info">company/indivdual name</label><label for="li" class="info" data-type="date" >2021/2/1</label>
-            <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i> where</label>
-            <label for="li" class="info"><i class="fas fa-dollar-sign"></i> per hour</label>
-            <label for="li" class="info"><i class="far fa-bookmark"></i> job type</label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i></div>
-          
-            <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title">Job Title</label><br>
-              <p class="descrption">description</p>
-            <br><label for="li" class="info">company/indivdual name</label><label for="li" class="info" data-type="date" >2021/2/1</label>
-            <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i> where</label>
-            <label for="li" class="info"><i class="fas fa-dollar-sign"></i> per hour</label>
-            <label for="li" class="info"><i class="far fa-bookmark"></i> job type</label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i></div>
-            <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title">Job Title</label><br>
-              <p class="descrption">description</p>
-            <br><label for="li" class="info">company/indivdual name</label><label for="li" class="info" data-type="date" >2021/2/1</label>
-            <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i> where</label>
-            <label for="li" class="info"><i class="fas fa-dollar-sign"></i> per hour</label>
-            <label for="li" class="info"><i class="far fa-bookmark"></i> job type</label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i></div>
-              <div class="a"><a href="#">Show all relative posts</a></div>
+            
               
             </div>
-        </div>
+       
+        <?php 
+                          }
+                      }
+                        }
 
+                      }
+                      else
+                  {
+
+                    
+                    $selectQuery= "SELECT * FROM individual inner JOIN posts ON individual.userID= posts.userID AND posts.jobType='Summer job'
+                    ORDER by posts.uploadDate DESC ";
+
+                
+                  
+                    if($result =mysqli_query($link,$selectQuery))
+                      {
+                        
+                        if ($result->num_rows > 0) {
+                              
+                          while($ads=mysqli_fetch_assoc($result))
+                          {?>
+                    
+                    
+                  
+                  
+                    <div class="ul">
+
+                                  
+                        <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?= $ads["jobTitle"];?></label><br>
+                                    <p class="descrption"><?= $ads["jobDescription"];?></p>
+                                    <br><label for="li" class="info"><?= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?= $ads["uploadDate"];?></label>
+                                    <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
+                                    <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["salary"];?> per hour</label>
+                                    <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i>
+                        </div>
+                        
+                    </div>
+                    
+                          <?php 
+                          }
+                      }
+                        }
+
+                      }
+                      ?>
+                        <div class="a"><a href="#">Show all relative posts</a></div>
+                        </div>
       </section>
           <!--weekend jobs-->
           <section class="cards Other-cards WeekendJobs " id="weekendJobs">

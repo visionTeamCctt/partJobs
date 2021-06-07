@@ -728,7 +728,7 @@ font-family: 'New Tegomin', serif;
   
 }
 .TopVacnacies{
-  height: 320px;
+  height: min-content;
 }
 
 .inner-card{
@@ -836,10 +836,10 @@ transform: translateY(-2px);
 }
 /*this one for jobs*/
 .PartTimeJobs{
-  margin-bottom:12rem ;
+  margin-bottom:50%;
 }
 .inner-card,.Other-cards{
-  margin-bottom: 10rem;
+  margin-bottom:40%rem;
 }
 .fa-chevron-circle-down{
   margin-left: 2rem;
@@ -848,7 +848,7 @@ transform: translateY(-2px);
 .Other-cards{
   background-image: none;
  box-shadow: none;
- margin-top: 2rem;/*sapce btwn cards excpt for the first one*/
+ margin-top: 3rem;/*sapce btwn cards excpt for the first one*/
 }
 /*contact page: path in the top of get in touch card*/
 .path-links a,.fo{
@@ -1041,7 +1041,7 @@ color: rgba(48, 48, 48, 0.2);
 /* upload ur cv */
   .upload-cv{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    max-width: 300px;
+    max-width: 290px;
     margin:auto;
     text-align: center;
     margin-top:300px;
@@ -1059,7 +1059,8 @@ color: rgba(48, 48, 48, 0.2);
     cursor: pointer;
     width: 100%;
     font-size: 18px;
-  margin-left: 0%;
+  margin-left: -1.5rem;
+
   }
   .uploadurcv:hover,a:hover{
 

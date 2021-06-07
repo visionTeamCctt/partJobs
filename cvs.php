@@ -1,3 +1,31 @@
+<?php
+session_start();
+// Initialize the session
+require_once "db_connect.php";
+if(isset($_POST["login"])){
+
+$username=$_POST["user"];
+$password=$_POST["pass"];
+$selectQuery="SELECT * FROM individual WHERE username='$username' and Password='$password'";
+if($resultlogin=mysqli_query($link,$selectQuery)){
+  $rowcount=mysqli_num_rows($resultlogin);
+  if($rowcount>0){
+    $row=mysqli_fetch_array($resultlogin);
+    $_SESSION['Login']=1;
+    $_SESSION['userID']=$row['userID'];
+    $_SESSION['UserName']=$row["username"];
+
+    header("Location: index.php");
+  }else{
+
+    echo'<script>';
+    echo 'alert("error")';
+   echo '</script>';
+  }
+
+}
+
+}?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +42,9 @@
 </head>
 
 <body>
-<a href="./Indiv_Profile.html" class="Profile-icon floating-btn"><i class="fas fa-user"></i></a>
+<button onclick="<?php if(isset($_SESSION["UserName"])){
+?>location.href='./Indiv_Profile.php' <?php }else{ ?>openIndiviualLogin();<?php }?>"class="Profile-icon floating-btn"><?php if(isset($_SESSION["UserName"])){
+  ?><img class="cat-icon" src="cat_profile_96px.png" alt=""><?php }else{ ?><i class="fas fa-user"></i><?php }?></button>
 
   <header class="H-F" id="header">
 
@@ -130,6 +160,28 @@
         </button>
        
       </div>
+      <?php
+
+if(isset($_SESSION["UserName"])){
+
+
+?>
+<div class="dropdown"> 
+        <!-- ad button to create an ad -->
+       
+        
+      </div>
+      <div class="dropdown"> 
+        <!-- ad button to create an ad -->
+        <button class="dropbtn">
+        
+          
+        <a class="dropbtn"  href="logout.php">Singout</a>
+        </button>
+      </div>
+<?php 
+}else{
+?>
       <div class="dropdown"><!--sign in by clicking on the a tag -->
         <button class="dropbtn" >Sign in
           <i class="fa fa-caret-down" onclick="openSearch"></i>
@@ -147,7 +199,9 @@
           <a onclick="openIndiviualLogin()">Student</a>
           <a onclick="openCompanyLogin()">Employer</a>
         </div>
+    
       </div>
+      <?php }?>
     </div>
 <!--sign in log in block-->
     <div class="back" id="logSignOverlayy">
@@ -157,11 +211,11 @@
         <input id="tab-1" type="radio" name="tab" class="sign-in" ><label for="tab-1" class="tab">Sign In</label>
         <input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Sign Up</label>
         <div class="login-form">
-          <form class="sign-in-htm" id="IndivisualLog" onsubmit="return false">
+          <form class="sign-in-htm" id="IndivisualLog" onsubmit="return false" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <div class="group">
               <label for="user" class="label">Username</label>
-              <input name="user" id="in-userf"  value="" type="text" class="userf input" pattern="[a-z0-9]{5,15}$"
-              title="Usernames may only contain letters and numbers and must be between 5 and 15 characters" required>
+              <input name="user" id="in-userf"  value="" type="text" class="userf input"
+               required>  <span class="invalid-feedback"><?php echo $username_err; ?></span> 
               <label for="user" id="in-user"  class=" label" >username is required</label>
               
             </div>
@@ -321,7 +375,36 @@
         </div>
       </div>
     </div></div>
+    <Form dir="rtl" align="right"  method="Post" enctype="multipart/form-data">
+            <div class="form-group">
+                    <label for="exampleInputFile">  شعار الشركة </label>
+					<input type="file" name="uploaded_file" size="57">
+                    <!--<input type="file" id="OffiecLogo11" name="OffiecLogo11" onchange="updateImage(this)">-->
+                </div>
+            <button type="submit" name="submitfile" class="btn btn-default" style="margin-right: 300px">انشاء</button>
+            </Form>
+            <?php
+            if($_SERVER["REQUEST_METHOD"]=='POST')
+            {
+                if(isset($_POST['submitfile'])){
 
+                    echo'<script>';
+                    echo 'alert("error")';
+                   echo '</script>';
+            
+            if(is_uploaded_file($_FILES["uploaded_file"]["tmp_name"]))
+                {
+                    
+                    move_uploaded_file($_FILES['uploaded_file']['tmp_name'],"uploads/".$_FILES["uploaded_file"]["name"]);
+                    $file2_path="uploads/".$_FILES["uploaded_file"]["name"];
+                            
+                    echo $file2_path;
+                }
+            }
+}
+        
+  	
+            ?>
 
 
     <button class="openBtn" onclick="openSearch()"> <i class="fa fa-search fa-lg " onclick="openSearch()"></i></button>
@@ -408,7 +491,9 @@
               <p class="do-upload">Do you want to upload  your CV? <br>
                   click here!</p>
                   
-              <p id="uploadurcv"><a href="CV Form/form.html"><button class="uploadurcv" >upload your cv</button></a></p>
+              <p id="uploadurcv"> <button class="uploadurcv" onclick="<?php if(isset($_SESSION["UserName"])){
+?>location.href='CV_Form/cvForm.php' <?php }else{ ?>openIndiviualLogin();<?php }?>" id="">Upload Your CVs</button>
+</p>
           </div>
   
     
