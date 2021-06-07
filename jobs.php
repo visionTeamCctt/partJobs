@@ -155,6 +155,7 @@ if(isset($_POST["login"])){
 
 <body id="body">
 <button onclick="<?php if(isset($_SESSION["UserName"])){
+?>location.href='./Indiv_Profile.php' <?php }else{ ?>openIndiviualLogin();<?php }?>"class="Profile-icon floating-btn"><?php if(isset($_SESSION["UserName"])){
   ?><img class="cat-icon" src="cat_profile_96px.png" alt=""><?php }else{ ?><i class="fas fa-user"></i><?php }?></button>
 
 <!-- <a href="./Indiv_Profile.html" class="Profile-icon floating-btn"><i class="fas fa-user"></i></a> -->
