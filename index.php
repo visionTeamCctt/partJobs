@@ -22,7 +22,7 @@ if(isset($_POST["login"])){
     }else{
 
       echo'<script>';
-      echo 'alert("error")';
+      echo 'alert("invaild username or password")';
      echo '</script>';
     }
  
@@ -42,12 +42,13 @@ if(isset($_POST["login"])){
   <script src="https://kit.fontawesome.com/a81649cedd.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="porfileBookmark.css">
   <title>Document</title>
 </head>
 
 <body>
   
-  
+<a href="./Indiv_Profile.html" class="Profile-icon floating-btn"><i class="fas fa-user"></i></a>
   <header class="H-F" id="header">
 
     <!--logo-->
@@ -170,17 +171,19 @@ if(isset($_SESSION["UserName"])){
 ?>
 <div class="dropdown"> 
         <!-- ad button to create an ad -->
-        <button class="dropbtn">  <?php echo $_SESSION["UserName"]; ?>
+        <!-- <button class="dropbtn">  <?php //echo $_SESSION["UserName"]; ?> -->
           
-        </button>
+        <!-- </button> -->
        
       </div>
       <div class="dropdown"> 
+       
         <!-- ad button to create an ad -->
+      
         <button class="dropbtn">
         
           
-        <a  href="logout.php">Singout</a>
+        <a class="dropbtn"  href="logout.php">Singout</a>
         </button>
       </div>
 <?php 
@@ -432,15 +435,16 @@ if(isset($_SESSION["UserName"])){
     <div id="are-you-looking-for">
       <h1><b> Are You Looking For?</b></h1>
 
-      <a href="jobs.html#partTimeJobs" class="looking-for">part Time Jobs</a>
-      <a href="jobs.html#weekendJobs" class="looking-for">weekend Jobs</a>
-      <a href="jobs.html#eveningJobs" class="looking-for">evening Jobs</a>
-      <a href="jobs.html#summerJobs" class="looking-for">summer Jobs</a>
-      <a href="jobs.html#workFromHome" class="looking-for">work from home</a>
-      <a href="jobs.html#internships" class="looking-for">internships</a> <br> <br>
+      <a href="jobs.php#partTimeJobs" class="looking-for">part Time Jobs</a>
+      <a href="jobs.php#weekendJobs" class="looking-for">weekend Jobs</a>
+      <a href="jobs.php#eveningJobs" class="looking-for">evening Jobs</a>
+      <a href="jobs.php#summerJobs" class="looking-for">summer Jobs</a>
+      <a href="jobs.php#workFromHome" class="looking-for">work from home</a>
+      <a href="jobs.php#internships" class="looking-for">internships</a> <br> <br>
       <div id="cv-upload">
         <h1><b> Do You Want to Upload Your CV?</b></h1>
-        <a onclick="" id="upload-your-btn">Upload Your CVs</a>
+        <button onclick="<?php if(isset($_SESSION["UserName"])){
+?>location.href='CV_Form/cvForm.php' <?php }else{ ?>openIndiviualLogin();<?php }?>" id="upload-your-btn">Upload Your CVs</button>
 
       </div>
     </div>

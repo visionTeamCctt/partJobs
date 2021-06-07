@@ -149,12 +149,14 @@ if(isset($_POST["login"])){
   <script src="https://kit.fontawesome.com/a81649cedd.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="porfileBookmark.css">
   <title>Document</title>
 </head>
 
 <body id="body">
  
-  
+<a href="./Indiv_Profile.html" class="Profile-icon floating-btn"><i class="fas fa-user"></i></a>
+
   
   <header class="H-F" id="header">
 
@@ -535,9 +537,9 @@ if(isset($_SESSION["UserName"])){
                         $keywors=$_POST["keywors"];
 
                   
-                        $selectQuery="SELECT * from individual INNER JOIN posts on individual.username=posts.username and posts.jobType='Part Time job' and posts.jobLocation='$city' or  posts.jobTitle Like '%$keywors%' ";
+                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city' or  posts.jobTitle Like '%$keywors%' ";
                           if($result =mysqli_query($link,$selectQuery))
-                          {
+                          {echo'shit';
                             
                             if ($result->num_rows > 0) {
                                     
@@ -587,7 +589,7 @@ if(isset($_SESSION["UserName"])){
                                                 </div>
                                     </section>
                           </div>
-                        <?php 
+                          <?php 
                         }
                   }
                     }

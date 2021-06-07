@@ -9,10 +9,13 @@
   <script src="https://kit.fontawesome.com/a81649cedd.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="porfileBookmark.css">
   <title>Document</title>
 </head>
 
 <body>
+<a href="./Indiv_Profile.html" class="Profile-icon floating-btn"><i class="fas fa-user"></i></a>
+
   <header class="H-F" id="header">
 
     <!--logo-->

@@ -728,7 +728,7 @@ font-family: 'New Tegomin', serif;
   
 }
 .TopVacnacies{
-  height: 350px;
+  height: 30px;
 }
 
 .inner-card{
@@ -813,6 +813,7 @@ transform: translateY(-2px);
 .inner-card .ul .li .descrption{
   font-size: 20px;
   padding-left: 3rem;
+  text-align: left;
 }
 .inner-card .ul .li .info{
   font-size: 16px;
