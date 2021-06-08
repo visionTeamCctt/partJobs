@@ -12,7 +12,7 @@
 
 <body>
 
-    <form class="main" onsubmit="return false">
+    <form class="main" name="CvForm" onsubmit="return false">
 
         <section class="asset split about" id="about-section">
             <p class="title section-item"><span>upload your CV </span></p>
@@ -87,14 +87,13 @@
                    <!--  -->
                     <div class="field">
                         <div class="label">CV</div>
-        <input type="file" name="realfile" id="real-file"  style="border: 0cm;" hidden >
-            <button type="button" name="customfileButton" id="custom-fileButton">choose file</button>
+        <input type="file" name="realfile" id="real-file"  style="border: 0cm;" value="" hidden>
+            <button type="button" id="custom-fileButton">choose file</button>
           <span id="custom-fileText" style="color: gray;">No File Choosen.</span>
                       </div>
                 </div>
              
             </div>
-            
                <!-- new edit    section-items-->
                <div class="ss">
                 <p class="title"></p>
@@ -115,35 +114,7 @@
     </Form>
 
     <script src="cvscript.js"></script>
-    <!-- <script>
-        var aboutSection = document.getElementById("about-section");
-        var skillsSection = document.getElementById("skills-section");
-        var resumeSection = document.getElementById("resume-section");
-        var storysSection = document.getElementById("storys-section");
-
-        const menuLinks = document.querySelectorAll('.menu .menu-item');
-        menuLinks.forEach(el => {
-            el.addEventListener('click', function () {
-
-                let sectionToGo = aboutSection;
-
-                switch (this.id) {
-                    case 'skills':
-                        sectionToGo = skillsSection;
-                        break;
-                    case 'resume':
-                        sectionToGo = resumeSection;
-                        break;
-                    case 'storys':
-                        sectionToGo = storysSection;
-                        break;
-                }
-                // Scroll smoothly to section
-                sectionToGo.scrollIntoView({behavior: 'smooth'});
-            })
-        })
-
-    </script> -->
+  
 </body>
 
 </html>

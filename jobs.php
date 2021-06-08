@@ -3,6 +3,7 @@ session_start();
 // Initialize the session
 require_once "db_connect.php";
 include "signin.php";
+global $postID;
  
 // Check if the user is already logged in, if yes then redirect him to welcome page
 // if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
@@ -110,7 +111,8 @@ if(isset($_POST["login"])){
 
   $username=$_POST["user"];
   $password=$_POST["pass"];
-  $selectQuery="SELECT * FROM individual WHERE username='$username' and Password='$password'";
+  $selectQuery="SELECT * FROM individual WHERE
+   username='$username' and Password='$password'";
   if($resultlogin=mysqli_query($link,$selectQuery)){
     $rowcount=mysqli_num_rows($resultlogin);
     if($rowcount>0){
@@ -545,8 +547,11 @@ if(isset($_SESSION["UserName"])){
                             
                             if ($result->num_rows > 0) {
                                     
-                                while($ads=mysqli_fetch_assoc($result))
-                                {?>
+                                while($ads=mysqli_fetch_assoc($result)){
+                               
+                                  $_SESSION['more']= $ads["postID"];
+                                // {
+                                  ?>
                   
                           <div class="ul">
 
@@ -555,40 +560,126 @@ if(isset($_SESSION["UserName"])){
                                                 <p class="descrption"><?= $ads["jobDescription"];?></p>
                                                 <br><label for="li" class="info"><?= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?= $ads["uploadDate"];?></label>
                                                 <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
-                                                <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["salary"];?> per hour</label>
-                                                <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i>
+                                                <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["postID"];?> per hour</label>
+                                                <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" name="more" onclick="location.href='JobInformation.php'"></i>
                                     </div>
                                     <section class="post-overlay" id="postOverlay">
-                                                  
+                                    <span class="closebtn" onclick="closeJobDetails()" title="Close Overlay">×</span>
 
-                                          <div class="post-container">
-                                                  <span class="closebtn" onclick="closeJobDetails()" title="Close Overlay">×</span>
-                                                    <h5><?= $ads["jobTitle"];?></h5>
-                                                  
-                                                <div class="JobDetails">
-                                                          <span></span>
-                                                            <label for="post-overlay" class="post-nav"><?= $ads["fname"];?></label>
-                                                            <label for="post-overlay" class="post-nav"><?= $ads["uploadDate"];?></label>
-                                                            
-                                                            <label for="post-overlay" class="post-nav"><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
-                                                            <label for="post-overlay" class="post-nav"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label>
-                                                            <br><br><br><br>
-                                                            <ul class="details-list">
-                                                          <li><label for="details-list" >Expire date:</label> <?= $ads["expireDate"];?></li>
-                                                          <li> <label for="details-list">salary:</label> <?= $ads["salary"];?> per day</li>  </ul>
-                                                            <br> 
-                                                            <table>
-                                                              <tr>
-                                                          <td><br><label for="description" class="details" >Description:</label></td> <td><p id="description"><?= $ads["jobDescription"];?></p></td></tr>
-                                                          <tr><td><label for="benefits" class="details">Benefits:</label></td><td><br><p  id="benefits"><?= $ads["benefits"];?></p></td></tr> 
-                                                          <tr> <td><label for="requirements" class="details">requirements:</label></td><td><br><br><br><br><p id="requirements"><?= $ads["requirements"];?></p></td></tr>
-                                                          <tr><td><br><br> <br><label for="location" class="details">job location:</label></td><td><p class="location"><?= $ads["jobLocation"];?></p></td></tr> 
-                                                          <tr><td><br><br><label for="note" class="details">note:</label></td><td><p class="note"><?= $ads["note"];?></p></td></tr>
-                                                          </table>
-                                                </div>
-                                                <button class="post-btn" id="cancelbtn" onclick="closeJobDetails()" >cancel</button>
-                                                <button  class="post-btn">Apply for this job</button>
-                                                </div>
+                                    <form class="main" name="CvForm" onsubmit="return false">
+
+<section class="asset split about" id="about-section">
+    <p class="title section-item"><span>Job Informationa </span></p>
+   
+    <div class="asset-body">
+        <div class="section-item">
+            <h3  style="text-align: left; margin: 10px;  margin-left: 15%; font-size: large;"></h3>
+            <p>
+                <label for="JobTitle" >Job Title</label><br>
+                <p class ="field-db"id="JobTitle"><?= $ads["jobTitle"];?></p><br><br>
+                <label for="JobLocation" >Job Location</label><br>
+                <p class ="field-db"id="JobLocation"><?= $ads["jobLocation"];?></p><br><br>
+               
+            </p>
+        </div>
+       
+        <div class="section-item">
+            <h3  style="text-align: left; margin: 10px;  margin-left: 15%; font-size: large;"></h3>
+
+            <label for="Slary" >Slary</label><br>
+            <p class ="field-db"id="Slary"><?= $ads["salary"];?> per day</p><br><br>
+            <label for="ExpireDate" >ExpireDate</label><br>
+            <p class ="field-db"id="ExpireDate"><?= $ads["expireDate"];?></p><br><br>
+        </div>
+    </div>
+</section>
+
+<section class="asset split about" id="about-section">
+    <p class="title section-item"><span></span></p>
+   
+    <div class="asset-body">
+        <div class="section-item">
+            <h3  style="text-align: left; margin: 10px;  margin-left: 15%; font-size: large;"></h3>
+            <p>
+                <label for="description" >description</label><br>
+                <textarea name="" id="" cols="55" rows="10"><?= $ads["jobDescription"];?></textarea>
+               
+
+            
+            </p>
+        </div>
+       
+    </div>
+</section>
+<section class="asset split about" id="about-section">
+    <p class="title section-item"><span></span></p>
+   
+    <div class="asset-body">
+        <div class="section-item">
+            <h3  style="text-align: left; margin: 10px;  margin-left: 15%; font-size: large;"></h3>
+            <p>
+                <label for="Benefits" >Benefits</label><br>
+                <textarea name="" id="Benefits" cols="55" rows="10"><?= $ads["benefits"];?></textarea>
+               
+
+            
+            </p>
+        </div>
+       
+    </div>
+</section>
+<section class="asset split about" id="about-section">
+    <p class="title section-item"><span></span></p>
+   
+    <div class="asset-body">
+        <div class="section-item">
+            <h3  style="text-align: left; margin: 10px;  margin-left: 15%; font-size: large;"></h3>
+            <p>
+                <label for="requirements" >requirements</label><br>
+                <textarea name="" id="requirements" cols="55" rows="10"><?= $ads["requirements"];?></textarea>
+               
+
+            
+            </p>
+        </div>
+       
+    </div>
+</section>
+<section class="asset split about" id="about-section">
+    <p class="title section-item"><span></span></p>
+   
+    <div class="asset-body">
+        <div class="section-item">
+            <h3  style="text-align: left; margin: 10px;  margin-left: 15%; font-size: large;"></h3>
+            <p>
+                <label for="Note" >Note</label><br>
+                <textarea name="" id="Note" cols="55" rows="10"><?= $ads["note"];?></textarea>
+               
+
+            
+            </p>
+        </div>
+       
+    </div>
+</section>
+
+
+
+<div class="ss">
+
+    <div class="field btns">
+        
+        <button class="button" id="Back" onclick="location.href='http:www.google.com'"> Back</button> <button class="button" id="Apply" >Apply</button>
+       
+        <br><br>
+  
+    
+      </div>
+</div>
+
+
+
+</Form>
                                     </section>
                           </div>
                           <?php 
@@ -706,7 +797,7 @@ if(isset($_SESSION["UserName"])){
                                                 <br><label for="li" class="info"><?= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?= $ads["uploadDate"];?></label>
                                                 <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
                                                 <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["salary"];?> per hour</label>
-                                                <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i>
+                                                <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick=""></i>
                                     </div>
             
             

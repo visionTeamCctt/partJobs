@@ -72,7 +72,16 @@ input[type=text],input[type=url]{
     border-bottom: 1px solid #ddd;
     text-align: center;
 }
-
+/* .title2 {
+    font-size: 1em;
+    letter-spacing: 1px;
+    color: #313131;
+    font-weight: bold;
+    text-transform: capitalize;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    padding-left: 30px;
+} */
 
 .title span {
     color: orange;
@@ -144,6 +153,8 @@ font-family: 'Courier New', Courier, monospace;
 /*new*/
 
 label{
+    /* position: absolute; */
+    /* top: -30px; */
     font-weight: 500;
 }
 /*new*/

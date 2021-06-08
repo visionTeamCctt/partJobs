@@ -160,10 +160,8 @@ if(isset($_POST["login"])){
     <div class="sign-log-in">
       <div class="dropdown"> 
         <!-- ad button to create an ad -->
-        <button class="dropbtn" onclick="setForLog()">Create Your Ad
-          
-        </button>
-       
+        <button class="dropbtn" onclick="<?php if(isset($_SESSION["UserName"])){
+?>location.href='postForm.php' <?php }else{ ?>openIndiviualLogin();<?php }?>" >Create Your Ad</button>
       </div>
 
       <?php
@@ -503,24 +501,14 @@ if(isset($_SESSION["UserName"])){
     <?php  
        global $selectQuery;
  
-    if(isset($_POST["city"]))
-{
-      $city = $_POST["city"];
-      $selectQuery= "SELECT *
-      FROM individual
-      RIGHT JOIN posts
-      ON individual.username = posts.username and posts.jobLocation='$city'";
-          
+    
 
-  }
-  else
-  {
 
 
     $selectQuery= "SELECT *
-    FROM posts
+    FROM posts 
     ";
-  }
+  
  
   
     if($result =mysqli_query($link,$selectQuery))

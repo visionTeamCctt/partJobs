@@ -1,4 +1,4 @@
-// buttons File & Photo
+      // buttons File & Photo
 const realfilebutn =document.getElementById("real-file");
 const cusftbtn =document.getElementById("custom-fileButton");
 const custFText =document.getElementById("custom-fileText");
@@ -33,7 +33,7 @@ cusftbtn.addEventListener("click",function(){
   });
   /*  the button cv file&Photo ends here*/
 
-
+ 
 
 function validateform(){
                  var fullname = document.getElementById("fullname").value;
@@ -41,7 +41,8 @@ function validateform(){
           var facebook = document.getElementById("facebook").value;
                     var linkedin = document.getElementById("linkedin").value;
                     var Maindomain = document.getElementById("Maindomain").value;
-        
+
+     
          if (fullname == null || fullname == "") {
                                     alert("Please enter Your Name.");
                                     return false;
@@ -91,15 +92,26 @@ function validateform(){
                     return formValidP;
                     } 
              
+                       /*im*g file validation img*/
+        var filename=document.forms['CvForm']['realfile'];
+        if (filename.value !=''){
+     //gfchgvhb
+        }else{
+     alert("no file choosen");
+     return false;}
+        /*im*g file validation img*/
+        var imgfilename=document.forms['CvForm']['imgfile'];
+        if (imgfilename.value !=''){
+     //gfchgvhb
+        }else{
+     alert("no img choosen");
+     return false;}
                      alert('Submit successful');                           
 }
 
 
 
                
-
-
-
 
 
 

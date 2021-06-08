@@ -96,7 +96,7 @@ require_once "db_connect.php";
                 <div class="domains section-item">
                     <div class="domain-item">
                         <i class="fas fa-code"></i>
-                        <p class="domain-name"><?php echo $row['bio']  ?></p>
+                        <p class="domain-name"><?php echo $row['domain']  ?></p>
                         
                     </div>
                     <div class="domain-item">
