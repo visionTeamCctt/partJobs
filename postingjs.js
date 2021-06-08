@@ -59,12 +59,12 @@ function validateform(){
                                     alert("Please enter the job Requirements .");
                                     return false;
                                 }
-                    var imgFile=document.forms['PostForm']['imgfile'];
-                    if (imgFile.value !=''){
-                 //gfchgvhb
-                    }else{
-                 alert("no img choosen");
-                 return false;}
+                //     var imgFile=document.forms['PostForm']['imgfile'];
+                //     if (imgFile.value !=''){
+                //  //gfchgvhb
+                //     }else{
+                //  alert("no img choosen");
+                //  return false;}
                  
        
                   alert('Submit successful');

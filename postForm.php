@@ -1,24 +1,30 @@
 <?php 
 session_start();
+
 include 'db_connect.php';
+
 if(isset($_POST["submit"])){
-$JobTitle = mysqli_real_escape_string($link, $_REQUEST['JobTitle']);
-$name = mysqli_real_escape_string($link, $_REQUEST['name']);
-$salary= mysqli_real_escape_string($link, $_REQUEST['salary']);
-$jobType = mysqli_real_escape_string($link, $_REQUEST['PostTypeChBx']);
-$Description = mysqli_real_escape_string($link, $_REQUEST['Description']);
-$Benefits = mysqli_real_escape_string($link, $_REQUEST['Benefits']);
-$Requirements = mysqli_real_escape_string($link, $_REQUEST['Requirements']);
-$JobLocation = mysqli_real_escape_string($link, $_REQUEST['JobLocation']);
-$Expiredate = mysqli_real_escape_string($link, $_REQUEST['Expiredate']);
+$JobTitle = mysqli_real_escape_string($link, $_POST['JobTitle']);
+$name = mysqli_real_escape_string($link, $_POST['Name']);
+$salary= mysqli_real_escape_string($link, $_POST['Salary']);
+$jobType = mysqli_real_escape_string($link, $_POST['PostTypeChBx']);
+$Description = mysqli_real_escape_string($link, $_POST['Description']);
+$Benefits = mysqli_real_escape_string($link, $_POST['Benefits']);
+$Requirements = mysqli_real_escape_string($link, $_POST['Requirements']);
+$JobLocation = mysqli_real_escape_string($link, $_POST['JobLocation']);
+$Expiredate = mysqli_real_escape_string($link, $_POST['Expiredate']);
+echo $jobType;
+$uploadDate=date('Y-m-d h:m');
 // Attempt insert query execution
-$sql = "INSERT INTO persons (jobTitle, jobDescription, jobType, jobLocation,salary
-,benefits,requirements,expireDate) VALUES ('$JobTitle', '$Description',
- '$jobType', '$JobLocation', '$salary','$Benefits','$Requirements','$Expiredate')";
+$sql = "INSERT INTO posts (jobTitle, jobDescription, jobType, jobLocation,
+salary,uploadDate ,benefits,requirements ,expireDate) VALUES ('$JobTitle', 
+'$Description',
+ '$jobType', '$JobLocation', $salary,'$uploadDate','$Benefits','$Requirements','$Expiredate')";
 if(mysqli_query($link, $sql)){
-    echo "Records added successfully.";
+    ?><script > alert('Records added successfully.')</script><?php
 } else{
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    // echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    echo "error";
 }
 }
 ?>
@@ -61,10 +67,10 @@ if(mysqli_query($link, $sql)){
                     <h3  style="text-align: left; margin: 10px;  margin-left: 15%; font-size: large;">Contact Info:</h3>
                     <label id="" class="left">Job Type</label><br>
            
-                    <input type="checkbox" value="PrtTimeJob" name="PostTypeChBx" id="PartTimeJobs"><label for="PartTimeJobs">Part Time Jobs</label>
-                   <br> <input type="checkbox" value="SummerJob" name="PostTypeChBx" id="SummerJobs"><label for="SummerJobs">Summer Jobs</label>
-                   <br> <input type="checkbox" value="WeekendJobs" name="PostTypeChBx" id="WeekendJobs"><label for="WeekendJobs">Weekend Jobs</label>
-                   <br> <input type="checkbox"  value="WorkFromHomeJobs" name="PostTypeChBx" id="WorkFromHomeJobs"><label for="WorkFromHomeJobs">Work From Home Jobs</label>
+                    <input type="radio" value="PartTimerJobs" name="PostTypeChBx" id="PartTimeJobs" checked><label for="PartTimeJobs">Part Time Jobs</label>
+                   <br> <input type="radio" value="Summer Job" name="PostTypeChBx" id="SummerJobs"><label for="SummerJobs">Summer Jobs</label>
+                   <br> <input type="radio" value="Weekend Jobs" name="PostTypeChBx" id="WeekendJobs"><label for="WeekendJobs">Weekend Jobs</label>
+                   <br> <input type="radio"  value="Work From Home Jobs" name="PostTypeChBx" id="WorkFromHomeJobs"><label for="WorkFromHomeJobs">Work From Home Jobs</label>
                 </div>
             </div>
         </section>
