@@ -120,19 +120,12 @@ if($resultlogin=mysqli_query($link,$selectQuery)){
                 </tr>
                 <!--check if this is a link-->
                 <tr>
-                  <!-- <td> <a href="#">part time jobs </a></td> -->
                   <td> <a href="">unemployed</a></td>
                 </tr>
                 <tr>
-                  <!-- <td> <a href="#">summer jobs </a></td> -->
                   <td> <a href="">Experience seekers</a></td>
                 </tr>
-                <tr>
-                  <!-- <td> <a href="#">weekend jobs</a></td> -->
-                </tr>
-                <tr>
-                  <!-- <td><a href="#">work from home jobs</a></td> -->
-                </tr>
+         
 
               </div>
 

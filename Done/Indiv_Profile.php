@@ -15,7 +15,7 @@ require_once "db_connect.php";
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="./profileStyle.css">
-    <title>Personal Online CV</title>
+    <title>individual Profile</title>
 </head>
 
 <body>
@@ -35,8 +35,6 @@ require_once "db_connect.php";
        
     if($row=mysqli_fetch_assoc($r))
     {
-    //  $_SESSION['OfficeID']=$row["OfficeID"];
-    //   $_SESSION["pic"]=$row["OffiecLogo"];
     }?>        
                   
         
@@ -116,27 +114,14 @@ require_once "db_connect.php";
 
     <script>
         var aboutSection = document.getElementById("about-section");
-        var skillsSection = document.getElementById("skills-section");
-        var resumeSection = document.getElementById("resume-section");
-        var storysSection = document.getElementById("storys-section");
-
+      
         const menuLinks = document.querySelectorAll('.menu .menu-item');
         menuLinks.forEach(el => {
             el.addEventListener('click', function () {
 
                 let sectionToGo = aboutSection;
 
-                switch (this.id) {
-                    case 'skills':
-                        sectionToGo = skillsSection;
-                        break;
-                    case 'resume':
-                        sectionToGo = resumeSection;
-                        break;
-                    case 'storys':
-                        sectionToGo = storysSection;
-                        break;
-                }
+          
                 // Scroll smoothly to section
                 sectionToGo.scrollIntoView({behavior: 'smooth'});
             })
