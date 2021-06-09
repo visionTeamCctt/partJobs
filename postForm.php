@@ -3,18 +3,20 @@ session_start();
 
 include 'db_connect.php';
 
+if($_SERVER["REQUEST_METHOD"]=='POST'){
 if(isset($_POST["submit"])){
-$JobTitle = mysqli_real_escape_string($link, $_POST['JobTitle']);
-$name = mysqli_real_escape_string($link, $_POST['Name']);
-$salary= mysqli_real_escape_string($link, $_POST['Salary']);
-$jobType = mysqli_real_escape_string($link, $_POST['PostTypeChBx']);
-$Description = mysqli_real_escape_string($link, $_POST['Description']);
-$Benefits = mysqli_real_escape_string($link, $_POST['Benefits']);
-$Requirements = mysqli_real_escape_string($link, $_POST['Requirements']);
-$JobLocation = mysqli_real_escape_string($link, $_POST['JobLocation']);
-$Expiredate = mysqli_real_escape_string($link, $_POST['Expiredate']);
-echo $jobType;
-$uploadDate=date('Y-m-d h:m');
+$JobTitle = $_POST['JobTitle'];
+$name =  $_POST['Name'];
+$salary=  $_POST['Salary'];
+$jobType =$_POST['PostTypeChBx'];
+$Description = $_POST['Description'];
+$Benefits =$_POST['Benefits'];
+$Requirements = $_POST['Requirements'];
+$JobLocation = $_POST['JobLocation'];
+$uploadDate = date('Y-m-d');
+
+
+$Expiredate=date('Y-m-d',strtotime($_POST['Expiredate']));
 // Attempt insert query execution
 $sql = "INSERT INTO posts (jobTitle, jobDescription, jobType, jobLocation,
 salary,uploadDate ,benefits,requirements ,expireDate) VALUES ('$JobTitle', 
@@ -23,10 +25,10 @@ salary,uploadDate ,benefits,requirements ,expireDate) VALUES ('$JobTitle',
 if(mysqli_query($link, $sql)){
     ?><script > alert('Records added successfully.')</script><?php
 } else{
-    // echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+     echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
     echo "error";
 }
-}
+}}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +44,7 @@ if(mysqli_query($link, $sql)){
 
 <body>
 
-    <form class="main" method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" name="PostForm" id="PostForm">
+    <form class="main" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" name="PostForm" id="PostForm">
 
         <section class="asset split about" id="about-section">
             <p class="title section-item"><span>upload your Post </span></p>
@@ -58,7 +60,8 @@ if(mysqli_query($link, $sql)){
                         <label for="Salary" class="left">Salary</label><br>
                         <input type="text" name="Salary" id="Salary">
                         <label for="Expiredate" class="left">Expire Date</label><br>
-                        <input type="Date" name="Expiredate" id="Expiredate">
+                        <input type="Date" placeholder="dd-mm-yyyy"  name="Expiredate" id="Expiredate"
+                        min="1997-01-01" max="2030-12-31">
                     
                     
                     </p>

@@ -702,7 +702,7 @@ if(isset($_SESSION["UserName"])){
                       {
                         
                         if ($result->num_rows > 0) {
-                              
+                          
                           while($ads=mysqli_fetch_assoc($result))
                           {?>
                     
