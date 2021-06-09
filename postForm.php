@@ -4,7 +4,7 @@ session_start();
 include 'db_connect.php';
 
 if($_SERVER["REQUEST_METHOD"]=='POST'){
-if(isset($_POST["submit"])){
+
 $JobTitle = $_POST['JobTitle'];
 $name =  $_POST['Name'];
 $salary=  $_POST['Salary'];
@@ -13,10 +13,12 @@ $Description = $_POST['Description'];
 $Benefits =$_POST['Benefits'];
 $Requirements = $_POST['Requirements'];
 $JobLocation = $_POST['JobLocation'];
-$uploadDate = date('Y-m-d');
+$uploadDate  = date('Y-m-d h:i:s');
 
 
-$Expiredate=date('Y-m-d',strtotime($_POST['Expiredate']));
+$Expiredate=$_POST['Expiredate'];
+
+$result = Date_format($Expiredate,'Y-m-d');
 // Attempt insert query execution
 $sql = "INSERT INTO posts (jobTitle, jobDescription, jobType, jobLocation,
 salary,uploadDate ,benefits,requirements ,expireDate) VALUES ('$JobTitle', 
@@ -28,7 +30,7 @@ if(mysqli_query($link, $sql)){
      echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
     echo "error";
 }
-}}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +62,7 @@ if(mysqli_query($link, $sql)){
                         <label for="Salary" class="left">Salary</label><br>
                         <input type="text" name="Salary" id="Salary">
                         <label for="Expiredate" class="left">Expire Date</label><br>
-                        <input type="Date" placeholder="dd-mm-yyyy"  name="Expiredate" id="Expiredate"
+                        <input type="Date"   name="Expiredate" id="Expiredate"
                         min="1997-01-01" max="2030-12-31">
                     
                     
