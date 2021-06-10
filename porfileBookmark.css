@@ -1,0 +1,28 @@
+
+.floating-btn{
+  width:100px;
+  height: 80px;
+  color: orange;
+  background-color: #24262b;
+  display: flex;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+  margin-left: 0;  /*new */
+  font-size: 30px;
+  align-items: center;
+  justify-content: center;
+  padding-top: 15px;
+box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+position: fixed;
+top:120px;
+transition: background 0.25s;
+
+}
+.cat-icon{
+  width: 5rem;
+  height: 5rem;
+  margin-left: 4rem;
+  margin-bottom: 1rem;
+  
+
+}

@@ -1,0 +1,1405 @@
+@import url('https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap');
+/*imported a font from google fonts*/
+*,
+*::before
+*::after{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  }
+.clearfix:after,.clearfix:before{content:'';display:table}
+.clearfix:after{clear:both;display:block}
+a{color:inherit;text-decoration:none}
+
+
+body {
+  background-color: #e6dede;
+  position: relative;
+  /*one of the tips to fix the white gap proplem*/
+  padding-bottom: 1100px;
+  /*one of the tips to fix the white gap proplem*/
+  min-height: 200vh;
+  /*one of the tips to fix the white g ap proplem*/
+  scroll-behavior: smooth;
+  font-family: 'New Tegomin', serif;
+  overflow-x: hidden;
+}
+
+main {
+  min-height: calc(100vh -400px - 85px);
+}
+
+#header {
+
+  text-align: center;
+
+  color: rgb(0, 0, 0);
+
+}
+
+
+#search {
+  display: inline-block;
+  position: relative;
+}
+
+.H-f {
+
+  box-shadow: gray 1px 2px;
+}
+
+#header img {
+  width: 90px;
+  height: 90px;
+  display: inline-block;
+}
+
+
+/* Navbar container */
+#header,
+.navbar {
+ 
+  overflow: hidden;
+  padding-top: 20px;
+  font-size: 16px;
+  background-color: #24262b;
+  font-family: 'New Tegomin', serif;
+}
+
+
+/* Links inside the navbar */
+.navbar a {
+  float: left;
+
+  color: white;
+  text-align: center;
+  padding: 9px 10px;
+  text-decoration: none;
+}
+
+/* The dropdown container */
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+/* Dropdown button */
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 11px 12px;
+  background-color: inherit;
+  font-family: inherit;
+  /* Important for vertical align on mobile phones */
+  margin: 0;
+  /* Important for vertical align on mobile phones */
+}
+
+/* Add a yallow background color to navbar links on hover */
+.navbar a:hover,
+.dropdown:hover .dropbtn {
+  background-color: rgb(255, 153, 0);
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  min-width: 100%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  float: none;
+  color: rgb(252, 250, 250);
+  padding: 11px 12px;
+  text-decoration: none;
+  display: block;
+  width: 400px;
+  text-align: left;
+  margin: 0;/*there were a gap which affected the way dropdown contents looked when you hover over it */
+}
+
+.head-0f-drop a {
+  font-size: 20px;
+
+}
+
+#header .navbar,
+img {
+  float: left;
+  margin-right: 3.5rem;
+  margin-left: 6px;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: rgb(158, 155, 155);
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+ 
+}
+.sign-log-in .dropdown{
+  margin-left: .4rem;
+}
+
+.sign-log-in .dropbtn {
+  /*styling the sign in log in drop list*/
+  margin-left: .2rem;/*edited the space btwn sign in and log in*/
+  margin-top: 0rem;/*edited : moved it up a bit*/
+  background-color: rgb(255, 153, 0);
+
+}
+
+.sign-log-in .dropbtn:hover {
+  background-color: #4c4d50;
+  margin-left: 0rem;
+ 
+
+
+}
+
+
+.fa-search {
+  /*search icon*/
+  color: white;
+}
+
+.openBtn {
+  /*search icon*/
+  background-color: #24262b;
+  border: none;
+  padding: 11px 12px;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: .2rem;
+  margin-top: 0rem;
+}
+
+.openBtn:hover {
+  background: rgb(104, 99, 99);
+}
+
+.overlay,.post-overlay  {/*for search screen and post overlay*/
+  /*the black screen on top of the page when u click search icon*/
+  height: 100%;
+  width: 100%;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.overlay-content {
+  /*styling the search bar*/
+  position: relative;
+  top: 50%;
+  width: 60%;
+  text-align: center;
+  margin-top: 30px;
+  margin: auto;
+}
+
+.overlay .closebtn {
+  /*styling the closing button that is gonna shown after the 
+  icon clicked*/
+  position: absolute;
+  top: 1rem;
+  right: 45px;
+  font-size: 60px;
+  cursor: pointer;
+  color: white;
+}
+.post-overlay .closebtn {
+  /*styling the closing button that is gonna shown after the 
+  icon clicked*/
+  position: relative;
+  top: .5rem;
+  left: 41.5rem;
+  font-size: 20px;
+  cursor: pointer;
+  color:black;
+}
+
+.overlay,.login-wrap,.post-overlay  .closebtn:hover {
+  color: #ccc;
+}
+
+.overlay input[type=text] {
+  /*styling the search feild*/
+  padding: 15px;
+  font-size: 17px;
+  border: none;
+  float: left;
+  width: 80%;
+  background: white;
+}
+
+.overlay input[type=text]:hover {
+  background: #f1f1f1;
+}
+
+.overlay button {
+  float: left;
+  width: 15%;
+  height: 3.13rem;
+  padding: 15px;
+  background: rgb(151, 148, 148);
+  /*styling the button beside the search bar*/
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  margin-top: .3rem;
+}
+
+.overlay button:hover {
+  background: #bbb;
+}
+.home-mid-page{
+  height: 78rem;
+}
+.jobs-mid-page{
+  height: 400rem;
+  
+}.contacts-mid-page {
+  height: 65rem;
+}
+.CVs-mid-page{
+  height: 60rem;
+}
+.about-mid-page {
+  height: 30rem;
+}
+/*home page*/
+#searh-where-what {
+  background-image: url(imgs/homepageimgs/6bc0e290ce553e510335ed71e98061fc.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  height: 300px;
+}
+
+#search-form {
+  position: absolute;
+  color: white;
+  font-family: 'New Tegomin', serif;
+  font-size: 25px;
+  right: 4%;
+  margin: 20px;
+  margin-top: 17%;
+  width: 80%;
+  height: 400px;
+  padding: 25px;
+  background-color: rgb(8, 8, 8);
+}
+
+/* Full-width input fields */
+input[type=text],textarea {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  font-style: 'New Tegomin', serif;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit button */
+.submitbtn {
+  background-color: rgb(255, 153, 0);
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  left: 0;
+  cursor: pointer;
+  width: 100%;
+  margin-left: 0rem;
+  opacity: 0.9;
+  font-family: 'New Tegomin', serif;
+}
+
+.submitbtn:hover {
+  opacity: 1;
+}
+
+/*the switch part*/
+/* The switch - the box around the slider */
+.switch {
+  float: right;
+  margin-top: 10px;
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  float: right;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  /*the circle */
+  position: absolute;
+  content: "";
+  height: 30px;
+  width: 30px;
+  left: 4px;
+  bottom: -5px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked+.slider {
+  background-color: #2196F3;
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.alert {
+  float: left;
+  font-family: 'New Tegomin', serif;
+}
+#alert-vaildation{
+  color: red;
+  font-size: 17px;
+  display: none;
+  margin-left: 8rem;
+}
+/*to turn the placeholder text to red*/
+.red::placeholder{
+  color:red;
+}
+/*hiding log in client side error labels*/
+#in-user,#in-pass,#co-user,#co-pass{
+  display: none;
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+}
+/*hiding sign in client side errors for both individual and company sign in*/
+#in-fname,#in-S-user,#in-S-pass,#in-passR,#in-Email,#in-birthDate,#in-address,#co-fname,#co-S-user,#co-S-pass,#co-passR,#co-Email,#co-birthDate,#co-address{
+  display: none;
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+}
+#email-field {
+  display: none;
+  float: left;
+  font-family: 'New Tegomin', serif;
+
+}
+
+/*------------second section of body in home page--------------------*/
+#are-you-looking-for {
+  font-family: 'New Tegomin', serif;
+  display: block;
+  margin-top: 350px;
+  align-items: center;
+  margin-left: 14%;
+
+}
+
+#are-you-looking-for h1 {
+  font-weight: bold;
+  margin-left: 1%;
+  margin: 20px;
+
+}
+
+#are-you-looking-for .looking-for {
+  float: left;
+  text-decoration: none;
+  color: white;
+  background-color: black;
+  padding: 5px 7px;
+  margin: 6px;
+  text-align: center;
+
+}
+
+#are-you-looking-for .looking-for:hover {
+  background-color: #e6dede;
+  border: solid rgb(10, 10, 10) 1px;
+  color: black;
+
+}
+
+#cv-upload {
+  margin-top: 80px;
+  display: block;
+
+
+}
+
+#upload-your-btn {
+  background-color: black;
+  color: white;
+  border: none;
+  font-family: 'New Tegomin', serif;
+  font-size: 20px;
+  padding: 10px 90px;
+  margin-top: 50px;
+  margin: 6px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 1.5px 1.5px 1px gray;
+
+}
+
+#upload-your-btn:hover {
+  background-color: rgba(48, 44, 44, 0.9);
+  border: none;
+} 
+/*---------Where do you want to work Sectionin home page Styling Starts Here---------------*/
+.cities{
+  padding-top: 10px;/*new*/
+background-color: rgb(247, 240, 240);
+width: 100%;
+height: 300px;
+font-family: 'New Tegomin', serif;
+  font-size: 20px;
+  left: 0rem;
+  margin-left: 0rem;
+
+}
+.show-more a{
+  color: black;
+  padding-left:60%;
+  padding-bottom: 90%; 
+  
+ margin-left: 40rem;
+ 
+}
+.show-more a:hover{
+ color:  rgb(255, 153, 0);
+ margin-left: 0;
+}
+.titlecites{
+  font-size: 35px;
+  font-weight: bold;
+  margin-left: 0px;
+
+
+}
+.cities-body.grid {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+   /* margin-left: 4rem;  */
+  
+   padding-left: 8rem;
+}
+
+
+.city-item {
+  width: 200px;
+  margin: 10px;
+  cursor: pointer;
+  
+}
+
+.city-item .img-content,
+.city-item img {
+  width:   200px;
+  height: 100px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s;
+}
+
+.city-item:hover img {
+  transform: scale(1.2);
+  
+} 
+
+
+/* More info layer */
+.more-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: orange;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+  font-size: 0.9em;
+  text-align-last: center;
+ 
+  letter-spacing: 1px;
+  /* Hide layer */
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: 0.4s;
+  margin-left: 0;
+}
+
+.city-item:hover .more-overlay {
+  opacity: 0.9;
+  height: 100%;
+  color: #fff;
+}
+/*---------------post overlay*/
+.post-overlay{
+  overflow-y: scroll;
+}
+ .post-container{
+  background-color:#e6dede ;
+  height: 860px;
+  width: 697px;
+  position: relative ;
+  border-radius: .3rem;
+
+  top: 5%;
+  font-family: 'New Tegomin', serif;
+  
+  margin-top: 25px;
+  margin: auto;
+} 
+.post-container h5{
+  text-align: center;
+  padding-top:2rem ;
+  font-size: 44px;
+  padding-bottom: 1.5rem;
+  opacity: .6rem;
+  color: #24262b;
+}
+.post-container::before {
+  content: '';
+  position: absolute;
+  
+   /*to fix the align of the orange line under the header*/
+  top: 9.3rem;
+  background-color: gray;
+  opacity: .5;
+  height: 1px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.JobDetails .post-nav::before {
+  content: '';
+  position: absolute;
+  
+   /*to fix the align of the orange line under the header*/
+ top: 12.5rem;
+  background-color: orange;
+ 
+  height: 2px;
+  box-sizing: border-box;
+  width: 5%;}
+.post-nav{/*the queue below header*/
+  float: left;
+  padding-right: 2rem;
+  padding-left: 1.5rem;
+  padding-top: 2rem;
+  
+  font-size: 12px;
+  font-weight: bold;
+}
+.details-list li{/*labels under the post nav^^^*/
+  text-decoration: none;
+  font-size: 12px;
+  margin-left: 1.5rem;
+  padding-bottom: 1.5rem;
+  font-weight: bold;
+}
+.JobDetails{
+  overflow-y: scroll;
+  background-color: white;
+  top:30%;
+  
+  height:580px;
+  width:100% ;
+
+  
+  border-radius: .3rem;
+ 
+}
+.JobDetails .details,p{
+ text-align: center;
+ float:none;
+ padding-left: 1.5rem;
+ padding-top: 1.6rem;
+ font-size: 12px;
+
+}
+.details{
+  font-weight: bold;
+}
+.JobDetails {
+  margin-top: 2.6rem;
+
+}
+.post-btn{/*apply for this job button */
+  color: #24262b;
+  left: 10%;
+  position: relative;
+  padding:1rem 2rem ;
+  border-radius: .5rem;
+  border: none;
+  margin: 3rem 3.5rem ;
+  background-color: orange;
+  font-family: 'New Tegomin', serif;
+  font-weight: bold;
+  box-shadow: .1rem .1rem gray ;
+}
+#cancelbtn{
+  padding: 1rem 4rem;
+}
+
+/*---------------top vacnacies in home page  "the same style for jobs too"-----------------------------------------*/
+
+.cards{
+  background-image: url(imgs/topVacnacies.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+ height: 800px;
+  /* add shadow here  */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2);
+  
+}
+.TopVacnacies{
+  height: min-content;
+}
+
+.inner-card{
+  position: absolute;
+  color: black;
+  font-family: 'New Tegomin', serif;
+  font-size: 20px;
+  right: 8rem;
+  margin: 20px;
+  margin-top: 20%;
+  width: 800px;
+  height: min-content;
+  padding: 25px;
+  
+  padding-bottom: 30px;
+  background-color:#fff ;
+  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, .5);
+ 
+}
+.inner-card h2{
+  color: rgb(255, 153, 0);
+  background: #fff; 
+  padding: 1rem 2rem;
+  font-size: 2.5rem;
+ 
+}
+.inner-card .ul{
+  position: relative;
+  background: #fff;
+}
+.inner-card .ul .li{
+list-style: none;
+padding: 1rem;
+width: 100%;
+background: #fff;
+box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+transition: transform 0.5s;
+}
+.inner-card .ul:hover .li{
+  opacity: 0.4;
+}
+.inner-card .ul .li .a{
+  color: black;
+}
+
+
+.inner-card .ul .li:hover{
+  transform: scale(1.1);
+  z-index: 100;
+background: rgba(255, 153, 0,.9);
+box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+color:rgb(27, 27, 27);
+opacity: 1;
+}
+
+.inner-card .fa-briefcase{
+  height: 2.5rem;
+  width: 2.5rem;
+}
+.inner-card .ul .li .span{
+  width: 5rem;
+  height: 5rem;
+  text-align: center;
+line-height: 20px;
+background: #424344;
+color: rgb(255, 153, 0);
+display:inline-block;
+border-radius: 50%;
+margin: 10px;
+font-size: 12px;
+font-weight: 600;
+transform: translateY(-2px);
+}
+
+.inner-card .ul .li .title{
+  font-size: 26px;
+  bottom: 0rem;
+}
+.inner-card .ul .li .descrption{
+  font-size: 20px;
+  padding-left: 3rem;
+  text-align: left;
+}
+.inner-card .ul .li .info{
+  font-size: 16px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  
+}
+.inner-card .ul .li:hover .span{
+  background: #fff;
+  color: rgb(255, 153, 0);
+
+}
+.inner-card p,a{
+  margin-left: 2rem;
+  padding-bottom: 1rem;
+
+}
+.inner-card .a:hover{
+  color: orange;
+}
+/*this one for jobs*/
+.PartTimeJobs{
+  margin-bottom:50%;
+}
+.inner-card,.Other-cards{
+  margin-bottom:40%rem;
+}
+.fa-chevron-circle-down{
+  margin-left: 2rem;
+}
+/*-----------------------*/
+.Other-cards{
+  background-image: none;
+ box-shadow: none;
+ margin-top: 3rem;/*sapce btwn cards excpt for the first one*/
+}
+/*contact page: path in the top of get in touch card*/
+.path-links a,.fo{
+  margin-right: 1rem;
+  color: black;
+  margin-left: 1rem;
+
+}
+.path-links{
+  height: 3rem;
+
+}
+.path-links::before {/*gray line under the path*/
+  content: '';
+  position: absolute;
+  padding-left: 1rem;
+  left: 0rem; /*to fix the align of the orange line under the header*/
+  top: 5.2rem;
+  background-color: rgb(224, 224, 224);
+  height: 1px;
+  box-sizing: border-box;
+  width: 100%;
+}
+#about::before,#contact::before,#jobs::before {/*gray line under the path*/
+  content: '';
+  position: absolute;
+  padding-left: 1rem;
+  left: 9.5rem; /*to fix the align of the orange line under the header*/
+  top: 5rem;
+  background-color: orange;
+  height: 3px;
+  box-sizing: border-box;
+  width: 15%;
+}
+.path-links a:hover{
+  color: gray;
+  
+}
+
+#getInTouch h2,.path-links{
+  /* height: 20rem; */
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  
+  
+}
+#getInTouch p,#aboutUs p{
+  font-size: 18px;
+  margin-left: 0;
+}
+
+/*about us*/ 
+.secondPara{
+  margin-top: 45rem;
+}
+.cardsInAbout{
+  height: 300px;
+}
+/*----------------------------------*/
+/*in contact*/
+.FAQ{
+  margin-top: 2rem;
+}
+
+
+/* cv page starts here-------------------------------------------- */
+
+.cv-img{
+  background-image: url(cv/CvPage.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  height:300px;
+  
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2);
+padding-top: 170px;
+}
+
+
+
+.cv-grig-page{
+  display: grid;
+  grid-template-columns:  2fr 1fr;
+  grid-template-rows: 300px 300px;
+/* margin-top: 100px; */
+}
+
+
+/* cv posts */
+.cv-countainer{
+  display: grid;
+  grid-template-columns:  1fr 1fr;  
+  grid-template-rows: .9fr .9fr;
+  margin-top: 150px;
+}
+img{
+ margin-top: 0;
+  margin-left: 0;
+}
+.cv-post-card {
+ 
+ background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    /* padding-bottom: -5px; */
+    margin-bottom: 30px;
+    /* position: fixed; */
+    height: min-content;
+ 
+  }
+  .Main-Domain {
+    color: grey;
+    font-size: 18px;
+  }
+  /* social */
+   .cv-sosialMedia .img {
+    width: 20px;
+  }
+  
+  .cv-sosialMedia a {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background-color: #ffffff; 
+    margin: 0 10px 10px 0;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    color: #ffffff;
+    transition: all 0.5s ease;
+  }
+  
+ .cv-sosialMedia a:hover {
+    color: #24262b;
+    background-color: rgba(80, 73, 73, 0.2);
+  }
+/* social */
+
+  .cv-content{
+    padding-top: 0%;
+    margin-top: 0;
+    padding-bottom: 5px;
+  }
+
+
+  .download-cv{
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: orange;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+  .indevisual-name{
+    font-size: 40px;
+  }
+  .cv-date{
+color: rgba(48, 48, 48, 0.2);
+
+  }
+ .cv-sosialMedia a{ 
+    display: inline-block;
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+    size: 10px;
+  }
+  
+ .download-cv:hover, a:hover {
+    opacity: 0.7;
+  }
+/* upload ur cv */
+  .upload-cv{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 290px;
+    margin:auto;
+    text-align: center;
+    margin-top:300px;
+   margin-left: 0%;
+  }
+  
+  .uploadurcv{
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    text-align: center;
+    background-color: rgb(255, 165, 0);
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  margin-left: -1.5rem;
+
+  }
+  .uploadurcv:hover,a:hover{
+
+    opacity: 0.7;
+  }
+  .do-upload{
+    padding-top: 30px;
+    /* padding:10px; */
+    font-size: large;
+    padding-right: 30px;
+    padding-left: 30px;
+    width: 100%;
+  }
+  #do-upload{
+    margin-left: 0%;
+  }
+ 
+  /*------------------sign in log in style-------*/
+ /*sign in side */
+ 
+.login-wrap{
+	width:100%;
+	margin:auto;
+	max-width:515px;
+	min-height:520px;
+	position:relative;
+	background:url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg) no-repeat center;
+	box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+}
+  .back{
+height: 100%;
+width: 100%;
+   display: none;
+   background-color: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  top: 30%;
+  z-index: 1;
+  top: 0;
+  
+  text-align: center;
+  margin-top: 30px;
+  margin: auto;
+
+ }
+ .login-wrap .closebtn {
+  position: absolute;
+  display: inline-block;
+  top: 0rem;
+  right: 20px;
+  font-size: 50px;
+  cursor: pointer;
+  color: white;
+ }
+  .login-html{
+    width:100%;
+    height:100%;
+    overflow: scroll;
+    position:absolute;
+    padding:90px 70px 50px 70px;
+    background:rgba(75, 72, 67, 0.7);
+  }
+  /*scroll sitting
+  /* width */
+.login-html::-webkit-scrollbar,.JobDetails::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.login-html::-webkit-scrollbar-track,.JobDetails::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.login-html ::-webkit-scrollbar-thumb,.JobDetails ::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+.login-html::-webkit-scrollbar-thumb:hover,.JobDetails::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+  .login-html .sign-in-htm,
+  .login-html .sign-up-htm{
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    position:absolute;
+    transform:rotateY(180deg);
+    backface-visibility:hidden;
+    transition:all .4s linear;
+  }
+  .login-html .sign-in,
+  .login-html .sign-up,
+  .login-form .group .check{
+    display:none;
+  }
+ 
+  #companySign{
+    display: none;
+  }
+ 
+  #companyLog{
+    display: none;
+
+  }
+  
+  .login-html .tab,
+  .login-form .group .label,
+  .login-form .group .button{
+    text-transform:uppercase;
+  }
+
+
+
+  .login-html .tab{
+    font-size:22px;
+    margin-right:15px;
+    padding-bottom:5px;
+    margin:0 15px 10px 0;
+    display:inline-block;
+    border-bottom:2px solid transparent;
+  }
+  .login-html .sign-in:checked + .tab,
+  .login-html .sign-up:checked + .tab{
+    color:#fff;
+    border-color:rgb(255, 153, 0);
+  }
+  .login-form{
+    min-height:300px;
+    position:relative;
+    perspective:1000px;
+    transform-style:preserve-3d;
+  }
+  .login-form .group{
+    margin-bottom:15px;
+  }
+  .login-form .group .label,
+  .login-form .group .input,
+  .login-form .group .button{
+    width:100%;
+    color:#fff;
+    display:block;
+  }
+  .login-form .group .input,
+  .login-form .group .button{
+    border:none;
+    padding:15px 20px;
+    border-radius:25px;
+    background:rgba(255,255,255,.1);
+  }
+  .login-form .group input[data-type="password"]{
+    text-security:circle;
+    -webkit-text-security:circle;
+  }
+  .login-form .group .label{
+    color:rgb(248, 245, 245);
+    font-size:12px;
+  }
+  .login-form .group .button{
+    background:rgb(255,153,0);
+  }
+  .login-form .group label .icon{
+    width:15px;
+    height:15px;
+    border-radius:2px;
+    position:relative;
+    display:inline-block;
+    background:rgba(255,255,255,.1);
+  }
+  .login-form .group label .icon:before,
+  .login-form .group label .icon:after{
+    content:'';
+    width:10px;
+    height:2px;
+    background:#fff;
+    position:absolute;
+    transition:all .2s ease-in-out 0s;
+  }
+  .login-form .group label .icon:before{
+    left:3px;
+    width:5px;
+    bottom:6px;
+    transform:scale(0) rotate(0);
+  }
+  .login-form .group label .icon:after{
+    top:6px;
+    right:0;
+    transform:scale(0) rotate(0);
+  }
+  .login-form .group .check:checked + label{
+    color:#fff;
+  }
+  .login-form .group .check:checked + label .icon{
+    background:rgb(255, 153, 0);
+  }
+  .login-form .group .check:checked + label .icon:before{
+    transform:scale(1) rotate(45deg);
+  }
+  .login-form .group .check:checked + label .icon:after{
+    transform:scale(1) rotate(-45deg);
+  }
+  .login-html .sign-in:checked + .tab + .sign-up + .tab + .login-form .sign-in-htm{
+    transform:rotate(0);
+  }
+  .login-html .sign-up:checked + .tab + .login-form .sign-up-htm{
+    transform:rotate(0);
+  }
+  
+  .hr{
+    height:1px;
+    bottom: 5rem;
+    background:rgba(255,255,255,.2);
+  }
+  .foot-lnk label{
+    text-align:center;
+    padding-bottom: 2rem;
+
+  }
+  .foot-lnk:hover{
+    color: orange;
+  }
+
+
+/*-----------Footer design starts here--------------*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+}
+
+.container {
+  max-width: 1170px;
+  margin: auto;
+  padding-bottom:0 ;
+
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+ul {
+  list-style: none;
+}
+
+
+.footer{
+  font-family: 'New Tegomin', serif;
+  height: 31rem;
+  background-color: #24262b;
+  padding: 0 0;
+  padding-top: 1rem;
+  
+  position: absolute;
+  /*one of the tips to fix the white gap proplem*/
+  bottom:0;/**this one new X2/
+  /*one of the tips to fix the white gap proplem*/
+  width: 100%;
+  /*one of the tips to fix the white gap proplem*/
+
+}
+
+.footer-col {
+  width: 25%;
+  padding: 0 5px;
+}
+
+.footer-col h4 {
+  font-size: 18px;
+  color: #ffffff;
+  text-transform: capitalize;
+  margin-bottom: 30px;
+  padding-left: 1.5rem;/*Edited: to move the header a bit to it's algined with the links underneath*/
+  font-weight: 500;
+  position: relative;
+}
+
+.footer-col h4::before {
+  content: '';
+  position: absolute;
+  padding-left: 1rem;
+  left: 1.5rem; /*to fix the align of the orange line under the header*/
+  bottom: -10px;
+  background-color: rgb(255, 153, 0);
+  height: 2px;
+  box-sizing: border-box;
+  width: 55px;
+}
+
+.footer-col ul li:not(:last-child) {
+  margin-bottom: 5px;/*Edited: to get the links closer together*/
+}
+
+.footer-col ul li a {
+  
+  font-size: 16px;
+  text-transform: capitalize;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 300;
+  color: #bbbbbb;
+  display:block;
+
+  transition: all 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+  color: #ffffff;
+  padding-left: 8px;
+}
+
+.footer .social-links.img {
+  width: 20px;
+}
+
+.footer-col .social-links a {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  background-color: rgba(80, 73, 73, 0.2);
+  margin: 0 10px 10px 0;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 50%;
+  color: #ffffff;
+  transition: all 0.5s ease;
+}
+
+.footer-col .social-links a:hover {
+  color: #24262b;
+  background-color: #ffffff;
+}
+
+span {
+  color: rgb(255, 153, 0);
+}
+
+.footer.copyright {
+  display: block;
+}
+
+.copyright {
+  text-align: center;
+  color: #ffffff;
+  margin-top:.5rem ;/*edited th gap between copright link and upper links was big*/
+}
+
+/*responsive*/
+@media(max-width: 767px) {
+  .footer-col {
+    width: 50%;
+    margin-bottom: 30px;
+  }
+}
+
+@media(max-width: 574px) {
+  .footer-col {
+    width: 100%;
+  }
+}
+
+/* The end of the footer */
