@@ -1,0 +1,63 @@
+body{
+  
+  
+        min-height: 100vh;
+        font-size: 14px;
+        background: linear-gradient(135deg, #4e4d4d, orange);
+        padding: 40px 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+}
+.outer-window{
+   
+    margin-top: -2rem;
+    max-height: 100rem;
+    overflow-y: auto;
+    background-color: #fff;
+    align-self: center;
+  
+    border-radius: 2px;
+}
+
+.outer-window * {
+    color: #656565;
+}
+input[type=text],input[type=url],input[type=date],input[type=number]{ 
+    width: 100%;
+    height: 30px;
+    border: none;
+    border: 2px solid orange;
+
+}
+body h2 {
+    font-size: 1.6em;
+    letter-spacing: 1px;
+    padding-bottom: 1rem;
+    color: #313131;
+    font-weight: bold;
+    text-transform: capitalize;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.left-side{
+    font-size: 17px;
+    max-height: 50rem;
+    align-self: left;
+    width: 50%;
+    margin-right: -5rem;
+
+}
+.right-side{
+    font-size: 17px;
+    max-height: 10rem;
+    align-self: right;
+    width: 50%;
+ margin-bottom: 20rem;
+    margin: 2rem;
+    margin-left: 15rem;
+
+}
