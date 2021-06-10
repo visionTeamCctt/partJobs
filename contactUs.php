@@ -1,3 +1,35 @@
+<?php
+session_start();
+// Initialize the session
+require_once "db_connect.php";
+if(isset($_POST["login"])){
+
+  $username=$_POST["user"];
+  $password=$_POST["pass"];
+  $selectQuery="SELECT * FROM individual WHERE
+   username='$username' and Password='$password'";
+  if($resultlogin=mysqli_query($link,$selectQuery)){
+    $rowcount=mysqli_num_rows($resultlogin);
+    if($rowcount>0){
+      $row=mysqli_fetch_array($resultlogin);
+      $_SESSION['Login']=1;
+      $_SESSION['userID']=$row['userID'];
+      $_SESSION['UserName']=$row["username"];
+
+      header("Location: index.php");
+    }else{
+
+      echo'<script>';
+      echo 'alert("error")';
+     echo '</script>';
+    }
+ 
+  }
+  
+}
+
+?>
+ 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,10 +41,13 @@
   <script src="https://kit.fontawesome.com/a81649cedd.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="porfileBookmark.css">
   <title>Document</title>
 </head>
 
 <body>
+  <a href="./Indiv_Profile.html" class="Profile-icon floating-btn"><i class="fas fa-user"></i></a>
+
   <header class="H-F" id="header">
 
     <!--logo-->
@@ -58,7 +93,7 @@
                 <td> <a href="jobs.html#internships" id="internships-" class="jobs">internships</a></td>
               </tr>
               <tr>
-                <td><a href="jobs.html#apprenticeships" id="apprenticeship-" class="jobs">Apprenticeship</a></td>
+                <td><a href="jobs.html#apprenticeship" id="apprenticeship-" class="jobs">Apprenticeship</a></td>
               </tr>
             </div>
 
@@ -87,12 +122,14 @@
                 </tr>
                 <!--check if this is a link-->
                 <tr>
-                  <td> <a href="">unemployed</a></td>
+                  <!-- <td> <a href="#">part time jobs </a></td> -->
+                  <td> <a href="cvs.html">unemployed</a></td>
                 </tr>
                 <tr>
-                  <td> <a href="">Experience seekers</a></td>
+                  <td> <a href="cvs.html">Experience seekers</a></td>
                 </tr>
-                
+              
+
               </div>
 
               <!-------------------------------------->
@@ -112,23 +149,36 @@
     <a href="home.html"><img src="imgs/logoSample (1).png" alt=""></a>
     <!--here goes the sign in and log in lists-->
     <div class="sign-log-in">
-      <div class="dropdown"> 
+    <div class="dropdown"> 
         <!-- ad button to create an ad -->
-        <button class="dropbtn" onclick="checkForLog()">Create Your Ad
-          
-        </button>
-       
+        <button class="dropbtn" onclick="<?php if(isset($_SESSION["UserName"])){
+?>location.href='Post.php' <?php }else{ ?>openIndiviualLogin();<?php }?>" >Create Your Ad</button>
       </div>
-      <div class="dropdown"><!--sign in by clicking on the a tag -->
-        <button class="dropbtn" >Sign in
-          <i class="fa fa-caret-down" onclick="openSearch"></i>
-        </button>
-        <div class="dropdown-content">
-          <a onclick="openIndiviualSignin()">Student</a><!--note : you can't have both href and onclick in a tag-->
-          <a onclick="openCompanySignin()">Employer</a>
-        </div>
-      </div>
-      <div class="dropdown">
+      <?php
+
+if(isset($_SESSION["UserName"])){
+
+
+?><div class="dropdown"> 
+<!-- ad button to create an ad -->
+<button class="dropbtn">
+
+  
+<a class="dropbtn"  href="logout.php">Singout</a>
+</button>
+</div>
+<?php 
+}else{
+?><div class="dropdown"><!--sign in by clicking on the a tag -->
+<button class="dropbtn" >Sign in
+  <i class="fa fa-caret-down" onclick="openSearch"></i>
+</button>
+<div class="dropdown-content">
+  <a onclick="openIndiviualSignin()">Student</a><!--note : you can't have both href and onclick in a tag-->
+  <a onclick="openCompanySignin()">Employer</a>
+</div>
+</div>
+<div class="dropdown">
         <button class="dropbtn">Log in
           <i class="fa fa-caret-down"></i>
         </button>
@@ -136,8 +186,9 @@
           <a onclick="openIndiviualLogin()">Student</a>
           <a onclick="openCompanyLogin()">Employer</a>
         </div>
-      </div>
-    </div>
+      </div> <?php }?>
+      
+    <!-- sign in log in block -->
     <div class="back" id="logSignOverlayy">
       <div class="login-wrap" >
       <div class="login-html ">
@@ -145,17 +196,25 @@
         <input id="tab-1" type="radio" name="tab" class="sign-in" ><label for="tab-1" class="tab">Sign In</label>
         <input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Sign Up</label>
         <div class="login-form">
-          <form class="sign-in-htm" id="IndivisualLog" onsubmit="return false">
+          <form class="sign-in-htm" id="IndivisualLog" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
+            onsubmit="return true">
             <div class="group">
+            <?php 
+        if(!empty($login_err)){
+            echo '<div class="alert alert-danger">' . $login_err . '</div>';
+        }        
+        ?>
               <label for="user" class="label">Username</label>
-              <input name="user" id="in-userf"  value="" type="text" class="userf input" pattern="[a-z0-9]{5,15}$"
-              title="Usernames may only contain letters and numbers and must be between 5 and 15 characters" required>
+              <input name="user" id="in-userf"  value="" type="text" class="userf input" require class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+                <span class="invalid-feedback"><?php echo $username_err; ?></span> 
+              
               <label for="user" id="in-user"  class=" label" >username is required</label>
               
             </div>
             <div class="group">
               <label for="pass" class="label">Password</label>
-              <input name="pass" id="in-passf" type="password" class="passf input" data-type="password" minlength="6" required>
+              <input name="pass" id="in-passf" type="password" class="passf input" data-type="password" minlength="6" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
+                <span class="invalid-feedback"><?php echo $password_err; ?></span>
               <label for="pass" id="in-pass" class="pass label" >password is required</label>
              
 
@@ -166,18 +225,19 @@
               <label for="check"><span class="icon"></span> Keep me Signed in</label>
             </div>
             <div class="group">
-              <input type="submit" class="button" value="Sign In" >
+ 
+              <input type="submit" name="login" class="button" value="Sign In" >
             </div>
             <div class="hr"></div>
             <div class="foot-lnk">
               <a href="#forgot">Forgot Password?</a>
             </div>
           </form>
-          <form class="sign-in-htm" id="companyLog" onsubmit="return false">
+          <form class="sign-in-htm" id="companyLog" >
             <div class="group">
               <label for="user" class="label">companyname</label>
-              <input name="user" id="co-userf" type="text" class="input userf" pattern="^[a-z0-9]{5,15}$"
-              title="Usernames may only contain letters and numbers and must be between 5 and 15 characters" required>
+              <input name="user" id="co-userf" type="text" class="input userf" 
+               required>
               <label for="user" id="co-user" class=" user label " >username is required</label>
            
             </div>
@@ -201,10 +261,11 @@
             </div>
           </form>
           <!--sign in-->
-          <form class="sign-up-htm "  id="IndiviualSign" onsubmit="return false" >
+          <form class="sign-up-htm " method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  id="IndiviualSign" onsubmit="return true" >
             <div class="group">
               <label for="fname" class="label">First Name</label>
-              <input name="fname" id="in-fnamef" type="text" class="input" pattern="^[a-z]{5,15}$" title="names may only contain letters must be between 5 and 15 characters" required>
+              <input name="fname" id="in-fnamef" type="text" class="input" require class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+                <span class="invalid-feedback"><?php echo $username_err; ?></span>
               <label for="fname" id="in-fname" class="label" >First Name is required</label>
 
             </div>
@@ -215,7 +276,7 @@
             </div>
             <div class="group">
               <label for="user" class="label">username</label>
-              <input name="user" id="in-S-userf" type="text" class="input" pattern="^[a-z0-9]{5,15}$"
+              <input name="user" id="in-S-userf" type="text" class="input" 
                title="Usernames may only contain letters and numbers and must be between 5 and 15 characters" required>
               <label for="user" id="in-S-user" class="label">username is required</label>
 
@@ -228,7 +289,7 @@
             </div>
             <div class="group">
               <label for="pass"  class="label">Repeat Password</label>
-              <input name="pass" id="in-passRf" type="password" class="input" data-type="password" >
+              <input name="Rpass" id="in-passRf" type="password" class="input" data-type="password" >
               <label for="pass" id="in-passR" class="label">you have to Repeat Password</label>
            
             </div>
@@ -251,7 +312,7 @@
             
             </div>
             <div class="group">
-              <input type="submit" class="button" value="Sign Up" >
+              <input type="submit" class="button" name="signin" value="Sign Up" >
             </div>
             <div class="hr"></div>
             <div class="foot-lnk">
@@ -260,7 +321,7 @@
           </form>
           <form class="sign-up-htm "  id="companySign" onsubmit="return false" >
             <div class="group">
-              <label for="birth"  class="label">Company Name</label>
+              <label for="birth"  class="label">Company name</label>
               <input name="birth" id="co-birthDatef" type="text" class="input" data-type="number" required >
               <label for="birth" id="co-birthDate" class="label">Company ID is required</label>
             
@@ -311,6 +372,8 @@
     </div></div>
 
 
+
+
     <button class="openBtn" onclick="openSearch()"> <i class="fa fa-search fa-lg " onclick="openSearch()"></i></button>
     <!--search bar on the whole screen-->
     <div id="myOverlay" class="overlay">
@@ -323,40 +386,61 @@
       </div>
     </div>
   </header>
-  <div class="about-mid-page mid">
+  <div class="contacts-mid-page mid">
     <!--main body-->
-
+   <!--get in touch-->
     <section class="cards cardsInAbout " >
 
  
-      <div class="inner-card other-cards " id="aboutUs">
-        <div class="path-links"> <!--here goes the path -->
-          
-           <a href="home.html"><b>Home</b> </a><i class="fa fa-caret-right fo"></i>
-          <a href="aboutUs.html" id="about">About us</a>
-          
-      
-        </div>
-        <h2>How it all started </h2>
-        <p>In 2021, two libyan students;Alla almgalesh and Weaam okok started Part Time jobs as college project for web development subject, so the project is about 
-          website where students, Experience seekers or emlpoyees can find a part time job so they can make money in thier free time as well as building up thier Experience.
-          we thought that it would be helpful to build up such a project so we started up, it was such a fun Experience to go through though it has it's own ups and downs
-          however the project still in progress and we hope our users find it as helpful as we thought it would be. </p>
+   <div class="inner-card other-cards " id="getInTouch">
+     <div class="path-links"> <!--here goes the path -->
+       
+        <a href="home.html"><b>Home</b> </a><i class="fa fa-caret-right fo"></i>
+       <a href="contactUs.html" id="contact">Contact</a>
+       
+   
      </div>
-     <div class="inner-card other-cards secondPara " id="getInTouch">
-      
-      <h2>where we are now </h2>
-      <p>we are trying so hard to develop this site and to get the 
-        best results to our custmers, since our project still in progress and 
-        we still working on the features of
-        it we hope to achive the greatest service ever. </p>
-   </div>
-   
-   </section>
+     <h2>Get in touch with us </h2>
+     <p>Do you want to know more about Studentjob? Ask your question below! We will contact <br> you as
+     soon as possible. Would you rather call? View our phone number details.</p>
+  </div>
 
-   
-   
+</section>
+<!--contact form-->
+<section class="cards Other-cards  " >
 
+ 
+  <div class="inner-card other-cards "id="">
+    <h2>Ask your question here</h2>
+    <h6>We will answer your question as soon as possible.</h6>
+    <div id="contact-form">
+      <form action="">
+        <label for="name" class="search-form-label">Your name *<br>
+          <input type="text" name="name" placeholder="Your name"></label><br>
+        <label for="E-mail " class="search-form-label">E-mail *<br>
+          <input type="text" name="E-mail" placeholder="E-mail"></label><br>
+          <label for="number " class="search-form-label">Number *<br>
+            <input type="text" name="number" placeholder="Number"></label><br>
+            <label for="question" class="search-form-label">Question *<br>
+              <textarea name="" id="" cols="30" rows="10" name="question" placeholder="Question"></textarea></label><br>
+        <input type="submit" value="Send" class="submitbtn">
+       
+      </form>
+
+    </div>
+    </div>
+  </section>
+  <!--fAQ-->
+<section class="cards Other-cards  " >
+
+ 
+  <div class="inner-card other-cards FAQ" id="FAQ">
+    <h2>Frequently Asked Questions</h2>
+    <p>Do you have some questions about StudentJob? We have listed the most <br> important questions and answers for you.</p>
+  <a href="" >CHECK THE FAQ</a>
+  </div>
+</section>
+</div>
  
 
   <!---------------------------------footer starts here--------------------------------------------->

@@ -264,18 +264,16 @@ if(isset($_POST["login"])){
         </div>
       </div>
 
-      <a href="aboutUs.html">About us</a>
-      <a href="contactUs.html">Contact</a>
+      <a href="aboutUs.php">About us</a>
+      <a href="contactUs.php">Contact</a>
     </div>
     <a href="index.php"><img src="imgs/logoSample (1).png" alt=""></a>
     <!--here goes the sign in and log in lists-->
     <div class="sign-log-in">
-      <div class="dropdown"> 
+    <div class="dropdown"> 
         <!-- ad button to create an ad -->
-        <button class="dropbtn" onclick="checkForLog()">Create Your Ad
-          
-        </button>
-       
+        <button class="dropbtn" onclick="<?php if(isset($_SESSION["UserName"])){
+?>location.href='Post.php' <?php }else{ ?>openIndiviualLogin();<?php }?>" >Create Your Ad</button>
       </div>
       <?php
 
@@ -535,13 +533,21 @@ if(isset($_SESSION["UserName"])){
                     <h2>Part Time Jobs</h2>
                     <?php  
                       global $selectQuery;
+                      global $i;
+                      $i=0;
                 
                         if (isset($_POST['searchsubmit'])){
                         $city=$_POST["city"];
                         $keywors=$_POST["keywors"];
 
+                        // switch(isset($_POST['searchsubmit'])){
+                        // case isset($city):  $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city'"; break;
+                        // case isset($keywors):  $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and  posts.jobTitle Like '%$keywors%' "; break;
+                        //   case isset($city)&& isset($keywors): $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city' or  posts.jobTitle Like '%$keywors%'";
+                        // }
+
                   
-                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
+                         $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%'";
                           if($result =mysqli_query($link,$selectQuery))
                           {
                             
@@ -549,7 +555,7 @@ if(isset($_SESSION["UserName"])){
                                     
                                 while($ads=mysqli_fetch_assoc($result)){
                                
-                                  $_SESSION['more']= $ads["postID"];
+                             if($i<4){
                                 // {
                                   ?>
                   
@@ -563,126 +569,9 @@ if(isset($_SESSION["UserName"])){
                                                 <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["postID"];?> per hour</label>
                                                 <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" name="more" onclick="location.href='JobInformation.php'"></i>
                                     </div>
-                                    <section class="post-overlay" id="postOverlay">
-                                    <span class="closebtn" onclick="closeJobDetails()" title="Close Overlay">×</span>
-
-                                    <form class="main" name="CvForm" onsubmit="return false">
-
-<section class="asset split about" id="about-section">
-    <p class="title section-item"><span>Job Informationa </span></p>
-   
-    <div class="asset-body">
-        <div class="section-item">
-            <h3  style="text-align: left; margin: 10px;  margin-left: 15%; font-size: large;"></h3>
-            <p>
-                <label for="JobTitle" >Job Title</label><br>
-                <p class ="field-db"id="JobTitle"><?= $ads["jobTitle"];?></p><br><br>
-                <label for="JobLocation" >Job Location</label><br>
-                <p class ="field-db"id="JobLocation"><?= $ads["jobLocation"];?></p><br><br>
-               
-            </p>
-        </div>
-       
-        <div class="section-item">
-            <h3  style="text-align: left; margin: 10px;  margin-left: 15%; font-size: large;"></h3>
-
-            <label for="Slary" >Slary</label><br>
-            <p class ="field-db"id="Slary"><?= $ads["salary"];?> per day</p><br><br>
-            <label for="ExpireDate" >ExpireDate</label><br>
-            <p class ="field-db"id="ExpireDate"><?= $ads["expireDate"];?></p><br><br>
-        </div>
-    </div>
-</section>
-
-<section class="asset split about" id="about-section">
-    <p class="title section-item"><span></span></p>
-   
-    <div class="asset-body">
-        <div class="section-item">
-            <h3  style="text-align: left; margin: 10px;  margin-left: 15%; font-size: large;"></h3>
-            <p>
-                <label for="description" >description</label><br>
-                <textarea name="" id="" cols="55" rows="10"><?= $ads["jobDescription"];?></textarea>
-               
-
-            
-            </p>
-        </div>
-       
-    </div>
-</section>
-<section class="asset split about" id="about-section">
-    <p class="title section-item"><span></span></p>
-   
-    <div class="asset-body">
-        <div class="section-item">
-            <h3  style="text-align: left; margin: 10px;  margin-left: 15%; font-size: large;"></h3>
-            <p>
-                <label for="Benefits" >Benefits</label><br>
-                <textarea name="" id="Benefits" cols="55" rows="10"><?= $ads["benefits"];?></textarea>
-               
-
-            
-            </p>
-        </div>
-       
-    </div>
-</section>
-<section class="asset split about" id="about-section">
-    <p class="title section-item"><span></span></p>
-   
-    <div class="asset-body">
-        <div class="section-item">
-            <h3  style="text-align: left; margin: 10px;  margin-left: 15%; font-size: large;"></h3>
-            <p>
-                <label for="requirements" >requirements</label><br>
-                <textarea name="" id="requirements" cols="55" rows="10"><?= $ads["requirements"];?></textarea>
-               
-
-            
-            </p>
-        </div>
-       
-    </div>
-</section>
-<section class="asset split about" id="about-section">
-    <p class="title section-item"><span></span></p>
-   
-    <div class="asset-body">
-        <div class="section-item">
-            <h3  style="text-align: left; margin: 10px;  margin-left: 15%; font-size: large;"></h3>
-            <p>
-                <label for="Note" >Note</label><br>
-                <textarea name="" id="Note" cols="55" rows="10"><?= $ads["note"];?></textarea>
-               
-
-            
-            </p>
-        </div>
-       
-    </div>
-</section>
-
-
-
-<div class="ss">
-
-    <div class="field btns">
-        
-        <button class="button" id="Back" onclick="location.href='http:www.google.com'"> Back</button> <button class="button" id="Apply" >Apply</button>
-       
-        <br><br>
-  
-    
-      </div>
-</div>
-
-
-
-</Form>
-                                    </section>
+                                    
                           </div>
-                          <?php 
+                          <?php $i++;}
                         }
                   }
                     }
@@ -703,8 +592,9 @@ if(isset($_SESSION["UserName"])){
                         
                         if ($result->num_rows > 0) {
                           
-                          while($ads=mysqli_fetch_assoc($result))
-                          {?>
+                          while($ads=mysqli_fetch_assoc($result)  )
+                          { if($i<4){
+                            ?>
                     
                     
                   
@@ -754,7 +644,7 @@ if(isset($_SESSION["UserName"])){
                     </div>
                     
                           <?php 
-                          }
+                          $i++; } }
                       }
                         }
 
@@ -777,7 +667,8 @@ if(isset($_SESSION["UserName"])){
           <h2>Summer Jobs</h2>
           <?php  
                       global $selectQuery;
-                
+                global $i;
+                $i=0;
                         if (isset($_POST['searchsubmit'])){
                         $city=$_POST["city"];
                         $keywors=$_POST["keywors"];
@@ -790,7 +681,9 @@ if(isset($_SESSION["UserName"])){
                             if ($result->num_rows > 0) {
                                     
                                 while($ads=mysqli_fetch_assoc($result))
-                                {?>
+                                
+                                {if($i<4){
+                                  ?>
           <div class="ul">
           <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?= $ads["jobTitle"];?></label><br>
                                                 <p class="descrption"><?= $ads["jobDescription"];?></p>
@@ -805,7 +698,7 @@ if(isset($_SESSION["UserName"])){
             </div>
        
         <?php 
-                          }
+                                  }  }
                       }
                         }
 
@@ -825,7 +718,8 @@ if(isset($_SESSION["UserName"])){
                         if ($result->num_rows > 0) {
                               
                           while($ads=mysqli_fetch_assoc($result))
-                          {?>
+                          {if($i<4){
+                            ?>
                     
                     
                   
@@ -844,7 +738,7 @@ if(isset($_SESSION["UserName"])){
                     </div>
                     
                           <?php 
-                          }
+                           } }
                       }
                         }
 

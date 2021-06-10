@@ -103,6 +103,9 @@ include 'db_connect.php';
                 <div class="field btns">
                   
                     <button type="submit"class="submit" name="submit" id="submit" onclick="validateform()">Submit</button>
+               <?php     if(isset($_SESSION['submit'])){?>
+                    <button class="submit" onclick="location.href='jobs.php'"> go to your post</button><?php
+               }?>
                     <br><br>
                 </div></div>
      
@@ -118,13 +121,19 @@ include 'db_connect.php';
     $bnfts=$_POST["benefits"];
     $rq=$_POST["requirmenets"];
     $jblcation=$_POST["JobLocation"];
+   
     
     $sql = "INSERT INTO posts (jobTitle, jobDescription, jobType, jobLocation,
     salary,uploadDate ,benefits,requirements ,expireDate) VALUES
      ('$jbTitl', '$dscrp','$jbtyp', '$jblcation', $slry,NOW(),
      '$bnfts','$rq','$expirdt')";
     if(mysqli_query($link, $sql)){
+   
+   $_SESSION['submit']=1;
+
+       
         ?><script > alert('Records added successfully.')</script><?php
+      
     } else{
          echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
         echo "error";

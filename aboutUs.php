@@ -1,15 +1,13 @@
 <?php
-// Initialize the session
 session_start();
+// Initialize the session
 require_once "db_connect.php";
-
-include "signin.php";
- 
-
 if(isset($_POST["login"])){
+
   $username=$_POST["user"];
   $password=$_POST["pass"];
-  $selectQuery="SELECT * FROM individual WHERE username='$username' and Password='$password'";
+  $selectQuery="SELECT * FROM individual WHERE
+   username='$username' and Password='$password'";
   if($resultlogin=mysqli_query($link,$selectQuery)){
     $rowcount=mysqli_num_rows($resultlogin);
     if($rowcount>0){
@@ -22,15 +20,16 @@ if(isset($_POST["login"])){
     }else{
 
       echo'<script>';
-      echo 'alert("invaild username or password")';
+      echo 'alert("error")';
      echo '</script>';
     }
  
   }
   
 }
-?>
 
+?>
+ 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,15 +41,11 @@ if(isset($_POST["login"])){
   <script src="https://kit.fontawesome.com/a81649cedd.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="porfileBookmark.css">
   <title>Document</title>
 </head>
 
 <body>
-  
-<button onclick="<?php if(isset($_SESSION["UserName"])){
-?>location.href='./Indiv_Profile.php' <?php }else{ ?>openIndiviualLogin();<?php }?>"class="Profile-icon floating-btn"><?php if(isset($_SESSION["UserName"])){
-  ?><img class="cat-icon" src="cat_profile_96px.png" alt=""><?php }else{ ?><i class="fas fa-user"></i><?php }?></button>  <header class="H-F" id="header">
+  <header class="H-F" id="header">
 
     <!--logo-->
     <!--navbar as select * edit-->
@@ -69,33 +64,33 @@ if(isset($_POST["login"])){
 
             <div>
               <tr class="head-0f-drop">
-                <td><a href="jobs.php"><b>Jobs</b></a></td>
-                <td> <a href="cvs.php"><b>CVs</b></a></td>
+                <td><a href="jobs.html"><b>Jobs</b></a></td>
+                <td> <a href="cvs.html"><b>CVs</b></a></td>
               </tr>
               <!--check if this is a link-->
               <tr>
-                <td> <a href="jobs.php#partTimejobs" id="part-t-j" >part time jobs </a></td>
+                <td> <a href="jobs.html#partTimejobs" id="part-t-j" class="jobs" >part time jobs </a></td>
                 <td> <a href="#">students</a></td>
               </tr>
               <tr>
-                <td> <a href="jobs.php#summerJobs" id="summer-job">summer jobs </a></td>
+                <td> <a href="jobs.html#summerJobs" id="summer-job" class="jobs">summer jobs </a></td>
                 <td> <a href="#">unemployed</a></td>
               </tr>
               <tr>
-                <td> <a href="jobs.php#weekendJobs" id="weekend-jobs">weekend jobs</a></td>
+                <td> <a href="jobs.html#weekendJobs" id="weekend-jobs" class="jobs">weekend jobs</a></td>
                 <td> <a href="">Experience seekers</a></td>
               </tr>
               <tr>
-                <td><a href="jobs.php#workFromHome" id="work-from-home">work from home jobs</a></td>
+                <td><a href="jobs.html#workFromHome" id="work-from-home" class="jobs">work from home jobs</a></td>
               </tr>
               <tr>
-                <td> <a href="jobs.php#eveningJobs" id="evening-jobs">evening jobs</a></td>
+                <td> <a href="jobs.html#eveningJobs" id="evening-jobs" class="jobs">evening jobs</a></td>
               </tr>
               <tr>
-                <td> <a href="jobs.php#internships" id="internships">internships</a></td>
+                <td> <a href="jobs.html#internships" id="internships-" class="jobs">internships</a></td>
               </tr>
               <tr>
-                <td><a href="jobs.php#apprenticeship" id="apprenticeship">Apprenticeship</a></td>
+                <td><a href="jobs.html#apprenticeships" id="apprenticeship-" class="jobs">Apprenticeship</a></td>
               </tr>
             </div>
 
@@ -119,16 +114,17 @@ if(isset($_POST["login"])){
 
               <div>
                 <tr class="head-0f-drop">
-                  <td> <a href="cvs.php"><b>CVs</b></td></a>
+                  <!-- <td><a href="#"><b>Jobs</b></a></td> -->
+                  <td> <a href="cvs.html"><b>CVs</b></td></a>
                 </tr>
                 <!--check if this is a link-->
                 <tr>
                   <td> <a href="">unemployed</a></td>
                 </tr>
                 <tr>
-                 
                   <td> <a href="">Experience seekers</a></td>
                 </tr>
+                
               </div>
 
               <!-------------------------------------->
@@ -142,34 +138,30 @@ if(isset($_POST["login"])){
         </div>
       </div>
 
-      <a href="aboutUs.html">About us</a>
-      <a href="contactUs.html">Contact</a>
+      <a href="aboutUs.php">About us</a>
+      <a href="contactUs.php">Contact</a>
     </div>
-    <a href="index.php"><img src="imgs/logoSample (1).png" alt=""></a>
-   
+    <a href="home.html"><img src="imgs/logoSample (1).png" alt=""></a>
     <!--here goes the sign in and log in lists-->
     <div class="sign-log-in">
-      <div class="dropdown"> 
+    <div class="dropdown"> 
         <!-- ad button to create an ad -->
         <button class="dropbtn" onclick="<?php if(isset($_SESSION["UserName"])){
-?>location.href='postForm.php' <?php }else{ ?>openIndiviualLogin();<?php }?>" >Create Your Ad</button>
+?>location.href='Post.php' <?php }else{ ?>openIndiviualLogin();<?php }?>" >Create Your Ad</button>
       </div>
-
       <?php
 
 if(isset($_SESSION["UserName"])){
+
+
 ?>
 <div class="dropdown"> 
         <!-- ad button to create an ad -->
-        <!-- <button class="dropbtn">  <?php //echo $_SESSION["UserName"]; ?> -->
-          
-        <!-- </button> -->
        
+        
       </div>
       <div class="dropdown"> 
-       
         <!-- ad button to create an ad -->
-      
         <button class="dropbtn">
         
           
@@ -179,10 +171,9 @@ if(isset($_SESSION["UserName"])){
 <?php 
 }else{
 ?>
-      
       <div class="dropdown"><!--sign in by clicking on the a tag -->
         <button class="dropbtn" >Sign in
-          <i class="fa fa-caret-down" onclick="openSearch()"></i>
+          <i class="fa fa-caret-down" onclick="openSearch"></i>
         </button>
         <div class="dropdown-content">
           <a onclick="openIndiviualSignin()">Student</a><!--note : you can't have both href and onclick in a tag-->
@@ -198,10 +189,8 @@ if(isset($_SESSION["UserName"])){
           <a onclick="openCompanyLogin()">Employer</a>
         </div>
       </div>
-
       <?php }?>
     </div>
-    <!--sign in log in block-->
     <div class="back" id="logSignOverlayy">
       <div class="login-wrap" >
       <div class="login-html ">
@@ -209,7 +198,7 @@ if(isset($_SESSION["UserName"])){
         <input id="tab-1" type="radio" name="tab" class="sign-in" ><label for="tab-1" class="tab">Sign In</label>
         <input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Sign Up</label>
         <div class="login-form">
-        <form class="sign-in-htm" id="IndivisualLog" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
+          <form class="sign-in-htm" id="IndivisualLog" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
             onsubmit="return true">
             <div class="group">
             <?php 
@@ -246,11 +235,11 @@ if(isset($_SESSION["UserName"])){
               <a href="#forgot">Forgot Password?</a>
             </div>
           </form>
-          <form class="sign-in-htm" id="companyLog" onsubmit="return false">
+          <form class="sign-in-htm" id="companyLog" >
             <div class="group">
               <label for="user" class="label">companyname</label>
-              <input name="user" id="co-userf" type="text" class="input userf" pattern="^[a-z0-9]{5,15}$"
-              title="Usernames may only contain letters and numbers and must be between 5 and 15 characters" required>
+              <input name="user" id="co-userf" type="text" class="input userf" 
+               required>
               <label for="user" id="co-user" class=" user label " >username is required</label>
            
             </div>
@@ -274,10 +263,11 @@ if(isset($_SESSION["UserName"])){
             </div>
           </form>
           <!--sign in-->
-          <form class="sign-up-htm "  id="IndiviualSign" onsubmit="return false"    action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"  >
+          <form class="sign-up-htm " method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  id="IndiviualSign" onsubmit="return true" >
             <div class="group">
               <label for="fname" class="label">First Name</label>
-              <input name="fname" id="in-fnamef" type="text" class="input" pattern="^[a-z]{5,15}$" title="names may only contain letters must be between 5 and 15 characters" required>
+              <input name="fname" id="in-fnamef" type="text" class="input" require class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+                <span class="invalid-feedback"><?php echo $username_err; ?></span>
               <label for="fname" id="in-fname" class="label" >First Name is required</label>
 
             </div>
@@ -288,7 +278,7 @@ if(isset($_SESSION["UserName"])){
             </div>
             <div class="group">
               <label for="user" class="label">username</label>
-              <input name="user" id="in-S-userf" type="text" class="input" pattern="^[a-z0-9]{5,15}$"
+              <input name="user" id="in-S-userf" type="text" class="input" 
                title="Usernames may only contain letters and numbers and must be between 5 and 15 characters" required>
               <label for="user" id="in-S-user" class="label">username is required</label>
 
@@ -301,7 +291,7 @@ if(isset($_SESSION["UserName"])){
             </div>
             <div class="group">
               <label for="pass"  class="label">Repeat Password</label>
-              <input name="pass" id="in-passRf" type="password" class="input" data-type="password" >
+              <input name="Rpass" id="in-passRf" type="password" class="input" data-type="password" >
               <label for="pass" id="in-passR" class="label">you have to Repeat Password</label>
            
             </div>
@@ -324,16 +314,16 @@ if(isset($_SESSION["UserName"])){
             
             </div>
             <div class="group">
-              <input type="submit" class="button" value="Sign Up" >
+              <input type="submit" class="button" name="signin" value="Sign Up" >
             </div>
             <div class="hr"></div>
             <div class="foot-lnk">
               <label for="tab-1" onclick="openIndiviualLogin()">Already Member?</label>
             </div>
           </form>
-          <form class="sign-up-htm "  id="companySign"  method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
+          <form class="sign-up-htm "  id="companySign" onsubmit="return false" >
             <div class="group">
-              <label for="birth"  class="label">Company Name</label>
+              <label for="birth"  class="label">Company name</label>
               <input name="birth" id="co-birthDatef" type="text" class="input" data-type="number" required >
               <label for="birth" id="co-birthDate" class="label">Company ID is required</label>
             
@@ -384,7 +374,6 @@ if(isset($_SESSION["UserName"])){
     </div></div>
 
 
-
     <button class="openBtn" onclick="openSearch()"> <i class="fa fa-search fa-lg " onclick="openSearch()"></i></button>
     <!--search bar on the whole screen-->
     <div id="myOverlay" class="overlay">
@@ -397,134 +386,41 @@ if(isset($_SESSION["UserName"])){
       </div>
     </div>
   </header>
-  <div class="home-mid-page mid">
+  <div class="about-mid-page mid">
     <!--main body-->
-    <div id="searh-where-what">
 
-      <div id="search-form">
-        <form action="jobs.php" method="POST"  name="form" onsubmit="
-        return validateForm()" id="Where-what-form" >
-          <label for="city" class="search-form-label">Where<br>
-            <input type="text" name="city" placeholder="City"></label><br>
-          <label for="keywors" class="search-form-label">What<br>
-            <input type="text" name="keywors" placeholder="keywors"></label><br>
-          <input type="submit" name="searchsubmit" value="submit"   class="submitbtn" >
-          <!-- Rounded switch -->
+    <section class="cards cardsInAbout " >
+
+ 
+      <div class="inner-card other-cards " id="aboutUs">
+        <div class="path-links"> <!--here goes the path -->
           
-          <label for="switch" class="alert">Email alert?</label> 
-          <label for="" id="alert-vaildation">You Have to Fill at least one field</label>
-          <label class="switch">
-            <input type="checkbox" name="switch" onclick="showEmail()" id="switch">
-            <!--add javascript function-->
-            <span class="slider round"></span>
-          </label>
-          <input type="text" id="email-field" placeholder="fill in your Email">
-        </form>
-      </div>
-    </div>
-    <div id="are-you-looking-for">
-      <h1><b> Are You Looking For?</b></h1>
-
-      <a href="jobs.php#partTimeJobs" class="looking-for">part Time Jobs</a>
-      <a href="jobs.php#weekendJobs" class="looking-for">weekend Jobs</a>
-      <a href="jobs.php#eveningJobs" class="looking-for">evening Jobs</a>
-      <a href="jobs.php#summerJobs" class="looking-for">summer Jobs</a>
-      <a href="jobs.php#workFromHome" class="looking-for">work from home</a>
-      <a href="jobs.php#internships" class="looking-for">internships</a> <br> <br>
-      <div id="cv-upload">
-        <h1><b> Do You Want to Upload Your CV?</b></h1>
-        <button onclick="<?php if(isset($_SESSION["UserName"])){
-?>location.href='CV_Form/cvForm.php' <?php }else{ ?>openIndiviualLogin();<?php }?>" id="upload-your-btn">Upload Your CVs</button>
-
-      </div>
-    </div>
-    <br>
-
-
-
-
-  
-  <!--Cieties---------------------------------------------------------->
-  <section class="cities" id="citysection">
-    <p class="titlecites" style="margin-right:25rem ;">Where do you want to work?</p>
-    <div class="cities-body grid">
+           <a href="home.html"><b>Home</b> </a><i class="fa fa-caret-right fo"></i>
+          <a href="aboutUs.html" id="about">About us</a>
+          
       
-   
-      <div class="city-item">
-        <div class="img-content">
-          <img src="./imgs/Cities/tripoli.jpg" alt="image">
-          <a href="jobs.html" class="more-overlay">tripoli</a>
         </div>
-        
-      </div>
-  
-    <div class="city-item">
-          <div class="img-content">
-              <img src="./imgs/Cities/dernah.jpg" alt="image">
-              <a href="#" class="more-overlay">Dernah</a>
-           </div>
-      </div>
-      <div class="city-item">
-        <div class="img-content">
-            <img src="./imgs/Cities/sabha.jpg" alt="image">
-            <a href="#" class="more-overlay">sabha</a>
-        </div>
-      </div>
-      <div class="city-item">
-        <div class="img-content">
-          <img src="./imgs/Cities/Misratah.jpg" alt="image">
-          <a href="#" class="more-overlay">Misratah</a>
-      </div>
-
-  </div>
-      <div class="show-more"><a href="#">Show all Vacnacies by city....</a></div>
-
+        <h2>How it all started </h2>
+        <p>In 2021, two libyan students;Alla almgalesh and Weaam okok started Part Time jobs as college project for web development subject, so the project is about 
+          website where students, Experience seekers or emlpoyees can find a part time job so they can make money in thier free time as well as building up thier Experience.
+          we thought that it would be helpful to build up such a project so we started up, it was such a fun Experience to go through though it has it's own ups and downs
+          however the project still in progress and we hope our users find it as helpful as we thought it would be. </p>
      </div>
-    </div>
-</section>
+     <div class="inner-card other-cards secondPara " id="getInTouch">
+      
+      <h2>where we are now </h2>
+      <p>we are trying so hard to develop this site and to get the 
+        best results to our custmers, since our project still in progress and 
+        we still working on the features of
+        it we hope to achive the greatest service ever. </p>
+   </div>
+   
+   </section>
 
-  <!--TopVacnacies---------------------------------------------------------->
-<section class="cards  TopVacnacies">
+   
+   
 
  
-  <div class="inner-card TopVacnacList  " id=" ">
-    <h2>Top Vacnacies</h2>
-    <?php  
-       global $selectQuery;
- 
-    
-
-
-
-    $selectQuery= "SELECT *
-    FROM posts 
-    ";
-  
- 
-  
-    if($result =mysqli_query($link,$selectQuery))
-		  {
-        
-        if ($result->num_rows > 0) {
-          	   
-					 while($ads=mysqli_fetch_assoc($result))
-					 {?>
-    <div class="ul">
-      <div class="li"> <i class="fas fa-briefcase"></i>
-      <label for="li" class="title"><?= $ads["jobTitle"];?>/ <?= $ads["jobLocation"];?> </label>
-    </div><?php 
-           }
-      }
-        }
-      ?>
-
-        <div class="a"><a href="#">Show all relative posts</a></div>
-        
-      </div>
-  </div>
-
-</section>
-
 
   <!---------------------------------footer starts here--------------------------------------------->
   <footer class="footer">
@@ -544,7 +440,7 @@ if(isset($_SESSION["UserName"])){
         <div class="footer-col">
           <h4>Employers</h4>
           <ul>
-            <li><a onclick="openIndiviualLogin()">Sign Up</a></li>
+            <li><a href="#">Sign Up</a></li>
             <li><a href="#">candidate Search</a></li>
             <li><a href="#"> Advertise with us</a></li>
           </ul>
@@ -577,7 +473,8 @@ if(isset($_SESSION["UserName"])){
     </div>
   </footer>
   <!---------------------------------the end of the footer--------------------------------------------->
-  <script src="js.js"></script>
+  <!-- Script------------>
+ <script src="js.js"></script>
 
 </body>
 
