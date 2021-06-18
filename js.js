@@ -3,6 +3,43 @@ var loggedFlag = 0;
 const usernameRegex =/^[a-zA-Z0-9_\.]+$/;
 const RegexFirstchar=/[0-9]/;
 //--------------------------------------------------------------------
+// function sendEmail(){
+
+// var name=$("#name");
+// var email=$("#email");
+// var number=$("#number");
+// var subject=$("#subject");
+// if(isNotEmpty(name) && isNotEmpty(number) && isNotEmpty(email) && isNotEmpty(subject)){
+//   alert('hi');
+//   $.ajax({
+//   url:'sendEmail.php',
+//   method:'POST',
+//   dataType:'json',
+//   data:{
+//     name:name.val(),
+//     number: number.val(),
+//     email:email.val(),
+//     subject:subject.val()
+//   },
+//   success: function(response){
+//     $('#contact')[0].reset();
+//     $('.sent-notification').text("message sent successfully");
+//   }
+
+// });
+// }  
+// }
+// function isNotEmpty(caller){
+// if(caller.val() == ""){
+//   caller.css('border','1px solid orange');
+//   return false;
+// }else
+// {
+//   caller.css('border','');
+//   return true;
+// }
+// }
+
 //when u click on search icon
 function openSearch() {
   document.getElementById("myOverlay").style.display = "block";
@@ -302,3 +339,5 @@ function closeJobDetails(){
   document.getElementById("postOverlay").style.display="none";
   document.getElementById("body").style.overflow="scroll";
 }
+
+  

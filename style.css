@@ -719,8 +719,12 @@ font-family: 'New Tegomin', serif;
 }
 .TopVacnacies{
   height: min-content;
+  margin-top: -5rem;
+  margin-bottom: 10rem;
 }
+#TV{/*TopVacnacies bottom margin */
 
+}
 .inner-card{
   position: absolute;
   color: black;
@@ -826,16 +830,17 @@ transform: translateY(-2px);
   margin-bottom:50%;
 }
 .inner-card,.Other-cards{
-  margin-bottom:40%rem;
+  margin-bottom:40%;
 }
 .fa-chevron-circle-down{
   margin-left: 2rem;
+  
 }
 /*-----------------------*/
 .Other-cards{
   background-image: none;
  box-shadow: none;
- margin-top: 3rem;/*sapce btwn cards excpt for the first one*/
+ margin-top: 2rem;/*sapce btwn cards excpt for the first one*/
 }
 /*contact page: path in the top of get in touch card*/
 .path-links a,.fo{
@@ -897,7 +902,7 @@ transform: translateY(-2px);
 /*----------------------------------*/
 /*in contact*/
 .FAQ{
-  margin-top: 2rem;
+  margin-top: 12rem;
 }
 
 
