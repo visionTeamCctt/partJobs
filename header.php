@@ -126,7 +126,7 @@ if(isset($_SESSION["UserName"])){
         <button class="dropbtn">
         
           
-        <a class="dropbtn"  href="logout.php">Singout</a>
+        <a class="dropbtn"  href="logout.php">Signout</a>
         </button>
       </div>
 <?php 

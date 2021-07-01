@@ -2,7 +2,25 @@ var loggedFlag = 0;
 //for scrolling in the jobs page
 const usernameRegex =/^[a-zA-Z0-9_\.]+$/;
 const RegexFirstchar=/[0-9]/;
+
 //--------------------------------------------------------------------
+ function birthDate(inFieldbirth){
+
+    var dob = new Date(inFieldbirth);  
+    //calculate month difference from current date in time  
+    var month_diff = Date.now() - dob.getTime();  
+      
+    //convert the calculated difference in date format  
+    var age_dt = new Date(month_diff);   
+      
+    //extract year from date      
+    var year = age_dt.getUTCFullYear();  
+      
+    //now calculate the age of the user  
+    var age = Math.abs(year - 1970);  
+      
+    return age;
+  }
 // function sendEmail(){
 
 // var name=$("#name");
@@ -199,78 +217,72 @@ alert("user name is invaild");
  
    });
    //inSignValidation this way the validation function will be applied before submission
-   document.getElementById('IndiviualSign').addEventListener('submit', function() {
-    n
-  var inFieldFanme = document.getElementById("in-fnamef");
-  var inFieldU = document.getElementById("in-S-userf");
-  var inFieldP = document.getElementById("in-S-passf");
-  var inFieldPR = document.getElementById("in-passRf");
-  var inFieldbirth = document.getElementById("in-birthDatef");
-  var inFieldAddress = document.getElementById("in-addressf");
-  usernameRegex .exec(inFieldU);//regular expression
-  const vaild=!!usernameRegex;
-  if(!vaild){
-alert("user name is invaild");
-  }
-  //inFieldU.value. match(nameRegex);
-  var inLabelFname = document.getElementById("in-fname");
-  var inLabelU = document.getElementById("in-S-user");
-  var inLabelP = document.getElementById("in-S-pass");
-  var inLabelPR = document.getElementById("in-passR");
-  var inLabelbirthDate = document.getElementById("in-birthDate");
-  var inLabeladdress = document.getElementById("in-address");
-
- 
- 
+   function IndiviualSign() {
+    
+    var usernameRegex = /[0-9]/;//regular expression
+    var inFieldN=document.getElementById("in-fnamef");
+    var inFieldU = document.getElementById("in-S-userf");
+    var inFieldP = document.getElementById("in-S-passf");
+    var inFieldPR = document.getElementById("in-passRf");
+    var inFieldbirth = document.getElementById("in-birthDatef").value;//company number
+    var inFieldAddress = document.getElementById("in-addressf");
   
-
-  //if already shown from previous submit to hide it
-  if (inLabelFname.style.display === "inline"||
-   inLabelU .style.display === "inline"||
-  inLabelP .style.display === "inline"||
- inLabelPR .style.display === "inline"||
- inLabelbirthDate .style.display === "inline"||
-   inLabeladdress .style.display === "inline" 
-   ) 
-   {
- 
-    inLabelFname .style.display ="none";
-    inLabelU .style.display = "none";
-   inLabelP .style.display = "none";
-  inLabelPR .style.display = "none";
-  
+   var inLabelN =document.getElementById("in-fname");
+    var inLabelU = document.getElementById("in-S-user");
+    var inLabelP = document.getElementById("in-S-pass");
+    var inLabelPR = document.getElementById("in-passR");
+    var inLabelbirthDate = document.getElementById("in-birthDate");
+    var inLabeladdress = document.getElementById("in-address");
+  var age=birthDate(inFieldbirth);
+   
+    //if already shown from previous submit to hide it
+    if (
+     inLabelU .style.display == "inline"||
+    inLabelP .style.display == "inline"||
+   inLabelPR .style.display == "inline"||
+   inLabelbirthDate .style.display == "inline"||
+     inLabeladdress .style.display == "inline" ||inLabelN.style.display =="inline"
+     ) {
+   
+      inLabelN.style.display =="none"
+      inLabelU .style.display = "none";
+     inLabelP .style.display = "none";
+    inLabelPR .style.display = "none";
+    
     inLabelbirthDate .style.display = "none";
-    inLabeladdress .style.display = "none";
-    
-     
-    }
-
-
-    if( inFieldFanme.value[0].match(RegexFirstchar) != null ){
-      inLabelFname.innerHTML="name should not start with number or Literal Characters";
-      inLabelFname.style.display="inline"
-     }
-
-
-if( inFieldU.value[0].match(RegexFirstchar) != null ){
- inLabelU.innerHTML="user name should not start with number or Literal Characters";
- inLabelU.style.display="inline"
-}
-
-   if (inFieldPR.value != inFieldP.value) {
-    
-    inLabelPR.innerHTML = "passwords are not the same";
-    inLabelPR.style.display="inline";
-  }
-  if (inFieldP.value.length < 6) {
-    //   //   //display label will be better
-     inLabelP.innerHTML = 'password cannot be less than 6 characters';
-    
-     }
+      inLabeladdress .style.display = "none";
+      return false;
       
-
+       
+      }
+     
   
-  });
+      if( inFieldU.value[0].match(usernameRegex) != null ){
+        inLabelU.innerHTML="user name should not start with number or Literal Characters";
+        inLabelU.style.display="inline";
+        return false;
+       }
+       if( inFieldN.value[0].match(usernameRegex) != null ){
+        inLabelN.innerHTML="name should not start with number or Literal Characters";
+        inLabelN.style.display="inline";
+        return false;
+       }
+  
+     if (inFieldPR.value != inFieldP.value) {
+      
+      inLabelPR.innerHTML = "passwords are not the same";
+      inLabelPR.style.display="inline";
+      return false;
+  
+    }
+    if( age< 15){
+    inLabelbirthDate.innerHTML="you're under 15 you can't reqest here";
+    inLabelbirthDate.style.display="inline";
+  return false;
+}
+return true;
+
+  }
    
 
 //coSignValidation
@@ -340,4 +352,4 @@ function closeJobDetails(){
   document.getElementById("body").style.overflow="scroll";
 }
 
-  
+ 

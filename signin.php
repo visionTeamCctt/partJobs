@@ -1,169 +1,58 @@
 <?php
+
 // Include config file
 require_once "db_connect.php";
  
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = $lname=$fname= $Email= $birthDate=$address= "";
-$username_err = $password_err = $confirm_password_err =$Eamil_err= "";
- 
+$username_err = $password_err = $confirm_password_err=$birthDate_err =$Eamil_err= "";
+$errors = array();
 // Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST"){
+
 if(isset($_POST["signin"])){
-    
-    //validate fname
-    if(empty(trim($_POST["fname"])))
-    {
-        $username_err = "Please enter your first name.";
-      } elseif(!preg_match('/^[a-zA-Z_]+$/', trim($_POST["fname"]))){
-        $fname_err = "name can only contain letters";
-     } else{echo'shit';
-      
-            
-            // Set parameters
-          $fname = trim($_POST["fname"]);
-            
-           
-        
-           
-        
+    $fname=mysqli_real_escape_string($link,$_POST['fname']);
+    $lname=mysqli_real_escape_string($link,$_POST['lname']);
+    $username=mysqli_real_escape_string($link,$_POST['user']);
+    $password=mysqli_real_escape_string($link,$_POST['pass']);
+    $Email=mysqli_real_escape_string($link,$_POST['Email']);
+    $birthDate=mysqli_real_escape_string($link,$_POST['birth']);
+    $address=mysqli_real_escape_string($link,$_POST['address']);
+    $sqlInsert="INSERT INTO individual ( username, fname, Lname,PASSWORD,Email,birthDate, Address) 
+    VALUES ('$username', '$fname', '$lname', '$password', '$Email','$birthDate','$address')";
+    $Email_check_query = "SELECT * FROM individual WHERE Email='$Email' LIMIT 1";
+    $username_check_query = "SELECT * FROM individual WHERE username='$username' LIMIT 1";
+    // first check the database to make sure 
+  // a user does not already exist with the same username and/or email
+  $user_check_query = "SELECT * FROM users WHERE username='$username' OR email='$Email' LIMIT 1";
+  $result = mysqli_query($link, $user_check_query);
+  $user = mysqli_fetch_assoc($result);
+  
+  if ($user) { // if user exists
+    if ($user['username'] === $username) {
+      array_push($errors, "Username already exists");
     }
-    //last name 
-    $lname = trim($_POST["lname"]);
- 
-    // Validate username
-    if(empty(trim($_POST["user"])))
-    {
-        $username_err = "Please enter a username.";
-      } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["user"]))){
-        $username_err = "Username can only contain letters, numbers, and underscores.";
-     } else{
-        // Prepare a select statement
-        $sql = "SELECT fname FROM individual WHERE username = ?";
-        
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
-            
-            // Set parameters
-            $param_username = trim($_POST["user"]);
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-                
-                if(mysqli_stmt_num_rows($stmt) == 1){
-                    $username_err = "This username is already taken.";
-                } else{
-                    $username = trim($_POST["user"]);
-                }
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
 
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
+    if ($user['Email'] === $Email) {
+      array_push($errors, "email already exists");
     }
-    
-    // Validate password
-    if(empty(trim($_POST["pass"]))){
-        $password_err = "Please enter a password.";     
-    } elseif(strlen(trim($_POST["pass"])) < 6){
-        $password_err = "Password must have atleast 6 characters.";
-    } else{
-        $password = trim($_POST["pass"]);
-    }
-    
-    // Validate confirm password
-    if(empty(trim($_POST["Rpass"]))){
-        $confirm_password_err = "Please confirm password.";     
-    } else{
-        $confirm_password = trim($_POST["Rpass"]);
-        if(empty($password_err) && ($password != $confirm_password)){
-            $confirm_password_err = "Password did not match.";
-        }
-    }
-    //Email
-    if(empty(trim($_POST["Email"])))
-    {
-        $Email_err = "Please enter an Email";
-      } elseif (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
-        $emailErr = "Invalid email format";
-      
-     } else{
-        // Prepare a select statement
-        $sql = "SELECT username FROM individual WHERE Email = ?";
-        
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_Email);
-            
-            // Set parameters
-            $param_Eamil = trim($_POST["Email"]);
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-                
-                if(mysqli_stmt_num_rows($stmt) == 1){
-                    $Email_err = "This username is already taken.";
-                } else{
-                    $Email = trim($_POST["Email"]);
-                }
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
+  }
 
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
-    }
-    //birth Date
-   
-        $birthDate = trim($_POST["birth"]);
+  // Finally, register user if there are no errors in the form
+  if (count($errors) == 0) {
+   // session_start();
+  	$password = md5($password_1);//encrypt the password before saving in the database
 
-//address
-$address=trim($_POST["address"]);
-
-       
-        
+  	
+  	mysqli_query($link,  $sqlInsert);
+    $sql="SELECT * FROM individual where username= '$username'";
+    $resultuserID=mysqli_query($link,$sql);
+    $row=mysqli_fetch_assoc($resultuserID);
+    $_SESSION['userID']=$row['userID'];
+    $_SESSION['Login']=1;
+  	$_SESSION['UserName'] = $username;
     
-
-    
-    // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err && empty($Email_err) && empty( $fname_err))){
-        
-        // Prepare an insert statement
-        $sql = "INSERT INTO individual (username, Password,fname,lname ,Eamil,Address,birthDate) VALUES (?, ?,?,?,?,?,?)";
-         
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password,$param_fname,$param_lname,$param_Email,$param_address,$param_birth);
-            
-            // Set parameters
-            $param_username = $username;
-            $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            $param_fname=$fname;
-            $param_lname=$lname;
-            $param_Email=$Email;
-            $param_address=$address;
-            $param_birth=$birthDate;
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                // Redirect to login page
-                header("location: login.php");
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
-
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
-    }
-    
-    // Close connection
-    mysqli_close($link);
-}
-}
+  	$_SESSION['success'] = "You are now logged in";
+  	header('location: index.php');
+  }else { echo'<script>';
+    echo 'alert("error")';
+   echo '</script>';}}

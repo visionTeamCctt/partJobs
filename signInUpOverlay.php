@@ -71,12 +71,12 @@
             </div>
           </form>
           <!--sign in-->
-          <form class="sign-up-htm " method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  id="IndiviualSign" onsubmit="return true" >
+          <form class="sign-up-htm " method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  id="IndiviualSign" onsubmit="return IndiviualSign()">
             <div class="group">
               <label for="fname" class="label">First Name</label>
-              <input name="fname" id="in-fnamef" type="text" class="input" require class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
-                <span class="invalid-feedback"><?php echo $username_err; ?></span>
-              <label for="fname" id="in-fname" class="label" >First Name is required</label>
+              <input name="fname" id="in-fnamef" type="text" pattern="^[a-zA-Z ,.'-]+$" title="name must be letters only" class="input" required >
+                
+              <label for="fname" id="in-fname" class="label" style="display: none;" >First Name is required</label>
 
             </div>
             <div class="group">
@@ -86,7 +86,7 @@
             </div>
             <div class="group">
               <label for="user" class="label">username</label>
-              <input name="user" id="in-S-userf" type="text" class="input" 
+              <input name="user" id="in-S-userf" type="text" class="input" pattern="^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$" 
                title="Usernames may only contain letters and numbers and must be between 5 and 15 characters" required>
               <label for="user" id="in-S-user" class="label">username is required</label>
 
@@ -112,7 +112,7 @@
             <div class="group">
               <label for="birth"  class="label">Birth Date</label>
               <input name="birth" id="in-birthDatef" type="date" class="input" data-type="date" required >
-              <label for="birth" id="in-birthDate" class="label">Birth Date is required</label>
+              <label for="birth" id="in-birthDate" class="label"></label>
             
             </div>
             <div class="group">

@@ -2,6 +2,7 @@
 session_start();
 // Initialize the session
 require_once "db_connect.php";
+ $userid = "";
 
  ?>
 <!DOCTYPE html>
@@ -27,7 +28,7 @@ require_once "db_connect.php";
         <a class="menu-item" id="myTeam" href="./Indiv_Cvs.html">  My CVs</a> 
     </section>
   <?php
-  $userid=$_SESSION["userID"];
+  $userid=$_SESSION['userID'];
     $selectQuery= "SELECT * FROM individual where userID= '$userid'";
                     
 
