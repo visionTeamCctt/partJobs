@@ -36,14 +36,14 @@
             </div>
             <div class="group">
  
-              <input type="submit" name="login" class="button" value="Sign In" >
+              <input type="submit" name="Indilogin" class="button" value="Sign In" >
             </div>
             <div class="hr"></div>
             <div class="foot-lnk">
               <a href="#forgot">Forgot Password?</a>
             </div>
           </form>
-          <form class="sign-in-htm" id="companyLog" >
+          <form class="sign-in-htm" id="companyLog" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" >
             <div class="group">
               <label for="user" class="label">companyname</label>
               <input name="user" id="co-userf" type="text" class="input userf" 
@@ -63,7 +63,7 @@
               <label for="check"><span class="icon"></span> Keep me Signed in</label>
             </div>
             <div class="group">
-              <input type="submit" class="button" value="Sign In">
+              <input type="submit"  name="Cologin" class="button" value="Sign In">
             </div>
             <div class="hr"></div>
             <div class="foot-lnk">

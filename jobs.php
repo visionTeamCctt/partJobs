@@ -96,7 +96,7 @@ require_once "signin.php";
                   {
 
                     
-                    $selectQuery= "SELECT * FROM individual RIGHT JOIN posts ON individual.userID= posts.userID AND posts.jobType='Part Time job'
+                    $selectQuery= "SELECT * FROM individual JOIN posts ON individual.userID= posts.userID AND posts.jobType='Part Time job'
                     ORDER by posts.uploadDate DESC ";
 
                 
@@ -128,7 +128,7 @@ require_once "signin.php";
 
                               <div class="post-container">
                                       <span class="closebtn" onclick="closeJobDetails()" title="Close Overlay">×</span>
-                                        <h5><?= $ads["jobTitle"];?></h5>
+                                      <b>  <h5><?= $ads["jobTitle"];?></h5></b>
                                       
                                     <div class="JobDetails">
                                               <span></span>
@@ -140,15 +140,15 @@ require_once "signin.php";
                                                 <br><br><br><br>
                                                 <ul class="details-list">
                                               <li><label for="details-list" >Expire date:</label> <?= $ads["expireDate"];?></li>
-                                              <li> <label for="details-list">salary:</label> <?= $ads["salary"];?> per day</li>  </ul>
+                                              <li> <label for="details-list">salary:</label> <?= $ads["salary"];?> $ per day</li>  </ul>
                                                 <br> 
                                                 <table>
                                                   <tr>
-                                              <td><br><label for="description" class="details" >Description:</label></td> <td><p id="description"><?= $ads["jobDescription"];?></p></td></tr>
-                                              <tr><td><label for="benefits" class="details">Benefits:</label></td><td><br><p  id="benefits"><?= $ads["benefits"];?></p></td></tr> 
-                                              <tr> <td><label for="requirements" class="details">requirements:</label></td><td><br><br><br><br><p id="requirements"><?= $ads["requirements"];?></p></td></tr>
-                                              <tr><td><br><br> <br><label for="location" class="details">job location:</label></td><td><p class="location"><?= $ads["jobLocation"];?></p></td></tr> 
-                                              <tr><td><br><br><label for="note" class="details">note:</label></td><td><p class="note"><?= $ads["note"];?></p></td></tr>
+                                              <td><label for="description" class="details" >Description:</label></td> <td><p id="description"><?= $ads["jobDescription"];?></p></td></tr><br>
+                                              <tr><td><label for="benefits" class="details">Benefits:</label></td><td><p  id="benefits"><?= $ads["benefits"];?></p></td></tr> 
+                                              <tr> <td><label for="requirements" class="details">requirements:</label></td><td><p id="requirements"><?= $ads["requirements"];?></p></td></tr>
+                                              <tr><td> <label for="location" class="details">job location:</label></td><td><p class="location"><?= $ads["jobLocation"];?></p></td></tr> <br>
+                                              <tr><td><label for="note" class="details">note:</label></td><td><p class="note"><?= $ads["note"];?></p></td></tr>
                                               </table>
                                     </div>
                                     <button class="post-btn" id="cancelbtn" onclick="closeJobDetails()" >cancel</button>
@@ -276,7 +276,7 @@ require_once "signin.php";
                         $keywors=$_POST["keywors"];
 
                   
-                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Summer job' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
+                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Weekend job' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
                           if($result =mysqli_query($link,$selectQuery))
                           {
                             
@@ -309,7 +309,7 @@ require_once "signin.php";
                   {
 
                     
-                    $selectQuery= "SELECT * FROM individual inner JOIN posts ON individual.userID= posts.userID AND posts.jobType='Summer job'
+                    $selectQuery= "SELECT * FROM individual inner JOIN posts ON individual.userID= posts.userID AND posts.jobType='Weekend job'
                     ORDER by posts.uploadDate DESC ";
 
                 
@@ -364,7 +364,7 @@ require_once "signin.php";
                         $keywors=$_POST["keywors"];
 
                   
-                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Summer job' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
+                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Work from home' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
                           if($result =mysqli_query($link,$selectQuery))
                           {
                             
@@ -397,7 +397,7 @@ require_once "signin.php";
                   {
 
                     
-                    $selectQuery= "SELECT * FROM individual inner JOIN posts ON individual.userID= posts.userID AND posts.jobType='Summer job'
+                    $selectQuery= "SELECT * FROM individual inner JOIN posts ON individual.userID= posts.userID AND posts.jobType='Work from home'
                     ORDER by posts.uploadDate DESC ";
 
                 
@@ -452,7 +452,7 @@ require_once "signin.php";
                         $keywors=$_POST["keywors"];
 
                   
-                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Summer job' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
+                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Evening job' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
                           if($result =mysqli_query($link,$selectQuery))
                           {
                             
@@ -485,7 +485,7 @@ require_once "signin.php";
                   {
 
                     
-                    $selectQuery= "SELECT * FROM individual inner JOIN posts ON individual.userID= posts.userID AND posts.jobType='Summer job'
+                    $selectQuery= "SELECT * FROM individual inner JOIN posts ON individual.userID= posts.userID AND posts.jobType='Evening job'
                     ORDER by posts.uploadDate DESC ";
 
                 
@@ -540,7 +540,7 @@ require_once "signin.php";
                         $keywors=$_POST["keywors"];
 
                   
-                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Summer job' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
+                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='intrenship' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
                           if($result =mysqli_query($link,$selectQuery))
                           {
                             
@@ -573,7 +573,7 @@ require_once "signin.php";
                   {
 
                     
-                    $selectQuery= "SELECT * FROM individual inner JOIN posts ON individual.userID= posts.userID AND posts.jobType='Summer job'
+                    $selectQuery= "SELECT * FROM individual inner JOIN posts ON individual.userID= posts.userID AND posts.jobType='intrenship'
                     ORDER by posts.uploadDate DESC ";
 
                 

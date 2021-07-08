@@ -639,24 +639,24 @@ font-family: 'New Tegomin', serif;
   position: absolute;
   
    /*to fix the align of the orange line under the header*/
- top: 12.5rem;
+ top: 13rem;
   background-color: orange;
  
   height: 2px;
   box-sizing: border-box;
-  width: 5%;}
+  width: 10%;}
 .post-nav{/*the queue below header*/
   float: left;
-  padding-right: 2rem;
-  padding-left: 1.5rem;
+  padding-right: 3rem;
+  padding-left: 2rem;
   padding-top: 2rem;
   
-  font-size: 12px;
+  font-size: 15px;
   font-weight: bold;
 }
 .details-list li{/*labels under the post nav^^^*/
   text-decoration: none;
-  font-size: 12px;
+  font-size: 15px;
   margin-left: 1.5rem;
   padding-bottom: 1.5rem;
   font-weight: bold;
@@ -673,21 +673,24 @@ font-family: 'New Tegomin', serif;
   border-radius: .3rem;
  
 }
-.JobDetails .details,p{
- text-align: center;
+
+.JobDetails p{
+
  float:none;
- padding-left: 1.5rem;
+ 
  padding-top: 1.6rem;
  font-size: 12px;
+ text-align: left;
 
 }
-.details{
+.details {
+  padding-left: 1.5rem;
+  padding-top: 1.6rem;
   font-weight: bold;
+  font-size: 15px;
 }
-.JobDetails {
-  margin-top: 2.6rem;
 
-}
+
 .post-btn{/*apply for this job button */
   color: #24262b;
   left: 10%;
@@ -695,7 +698,7 @@ font-family: 'New Tegomin', serif;
   padding:1rem 2rem ;
   border-radius: .5rem;
   border: none;
-  margin: 3rem 3.5rem ;
+  margin:2.5rem 3rem ;
   background-color: orange;
   font-family: 'New Tegomin', serif;
   font-weight: bold;
