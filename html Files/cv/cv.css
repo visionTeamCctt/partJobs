@@ -1,0 +1,368 @@
+@import url('https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap');
+/*imported a font from google fonts*/
+*,
+*::before
+*::after{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid: template rows 100px 1900px 400px;
+  background-color: #e6dede;
+  position: relative;
+  /*one of the tips to fix the white gap proplem*/
+  padding-bottom: 1100px;
+  /*one of the tips to fix the white gap proplem*/
+  min-height: 200vh;
+  /*one of the tips to fix the white g ap proplem*/
+}
+
+main {
+  min-height: calc(100vh -400px - 85px);
+}
+
+#header {
+
+  text-align: center;
+
+  color: rgb(0, 0, 0);
+
+}
+
+/* header  {
+      margin-top : -20px;
+      
+      height: 100px;
+      margin-right: -12px;
+      margin-left: -10px;
+      
+     
+  
+  } */
+#search {
+  display: inline-block;
+  position: relative;
+}
+
+.H-f {
+
+  box-shadow: gray 1px 2px;
+}
+
+#header img {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+}
+
+
+/* Navbar container */
+#header,
+.navbar {
+  /* margin-top: -36px;*/
+  overflow: hidden;
+  padding-top: 20px;
+  font-size: 16px;
+  background-color: #24262b;
+  font-family: 'New Tegomin', serif;
+}
+
+
+/* Links inside the navbar */
+.navbar a {
+  float: left;
+
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* The dropdown container */
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+/* Dropdown button */
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  /* Important for vertical align on mobile phones */
+  margin: 0;
+  /* Important for vertical align on mobile phones */
+}
+
+/* Add a yallow background color to navbar links on hover */
+.navbar a:hover,
+.dropdown:hover .dropbtn {
+  background-color: rgb(255, 153, 0);
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  min-width: 100%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  float: none;
+  color: rgb(252, 250, 250);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  width: 400px;
+  text-align: left;
+}
+
+.head-0f-drop a {
+  font-size: 20px;
+
+}
+
+#header .navbar,
+img {
+  float: left;
+  margin-right: 110px;
+  margin-left: 10px;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: rgb(158, 155, 155);
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.sign-log-in .dropbtn {
+  /*styling the sign in log in drop list*/
+  margin: 5px;
+  margin-top: 15px;
+  background-color: rgb(255, 153, 0);
+
+}
+
+.sign-log-in .dropbtn:hover {
+  background-color: #4c4d50;
+
+}
+
+.fa-search {
+  /*search icon*/
+  color: white;
+}
+
+.openBtn {
+  /*search icon*/
+  background-color: #24262b;
+  border: none;
+  padding: 15px 20px;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-top: 12px;
+}
+
+.openBtn:hover {
+  background: rgb(104, 99, 99);
+}
+
+.overlay {
+  /*the black screen on top of the page when u click search icon*/
+  height: 100%;
+  width: 100%;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.overlay-content {
+  /*styling the search bar*/
+  position: relative;
+  top: 50%;
+  width: 60%;
+  text-align: center;
+  margin-top: 30px;
+  margin: auto;
+}
+
+.overlay .closebtn {
+  /*styling the closing button that is gonna shown after the 
+  icon clicked*/
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+  cursor: pointer;
+  color: white;
+}
+
+.overlay .closebtn:hover {
+  color: #ccc;
+}
+
+.overlay input[type=text] {
+  /*styling the search feild*/
+  padding: 15px;
+  font-size: 17px;
+  border: none;
+  float: left;
+  width: 80%;
+  background: white;
+}
+
+.overlay input[type=text]:hover {
+  background: #f1f1f1;
+}
+
+.overlay button {
+  float: left;
+  width: 15%;
+  padding: 15px;
+  background: rgb(151, 148, 148);
+  /*styling the button beside the search bar*/
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.overlay button:hover {
+  background: #bbb;
+}
+.cv-mid-page{
+  height: 200rem;
+}
+/* ----------------------------------------------------------------------- */
+.cv-grig-page{
+  background-image: url(CvPage.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  height: 300px;
+  margin-left: 0;
+}
+.cv-grig-page{
+  display: grid;
+  grid-template-columns:  2fr 1fr;
+  grid-template-rows: 300px 300px;
+/* margin-top: 100px; */
+}
+
+
+/* cv posts */
+.cv-countainer{
+  display: grid;
+  grid-template-columns:  1fr 1fr;  
+  grid-template-rows: .9fr .9fr;
+  margin-top: 150px;
+}
+img{
+ margin-top: 0;
+  margin-left: 0;
+}
+.cv-post-card {
+ 
+ background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    /* padding-bottom: -5px; */
+    margin-bottom: 30px;
+    /* position: fixed; */
+    height: min-content;
+ 
+  }
+  
+  .Main-Domain {
+    color: grey;
+    font-size: 18px;
+  }
+  .cv-content{
+    padding-top: 0%;
+    margin-top: 0;
+    padding-bottom: 5px;
+  }
+  .download-cv{
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: orange;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+  .indevisual-name{
+    font-size: 40px;
+  }
+  .cv-date{
+color: rgba(48, 48, 48, 0.2);
+
+  }
+ .cv-sosialMedia a{ 
+    /* display: inline-block; */
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+    size: 10px;
+  }
+  
+ .download-cv:hover, a:hover {
+    opacity: 0.7;
+  }
+/* upload ur cv */
+  .upload-cv{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin:auto;
+    text-align: center;
+    margin-top:300px;
+  }
+  
+  .uploadurcv{
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: orange;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+  .uploadurcv:hover,a:hover{
+
+    opacity: 0.7;
+  }
+  .do-upload{
+    padding-top: 30px;
+    /* padding:10px; */
+    font-size: large;
+    padding-right: 30px;
+    padding-left: 30px;
+  }
