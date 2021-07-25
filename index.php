@@ -41,11 +41,13 @@ require_once "signin.php";
           <label for="switch" class="alert">Email alert?</label> 
           <label for="" id="alert-vaildation">You Have to Fill at least one field</label>
           <label class="switch">
-            <input type="checkbox" name="switch" onclick="showEmail()" id="switch">
+            <input type="checkbox" name="switch"  onclick="showEmail()" id="switch">
             <!--add javascript function-->
             <span class="slider round"></span>
           </label>
           <input type="text" name="EmailS" id="email-field" placeholder="fill in your Email">
+          <label for="EmailS" id="Email-vaildation">fill in your Email!</label>
+
         </form>
       </div>
     </div>
@@ -73,7 +75,7 @@ require_once "signin.php";
   
   <!--Cieties---------------------------------------------------------->
   <section class="cities" id="citysection">
-    <p class="titlecites" style="margin-right:25rem ;">Where do you want to work?</p>
+    <p class="titlecites" style="margin-left: 10rem;" >Where do you want to work?</p>
     <div class="cities-body grid">
       
    
