@@ -1,6 +1,15 @@
 <?php
 require_once "LogIn.php";
 require_once "signin.php";
+require_once "searchByForm.php";
+require_once "sendAdEmail.php";
+
+//---------------------------------------------
+global $city;
+global $keywors;
+global $_SESSION;
+// $_SESSION['jobsT'];
+// $_SESSION['jobsD'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,123 +55,139 @@ require_once "signin.php";
                           </div>
                     <h2>Part Time Jobs</h2>
                     <?php  
-                      global $selectQuery;
-                      global $i;
-                      $i=0;
+                      // global $selectQuery;
+                      // global $i;
+                      // $i=0;
                 
-                        if (isset($_POST['searchsubmit'])){
-                        $city=$_POST["city"];
+                        if (isset($_POST['searchsubmit']) && empty($_POST['EmailS'])){
+                       $city=$_POST["city"];
                         $keywors=$_POST["keywors"];
+                        if(!empty($city)&& !empty($keywors)){
+                        $sql="SELECT * from individual  JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%'";
+
 
                         // switch(isset($_POST['searchsubmit'])){
                         // case isset($city):  $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city'"; break;
                         // case isset($keywors):  $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and  posts.jobTitle Like '%$keywors%' "; break;
                         //   case isset($city)&& isset($keywors): $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city' or  posts.jobTitle Like '%$keywors%'";
                         // }
-
+posts($sql);
+}
+else if(!empty($_POST["city"]) && empty($_POST["keywors"])){
+  $sql="SELECT * from individual JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city'";
+posts($sql);
+}else if(empty($_POST["city"]) && !empty($_POST["keywors"])) {           
+               $sql="SELECT * from individual  JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobTitle Like '%$keywors%'";
+  posts($sql);
+}
                   
-                         $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%'";
-                          if($result =mysqli_query($link,$selectQuery))
-                          {
-                            
-                            if ($result->num_rows > 0) {
-                                    
-                                while($ads=mysqli_fetch_assoc($result)){
-                               
-                             if($i<4){
-                                // {
-                                  ?>
-                  
-                          <div class="ul">
+                        }   
+                else  if (isset($_POST['searchsubmit']) && isset($_POST['EmailS'])){ 
+                   $ToEmail = $_POST['EmailS'];//where to send the email
+    $ToName  ='job seeker';
 
-                                  
-                                    <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?= $ads["jobTitle"];?></label><br>
-                                                <p class="descrption"><?= $ads["jobDescription"];?></p>
-                                                <br><label for="li" class="info"><?= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?= $ads["uploadDate"];?></label>
-                                                <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
-                                                <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["postID"];?> per hour</label>
-                                                <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" name="more" onclick="location.href='JobInformation.php'"></i>
-                                    </div>
-                                    
-                          </div>
-                          <?php $i++;}
-                        }
-                  }
-                    }
-                  
+    $MessageHTML ='Hi, you searched a job through our site here is some ads:'.'';//trying to insert the next var to the next line!!
+     
+      
+    $MessageTEXT="ads";
+    $body = "<html>\n"; 
+    $body .= "<body style=\"font-family:Verdana, Verdana, Geneva, sans-serif; font-size:12px; color:#666666;\">\n"; 
+    $body = $MessageHTML; 
+    $body .= "</body>\n"; 
+    $body .= "</html>\n"; 
 
-                }
+    $headers  = "From:Part Time Jobs<n@example.com>\r\n"; 
+    $headers .= "Reply-To:".$_POST['EmailS']." \r\n"; 
+  
+    $headers .= $_SESSION['jobsT']."\n"; 
+    $headers .=  $_SESSION['jobsD'] . "\n"; 
+    $headers .= 'visit jobs.php for more info' . "\r\n"; 
+
+    $Send = SendMail( $ToEmail, $MessageHTML, $MessageTEXT,$body,$headers);
+    if ( $Send ) {
+        header('Location:jobs.php');
+    
+      
+    }
+    else {
+     
+    }
+    die;
+    
+
+  }
                 else
                   {
 
                     
-                    $selectQuery= "SELECT * FROM individual JOIN posts ON individual.userID= posts.userID AND posts.jobType='Part Time job'
+                    $sql= "SELECT * FROM individual JOIN posts ON individual.userID= posts.userID AND posts.jobType='Part Time job'
                     ORDER by posts.uploadDate DESC ";
 
-                
+                posts($sql);
                   
-                    if($result =mysqli_query($link,$selectQuery))
-                      {
+                    // if($result =mysqli_query($link,$selectQuery))
+                    //   {
                         
-                        if ($result->num_rows > 0) {
+                    //     if ($result->num_rows > 0) {
                           
-                          while($ads=mysqli_fetch_assoc($result)  )
-                          { if($i<4){
+                    //       while($ads=mysqli_fetch_assoc($result)  )
+                    //       { if($i<4){
                             ?>
                     
                     
                   
                   
-                    <div class="ul">
+                    <!-- <div class="ul">
 
                                   
-                        <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?= $ads["jobTitle"];?></label><br>
-                                    <p class="descrption"><?= $ads["jobDescription"];?></p>
-                                    <br><label for="li" class="info"><?= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?= $ads["uploadDate"];?></label>
-                                    <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
-                                    <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["salary"];?> per hour</label>
-                                    <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i>
+                        <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?//= $ads["jobTitle"];?></label><br>
+                                    <p class="descrption"><?//= $ads["jobDescription"];?></p>
+                                    <br><label for="li" class="info"><?//= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?//= $ads["uploadDate"];?></label>
+                                    <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?//= $ads["jobLocation"];?></label>
+                                    <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?//= $ads["salary"];?> per hour</label>
+                                    <label for="li" class="info"><i class="far fa-bookmark"></i> <?//= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i>
                         </div>
                         <section class="post-overlay" id="postOverlay">
                                       
 
                               <div class="post-container">
                                       <span class="closebtn" onclick="closeJobDetails()" title="Close Overlay">×</span>
-                                      <b>  <h5><?= $ads["jobTitle"];?></h5></b>
+                                      <b>  <h5><?//= $ads["jobTitle"];?></h5></b>
                                       
                                     <div class="JobDetails">
                                               <span></span>
-                                                <label for="post-overlay" class="post-nav"><?= $ads["fname"];?></label>
-                                                <label for="post-overlay" class="post-nav"><?= $ads["uploadDate"];?></label>
+                                                <label for="post-overlay" class="post-nav"><//?= $ads["fname"];?></label>
+                                                <label for="post-overlay" class="post-nav"><?//= $ads["uploadDate"];?></label>
                                                 
-                                                <label for="post-overlay" class="post-nav"><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
-                                                <label for="post-overlay" class="post-nav"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label>
+                                                <label for="post-overlay" class="post-nav"><i class="fas fa-map-marker-alt"></i><?//= $ads["jobLocation"];?></label>
+                                                <label for="post-overlay" class="post-nav"><i class="far fa-bookmark"></i> <?//= $ads["jobType"];?></label>
                                                 <br><br><br><br>
                                                 <ul class="details-list">
-                                              <li><label for="details-list" >Expire date:</label> <?= $ads["expireDate"];?></li>
-                                              <li> <label for="details-list">salary:</label> <?= $ads["salary"];?> $ per day</li>  </ul>
+                                              <li><label for="details-list" >Expire date:</label> <?//= $ads["expireDate"];?></li>
+                                              <li> <label for="details-list">salary:</label> <?//= $ads["salary"];?> $ per day</li>  </ul>
                                                 <br> 
                                                 <table>
                                                   <tr>
-                                              <td><label for="description" class="details" >Description:</label></td> <td><p id="description"><?= $ads["jobDescription"];?></p></td></tr><br>
-                                              <tr><td><label for="benefits" class="details">Benefits:</label></td><td><p  id="benefits"><?= $ads["benefits"];?></p></td></tr> 
-                                              <tr> <td><label for="requirements" class="details">requirements:</label></td><td><p id="requirements"><?= $ads["requirements"];?></p></td></tr>
-                                              <tr><td> <label for="location" class="details">job location:</label></td><td><p class="location"><?= $ads["jobLocation"];?></p></td></tr> <br>
-                                              <tr><td><label for="note" class="details">note:</label></td><td><p class="note"><?= $ads["note"];?></p></td></tr>
+                                              <td><label for="description" class="details" >Description:</label></td> <td><p id="description"><?//= $ads["jobDescription"];?></p></td></tr><br>
+                                              <tr><td><label for="benefits" class="details">Benefits:</label></td><td><p  id="benefits"><?//= $ads["benefits"];?></p></td></tr> 
+                                              <tr> <td><label for="requirements" class="details">requirements:</label></td><td><p id="requirements"><?//= $ads["requirements"];?></p></td></tr>
+                                              <tr><td> <label for="location" class="details">job location:</label></td><td><p class="location"><?//= $ads["jobLocation"];?></p></td></tr> <br>
+                                              <tr><td><label for="note" class="details">note:</label></td><td><p class="note"><?//= $ads["note"];?></p></td></tr>
                                               </table>
                                     </div>
                                     <button class="post-btn" id="cancelbtn" onclick="closeJobDetails()" >cancel</button>
                                     <button  class="post-btn">Apply for this job</button>
                                     </div>
                         </section>
-                    </div>
+                    </div> -->
                     
                           <?php 
-                          $i++; } }
+                        //  $i++; } 
                       }
-                        }
+                      
+                      
 
-                      }
+                
                       ?>
                         <div class="a"><a href="#">Show all relative posts</a></div>
 
@@ -179,84 +204,102 @@ require_once "signin.php";
       
         <div class="inner-card other-cards summerJobs"id="summerJobs">
           <h2>Summer Jobs</h2>
-          <?php  
-                      global $selectQuery;
-                global $i;
-                $i=0;
-                        if (isset($_POST['searchsubmit'])){
-                        $city=$_POST["city"];
-                        $keywors=$_POST["keywors"];
+          <?php                          
 
-                  
-                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Summer job' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
-                          if($result =mysqli_query($link,$selectQuery))
-                          {
-                            
-                            if ($result->num_rows > 0) {
-                                    
-                                while($ads=mysqli_fetch_assoc($result))
-                                
-                                {if($i<4){
-                                  ?>
-          <div class="ul">
-          <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?= $ads["jobTitle"];?></label><br>
-                                                <p class="descrption"><?= $ads["jobDescription"];?></p>
-                                                <br><label for="li" class="info"><?= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?= $ads["uploadDate"];?></label>
-                                                <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
-                                                <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["salary"];?> per hour</label>
-                                                <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick=""></i>
-                                    </div>
+// global $selectQuery;
+// global $i;
+// $i=0;
+
+  if (isset($_POST['searchsubmit'])){
+ $city=$_POST["city"];
+  $keywors=$_POST["keywors"];
+  if(!empty($city)&& !empty($keywors)){
+    $sql="SELECT * from individual  JOIN posts on individual.userID=posts.userID and posts.jobType='Summer job' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
+
+  // switch(isset($_POST['searchsubmit'])){
+  // case isset($city):  $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city'"; break;
+  // case isset($keywors):  $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and  posts.jobTitle Like '%$keywors%' "; break;
+  //   case isset($city)&& isset($keywors): $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city' or  posts.jobTitle Like '%$keywors%'";
+  // }
+posts($sql);
+}
+else if(!empty($_POST["city"]) && empty($_POST["keywors"])){
+  $sql="SELECT * from individual  JOIN posts on individual.userID=posts.userID and posts.jobType='Summer job' and posts.jobLocation='$city' ";
+  posts($sql);
+}else if(empty($_POST["city"]) && !empty($_POST["keywors"])) {           
+  $sql="SELECT * from individual  JOIN posts on individual.userID=posts.userID and posts.jobType='Summer job' and  posts.jobTitle Like '%$keywors%' ";
+  posts($sql);
+}
+
+  }   
+else
+{
+
+
+$sql= "SELECT * FROM individual JOIN posts ON individual.userID= posts.userID AND posts.jobType='Summer job'
+ORDER by posts.uploadDate DESC ";
+
+posts($sql);
+
+// if($result =mysqli_query($link,$selectQuery))
+//   {
+  
+//     if ($result->num_rows > 0) {
+    
+//       while($ads=mysqli_fetch_assoc($result)  )
+//       { if($i<4){
+      ?>
+
+
+
+
+<!-- <div class="ul">
+
             
-            
-              
-            </div>
-       
-        <?php 
-                                  }  }
-                      }
-                        }
-
-                      }
-                      else
-                  {
-
-                    
-                    $selectQuery= "SELECT * FROM individual inner JOIN posts ON individual.userID= posts.userID AND posts.jobType='Summer job'
-                    ORDER by posts.uploadDate DESC ";
-
+  <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?//= $ads["jobTitle"];?></label><br>
+              <p class="descrption"><?//= $ads["jobDescription"];?></p>
+              <br><label for="li" class="info"><?//= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?//= $ads["uploadDate"];?></label>
+              <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?//= $ads["jobLocation"];?></label>
+              <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?//= $ads["salary"];?> per hour</label>
+              <label for="li" class="info"><i class="far fa-bookmark"></i> <?//= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i>
+  </div>
+  <section class="post-overlay" id="postOverlay">
                 
-                  
-                    if($result =mysqli_query($link,$selectQuery))
-                      {
-                        
-                        if ($result->num_rows > 0) {
-                              
-                          while($ads=mysqli_fetch_assoc($result))
-                          {if($i<4){
-                            ?>
-                    
-                    
-                  
-                  
-                    <div class="ul">
 
-                                  
-                        <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?= $ads["jobTitle"];?></label><br>
-                                    <p class="descrption"><?= $ads["jobDescription"];?></p>
-                                    <br><label for="li" class="info"><?= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?= $ads["uploadDate"];?></label>
-                                    <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
-                                    <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["salary"];?> per hour</label>
-                                    <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i>
-                        </div>
-                        
-                    </div>
-                    
-                          <?php 
-                           } }
-                      }
-                        }
+        <div class="post-container">
+                <span class="closebtn" onclick="closeJobDetails()" title="Close Overlay">×</span>
+                <b>  <h5><?//= $ads["jobTitle"];?></h5></b>
+                
+              <div class="JobDetails">
+                        <span></span>
+                          <label for="post-overlay" class="post-nav"><//?= $ads["fname"];?></label>
+                          <label for="post-overlay" class="post-nav"><?//= $ads["uploadDate"];?></label>
+                          
+                          <label for="post-overlay" class="post-nav"><i class="fas fa-map-marker-alt"></i><?//= $ads["jobLocation"];?></label>
+                          <label for="post-overlay" class="post-nav"><i class="far fa-bookmark"></i> <?//= $ads["jobType"];?></label>
+                          <br><br><br><br>
+                          <ul class="details-list">
+                        <li><label for="details-list" >Expire date:</label> <?//= $ads["expireDate"];?></li>
+                        <li> <label for="details-list">salary:</label> <?//= $ads["salary"];?> $ per day</li>  </ul>
+                          <br> 
+                          <table>
+                            <tr>
+                        <td><label for="description" class="details" >Description:</label></td> <td><p id="description"><?//= $ads["jobDescription"];?></p></td></tr><br>
+                        <tr><td><label for="benefits" class="details">Benefits:</label></td><td><p  id="benefits"><?//= $ads["benefits"];?></p></td></tr> 
+                        <tr> <td><label for="requirements" class="details">requirements:</label></td><td><p id="requirements"><?//= $ads["requirements"];?></p></td></tr>
+                        <tr><td> <label for="location" class="details">job location:</label></td><td><p class="location"><?//= $ads["jobLocation"];?></p></td></tr> <br>
+                        <tr><td><label for="note" class="details">note:</label></td><td><p class="note"><?//= $ads["note"];?></p></td></tr>
+                        </table>
+              </div>
+              <button class="post-btn" id="cancelbtn" onclick="closeJobDetails()" >cancel</button>
+              <button  class="post-btn">Apply for this job</button>
+              </div>
+  </section>
+</div> -->
 
-                      }
+    <?php 
+}
+                  
                       ?>
                         <div class="a"><a href="#">Show all relative posts</a></div>
                         </div>
@@ -266,173 +309,209 @@ require_once "signin.php";
 
           
             <div class="inner-card other-cards weekendJobs">
-              <h2>Weekend Jobs</h2>
-              <?php  
-                      global $selectQuery;
-                global $i;
-                $i=0;
-                        if (isset($_POST['searchsubmit'])){
-                        $city=$_POST["city"];
-                        $keywors=$_POST["keywors"];
+              <h2>Weekend Jobs</h2>                       
 
-                  
-                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Weekend job' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
-                          if($result =mysqli_query($link,$selectQuery))
-                          {
-                            
-                            if ($result->num_rows > 0) {
-                                    
-                                while($ads=mysqli_fetch_assoc($result))
-                                
-                                {if($i<4){
-                                  ?>
-          <div class="ul">
-          <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?= $ads["jobTitle"];?></label><br>
-                                                <p class="descrption"><?= $ads["jobDescription"];?></p>
-                                                <br><label for="li" class="info"><?= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?= $ads["uploadDate"];?></label>
-                                                <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
-                                                <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["salary"];?> per hour</label>
-                                                <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick=""></i>
-                                    </div>
+              <?php                          
+
+// global $selectQuery;
+// global $i;
+// $i=0;
+
+  if (isset($_POST['searchsubmit'])){
+ $city=$_POST["city"];
+  $keywors=$_POST["keywors"];
+  if(!empty($city)&& !empty($keywors)){
+    $sql="SELECT * from individual JOIN posts on individual.userID=posts.userID and posts.jobType='Weekend job' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
+  // switch(isset($_POST['searchsubmit'])){
+  // case isset($city):  $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city'"; break;
+  // case isset($keywors):  $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and  posts.jobTitle Like '%$keywors%' "; break;
+  //   case isset($city)&& isset($keywors): $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city' or  posts.jobTitle Like '%$keywors%'";
+  // }
+posts($sql);
+}
+else if(!empty($_POST["city"]) && empty($_POST["keywors"])){
+  $sql="SELECT * from individual JOIN posts on individual.userID=posts.userID and posts.jobType='Weekend job' and posts.jobLocation='$city' ";
+  posts($sql);
+}else if(empty($_POST["city"]) && !empty($_POST["keywors"])) {           
+  $sql="SELECT * from individual  JOIN posts on individual.userID=posts.userID and posts.jobType='Weekend job' and  posts.jobTitle Like '%$keywors%' ";
+  posts($sql);
+}
+
+  }   
+else
+{
+
+
+$sql= "SELECT * FROM individual JOIN posts ON individual.userID= posts.userID AND posts.jobType='Weekend job'
+ORDER by posts.uploadDate DESC ";
+
+posts($sql);
+
+// if($result =mysqli_query($link,$selectQuery))
+//   {
+  
+//     if ($result->num_rows > 0) {
+    
+//       while($ads=mysqli_fetch_assoc($result)  )
+//       { if($i<4){
+      ?>
+
+
+
+
+<!-- <div class="ul">
+
             
-            
-              
-            </div>
-       
-        <?php 
-                                  }  }
-                      }
-                        }
-
-                      }
-                      else
-                  {
-
-                    
-                    $selectQuery= "SELECT * FROM individual inner JOIN posts ON individual.userID= posts.userID AND posts.jobType='Weekend job'
-                    ORDER by posts.uploadDate DESC ";
-
+  <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?//= $ads["jobTitle"];?></label><br>
+              <p class="descrption"><?//= $ads["jobDescription"];?></p>
+              <br><label for="li" class="info"><?//= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?//= $ads["uploadDate"];?></label>
+              <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?//= $ads["jobLocation"];?></label>
+              <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?//= $ads["salary"];?> per hour</label>
+              <label for="li" class="info"><i class="far fa-bookmark"></i> <?//= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i>
+  </div>
+  <section class="post-overlay" id="postOverlay">
                 
-                  
-                    if($result =mysqli_query($link,$selectQuery))
-                      {
-                        
-                        if ($result->num_rows > 0) {
-                              
-                          while($ads=mysqli_fetch_assoc($result))
-                          {if($i<4){
-                            ?>
-                    
-                    
-                  
-                  
-                    <div class="ul">
 
-                                  
-                        <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?= $ads["jobTitle"];?></label><br>
-                                    <p class="descrption"><?= $ads["jobDescription"];?></p>
-                                    <br><label for="li" class="info"><?= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?= $ads["uploadDate"];?></label>
-                                    <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
-                                    <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["salary"];?> per hour</label>
-                                    <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i>
-                        </div>
-                        
-                    </div>
-                    
-                          <?php 
-                           } }
-                      }
-                        }
+        <div class="post-container">
+                <span class="closebtn" onclick="closeJobDetails()" title="Close Overlay">×</span>
+                <b>  <h5><?//= $ads["jobTitle"];?></h5></b>
+                
+              <div class="JobDetails">
+                        <span></span>
+                          <label for="post-overlay" class="post-nav"><//?= $ads["fname"];?></label>
+                          <label for="post-overlay" class="post-nav"><?//= $ads["uploadDate"];?></label>
+                          
+                          <label for="post-overlay" class="post-nav"><i class="fas fa-map-marker-alt"></i><?//= $ads["jobLocation"];?></label>
+                          <label for="post-overlay" class="post-nav"><i class="far fa-bookmark"></i> <?//= $ads["jobType"];?></label>
+                          <br><br><br><br>
+                          <ul class="details-list">
+                        <li><label for="details-list" >Expire date:</label> <?//= $ads["expireDate"];?></li>
+                        <li> <label for="details-list">salary:</label> <?//= $ads["salary"];?> $ per day</li>  </ul>
+                          <br> 
+                          <table>
+                            <tr>
+                        <td><label for="description" class="details" >Description:</label></td> <td><p id="description"><?//= $ads["jobDescription"];?></p></td></tr><br>
+                        <tr><td><label for="benefits" class="details">Benefits:</label></td><td><p  id="benefits"><?//= $ads["benefits"];?></p></td></tr> 
+                        <tr> <td><label for="requirements" class="details">requirements:</label></td><td><p id="requirements"><?//= $ads["requirements"];?></p></td></tr>
+                        <tr><td> <label for="location" class="details">job location:</label></td><td><p class="location"><?//= $ads["jobLocation"];?></p></td></tr> <br>
+                        <tr><td><label for="note" class="details">note:</label></td><td><p class="note"><?//= $ads["note"];?></p></td></tr>
+                        </table>
+              </div>
+              <button class="post-btn" id="cancelbtn" onclick="closeJobDetails()" >cancel</button>
+              <button  class="post-btn">Apply for this job</button>
+              </div>
+  </section>
+</div> -->
 
-                      }
+    <?php 
+}
+                  
                       ?>
                         <div class="a"><a href="#">Show all relative posts</a></div>
                         </div>
       </section>
-          <!--work from home jobs-->
+          <!--work from home jobs-->                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
+
           <section class="cards Other-cards FromHomeJobs " >
 
           
             <div class="inner-card other-cards fromHomeJobs" id="workFromHome">
               <h2>Work From Home Jobs</h2>
-              <?php  
-                      global $selectQuery;
-                global $i;
-                $i=0;
-                        if (isset($_POST['searchsubmit'])){
-                        $city=$_POST["city"];
-                        $keywors=$_POST["keywors"];
+              <?php                          
 
-                  
-                        $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Work from home' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
-                          if($result =mysqli_query($link,$selectQuery))
-                          {
-                            
-                            if ($result->num_rows > 0) {
-                                    
-                                while($ads=mysqli_fetch_assoc($result))
-                                
-                                {if($i<4){
-                                  ?>
-          <div class="ul">
-          <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?= $ads["jobTitle"];?></label><br>
-                                                <p class="descrption"><?= $ads["jobDescription"];?></p>
-                                                <br><label for="li" class="info"><?= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?= $ads["uploadDate"];?></label>
-                                                <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
-                                                <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["salary"];?> per hour</label>
-                                                <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick=""></i>
-                                    </div>
+// global $selectQuery;
+// global $i;
+// $i=0;
+
+  if (isset($_POST['searchsubmit'])){
+ $city=$_POST["city"];
+  $keywors=$_POST["keywors"];
+  if(!empty($city)&& !empty($keywors)){
+    $sql="SELECT * from individual JOIN posts on individual.userID=posts.userID and posts.jobType='Work from home' and posts.jobLocation='$city' and  posts.jobTitle Like '%$keywors%' ";
+  // switch(isset($_POST['searchsubmit'])){
+  // case isset($city):  $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city'"; break;
+  // case isset($keywors):  $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and  posts.jobTitle Like '%$keywors%' "; break;
+  //   case isset($city)&& isset($keywors): $selectQuery="SELECT * from individual inner JOIN posts on individual.userID=posts.userID and posts.jobType='Part Time job' and posts.jobLocation='$city' or  posts.jobTitle Like '%$keywors%'";
+  // }
+posts($sql);
+}
+else if(!empty($_POST["city"]) && empty($_POST["keywors"])){
+  $sql="SELECT * from individual JOIN posts on individual.userID=posts.userID and posts.jobType='Weekend job' and posts.jobLocation='$city' ";
+  posts($sql);
+}else if(empty($_POST["city"]) && !empty($_POST["keywors"])) {           
+  $sql="SELECT * from individual  JOIN posts on individual.userID=posts.userID and posts.jobType='Work from home' and  posts.jobTitle Like '%$keywors%' ";
+  posts($sql);
+}
+
+  }   
+else
+{
+
+
+$sql= "SELECT * FROM individual JOIN posts ON individual.userID= posts.userID AND posts.jobType='Work from home'
+ORDER by posts.uploadDate DESC ";
+
+posts($sql);
+
+// if($result =mysqli_query($link,$selectQuery))
+//   {
+  
+//     if ($result->num_rows > 0) {
+    
+//       while($ads=mysqli_fetch_assoc($result)  )
+//       { if($i<4){
+      ?>
+
+
+
+
+<!-- <div class="ul">
+
             
-            
-              
-            </div>
-       
-        <?php 
-                                  }  }
-                      }
-                        }
-
-                      }
-                      else
-                  {
-
-                    
-                    $selectQuery= "SELECT * FROM individual inner JOIN posts ON individual.userID= posts.userID AND posts.jobType='Work from home'
-                    ORDER by posts.uploadDate DESC ";
-
+  <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?//= $ads["jobTitle"];?></label><br>
+              <p class="descrption"><?//= $ads["jobDescription"];?></p>
+              <br><label for="li" class="info"><?//= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?//= $ads["uploadDate"];?></label>
+              <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?//= $ads["jobLocation"];?></label>
+              <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?//= $ads["salary"];?> per hour</label>
+              <label for="li" class="info"><i class="far fa-bookmark"></i> <?//= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i>
+  </div>
+  <section class="post-overlay" id="postOverlay">
                 
-                  
-                    if($result =mysqli_query($link,$selectQuery))
-                      {
-                        
-                        if ($result->num_rows > 0) {
-                              
-                          while($ads=mysqli_fetch_assoc($result))
-                          {if($i<4){
-                            ?>
-                    
-                    
-                  
-                  
-                    <div class="ul">
 
-                                  
-                        <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?= $ads["jobTitle"];?></label><br>
-                                    <p class="descrption"><?= $ads["jobDescription"];?></p>
-                                    <br><label for="li" class="info"><?= $ads["fname"];?></label><label for="li" class="info" data-type="date" ><?= $ads["uploadDate"];?></label>
-                                    <label for="li" class="info" ><i class="fas fa-map-marker-alt"></i><?= $ads["jobLocation"];?></label>
-                                    <label for="li" class="info"><i class="fas fa-dollar-sign"></i><?= $ads["salary"];?> per hour</label>
-                                    <label for="li" class="info"><i class="far fa-bookmark"></i> <?= $ads["jobType"];?></label><i class="fas fa-chevron-circle-down" onclick="openJobDetails()"></i>
-                        </div>
-                        
-                    </div>
-                    
-                          <?php 
-                           } }
-                      }
-                        }
+        <div class="post-container">
+                <span class="closebtn" onclick="closeJobDetails()" title="Close Overlay">×</span>
+                <b>  <h5><?//= $ads["jobTitle"];?></h5></b>
+                
+              <div class="JobDetails">
+                        <span></span>
+                          <label for="post-overlay" class="post-nav"><//?= $ads["fname"];?></label>
+                          <label for="post-overlay" class="post-nav"><?//= $ads["uploadDate"];?></label>
+                          
+                          <label for="post-overlay" class="post-nav"><i class="fas fa-map-marker-alt"></i><?//= $ads["jobLocation"];?></label>
+                          <label for="post-overlay" class="post-nav"><i class="far fa-bookmark"></i> <?//= $ads["jobType"];?></label>
+                          <br><br><br><br>
+                          <ul class="details-list">
+                        <li><label for="details-list" >Expire date:</label> <?//= $ads["expireDate"];?></li>
+                        <li> <label for="details-list">salary:</label> <?//= $ads["salary"];?> $ per day</li>  </ul>
+                          <br> 
+                          <table>
+                            <tr>
+                        <td><label for="description" class="details" >Description:</label></td> <td><p id="description"><?//= $ads["jobDescription"];?></p></td></tr><br>
+                        <tr><td><label for="benefits" class="details">Benefits:</label></td><td><p  id="benefits"><?//= $ads["benefits"];?></p></td></tr> 
+                        <tr> <td><label for="requirements" class="details">requirements:</label></td><td><p id="requirements"><?//= $ads["requirements"];?></p></td></tr>
+                        <tr><td> <label for="location" class="details">job location:</label></td><td><p class="location"><?//= $ads["jobLocation"];?></p></td></tr> <br>
+                        <tr><td><label for="note" class="details">note:</label></td><td><p class="note"><?//= $ads["note"];?></p></td></tr>
+                        </table>
+              </div>
+              <button class="post-btn" id="cancelbtn" onclick="closeJobDetails()" >cancel</button>
+              <button  class="post-btn">Apply for this job</button>
+              </div>
+  </section>
+</div> -->
 
-                      }
+    <?php 
+}
+                  
                       ?>
                         <div class="a"><a href="#">Show all relative posts</a></div>
                         </div>
@@ -461,6 +540,7 @@ require_once "signin.php";
                                 while($ads=mysqli_fetch_assoc($result))
                                 
                                 {if($i<4){
+                                 
                                   ?>
           <div class="ul">
           <div class="li"><img src="imgs/logo.png" class="span" alt=""><label for="li" id="Job-title" class="title"><?= $ads["jobTitle"];?></label><br>

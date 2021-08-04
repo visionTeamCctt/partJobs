@@ -127,10 +127,13 @@ function closeSignin() {
 function validateForm() {
   var where = document.form.city.value;
   var what = document.form.keywors.value;
+  
   var alerti = document.getElementById("alert-vaildation");
-  if (alerti.style.display === 'inline') {
+  if (alerti.style.display === 'inline' || document.getElementById("Email-vaildation").style.display == "inline") {
     alerti.style.display = "none";
   }
+  
+  
   if (where === "" && what === "") {
     //  alert("Name must be filled out");
     
@@ -347,6 +350,7 @@ function openJobDetails(){
   document.getElementById("body").style.overflow="hidden";
 }///to close the overlay
 function closeJobDetails(){
+  document.getElementsByClassName("post-overlay").innerHTML="";
 
   document.getElementById("postOverlay").style.display="none";
   document.getElementById("body").style.overflow="scroll";

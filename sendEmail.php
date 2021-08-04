@@ -41,12 +41,13 @@ function SendMail( $ToEmail, $MessageHTML, $MessageTEXT ) {
   
 }
 
-$ToEmail = 'wowcool56789@gmail.com';//where to send the email
-$ToName  ='Part Time Jobs';//'Name';//from from
+
 
 //isset
 
 if(isset($_POST['name']) && isset($_POST['E-mail']) && isset($_POST['subject'])){
+  $ToEmail = $_POST['E-mail'];//where to send the email
+$ToName  =$_POST['name'];//'Name';//from from
  
   $MessageHTML=$_POST['subject'];
 $MessageTEXT=$_POST['subject'];
@@ -58,7 +59,7 @@ if ( $Send ) {
 
 }
 else {
-  echo "<h2> ERROR</h2>";
+  ?><script>alert('Email sent successfully!')</script><?php
 }
 die;
 }

@@ -1,6 +1,7 @@
 <?php
 require_once "LogIn.php";
 require_once "signin.php";
+require_once "sendEmail.php";
 ?>
 
  
